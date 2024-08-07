@@ -1,0 +1,213 @@
+import { useState } from "react";
+import menuIcon from "../../../assets/nav/Icon-Menu.svg";
+import profileIcon from "../../../assets/nav/Icon-Profile.svg";
+import praktikumIcon from "../../../assets/nav/Icon-Praktikum.svg";
+import nilaiIcon from "../../../assets/nav/Icon-Nilai.svg";
+import leaderboardIcon from "../../../assets/nav/Icon-Leaderboard.svg";
+import asistenIcon from "../../../assets/nav/Icon-Asisten.svg";
+import changePassIcon from "../../../assets/nav/Icon-GantiPassword.svg";
+import logoutIcon from "../../../assets/nav/Icon-Logout.svg";
+
+function PraktikanNav() {
+    const [isCollapsed, setIsCollapsed] = useState(true);
+    const [isAnimating, setIsAnimating] = useState(false);
+
+    const toggleSidebar = () => {
+        if (!isCollapsed) {
+            setIsAnimating(true);
+            setTimeout(() => {
+                setIsCollapsed(!isCollapsed);
+                setIsAnimating(false);
+            }, 300);
+        } else {
+            setIsCollapsed(!isCollapsed);
+        }
+    };
+
+    return (
+        <nav className="h-screen flex items-center">
+            <div
+                className={` flex flex-col justify-between ${
+                    isCollapsed ? "w-12" : "w-[230px]"
+                } bg-forestGreen text-left text-white mx-[8px] my- font-poppins font-bold rounded-md transition-all duration-300`}
+            >
+                <div className="flex relative items-center">
+                    <i
+                        className="absolute top-3 right-3 cursor-pointer text-lg"
+                        id="btn"
+                        onClick={toggleSidebar}
+                    >
+                        <img className="w-6" src={menuIcon} alt="burger" />
+                    </i>
+                </div>
+                <div className="flex-grow flex flex-col justify-center py-16">
+                    <ul className="py-5">
+                        <li>
+                            <a
+                                href="/profile"
+                                className="flex py-3 px-3 hover:bg-darkGreen items-center"
+                            >
+                                <img
+                                    className="w-6"
+                                    src={profileIcon}
+                                    alt="profile"
+                                />
+                                <span
+                                    className={`self-center text-sm ml-3 transition-opacity duration-300 ${
+                                        isCollapsed
+                                            ? "opacity-0 delay-0"
+                                            : isAnimating
+                                            ? "opacity-0"
+                                            : "opacity-100 delay-300"
+                                    }`}
+                                >
+                                    Profile
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href=""
+                                className="flex py-3 px-3 hover:bg-darkGreen items-center"
+                            >
+                                <img
+                                    className="w-6"
+                                    src={praktikumIcon}
+                                    alt="praktikum"
+                                />
+                                <span
+                                    className={`self-center text-sm ml-3 transition-opacity duration-300 ${
+                                        isCollapsed
+                                            ? "opacity-0 delay-0"
+                                            : isAnimating
+                                            ? "opacity-0"
+                                            : "opacity-100 delay-300"
+                                    }`}
+                                >
+                                    Praktikum
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href=""
+                                className="flex py-3 px-3 hover:bg-darkGreen items-center"
+                            >
+                                <img
+                                    className="w-6"
+                                    src={nilaiIcon}
+                                    alt="nilai"
+                                />
+                                <span
+                                    className={`self-center text-sm ml-3 transition-opacity duration-300 ${
+                                        isCollapsed
+                                            ? "opacity-0 delay-0"
+                                            : isAnimating
+                                            ? "opacity-0"
+                                            : "opacity-100 delay-300"
+                                    }`}
+                                >
+                                    Nilai
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href=""
+                                className="flex py-3 px-3 hover:bg-darkGreen items-center"
+                            >
+                                <img
+                                    className="w-6"
+                                    src={leaderboardIcon}
+                                    alt="leaderboard"
+                                />
+                                <span
+                                    className={`self-center text-sm ml-3 transition-opacity duration-300 ${
+                                        isCollapsed
+                                            ? "opacity-0 delay-0"
+                                            : isAnimating
+                                            ? "opacity-0"
+                                            : "opacity-100 delay-300"
+                                    }`}
+                                >
+                                    Leaderboard
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href=""
+                                className="flex py-3 px-3 hover:bg-darkGreen items-center"
+                            >
+                                <img
+                                    className="w-6"
+                                    src={asistenIcon}
+                                    alt="asisten"
+                                />
+                                <span
+                                    className={`self-center text-sm ml-3 transition-opacity duration-300 ${
+                                        isCollapsed
+                                            ? "opacity-0 delay-0"
+                                            : isAnimating
+                                            ? "opacity-0"
+                                            : "opacity-100 delay-300"
+                                    }`}
+                                >
+                                    Asisten
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href=""
+                                className="flex py-3 px-3 hover:bg-darkGreen items-center"
+                            >
+                                <img
+                                    className="w-6"
+                                    src={changePassIcon}
+                                    alt="change password"
+                                />
+                                <span
+                                    className={`self-center text-sm ml-3 text-nowrap transition-opacity duration-300 ${
+                                        isCollapsed
+                                            ? "opacity-0 delay-0"
+                                            : isAnimating
+                                            ? "opacity-0"
+                                            : "opacity-100 delay-300"
+                                    }`}
+                                >
+                                    Change Password
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                href=""
+                                className="flex py-3 px-3 hover:bg-darkGreen items-center"
+                            >
+                                <img
+                                    className="w-6"
+                                    src={logoutIcon}
+                                    alt="logout"
+                                />
+                                <span
+                                    className={`self-center text-sm ml-3 transition-opacity duration-300 ${
+                                        isCollapsed
+                                            ? "opacity-0 delay-0"
+                                            : isAnimating
+                                            ? "opacity-0"
+                                            : "opacity-100 delay-300"
+                                    }`}
+                                >
+                                    Logout
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    );
+}
+
+export default PraktikanNav;
