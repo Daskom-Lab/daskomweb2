@@ -8,7 +8,7 @@ import asistenIcon from "../../../assets/nav/Icon-Asisten.svg";
 import changePassIcon from "../../../assets/nav/Icon-GantiPassword.svg";
 import logoutIcon from "../../../assets/nav/Icon-Logout.svg";
 
-function PraktikanNav() {
+export default function PraktikanNav() {
     const [isCollapsed, setIsCollapsed] = useState(true);
     const [isAnimating, setIsAnimating] = useState(false);
 
@@ -23,28 +23,50 @@ function PraktikanNav() {
             setIsCollapsed(!isCollapsed);
         }
     };
+    const [isOpen, setIsOpen] = useState(false);
+    const genericHamburgerLine = `h-1 w-6 my-1 rounded-full bg-black transition ease transform duration-300`;
 
     return (
         <nav className="h-screen flex items-center">
             <div
-                className={` flex flex-col justify-between ${
+                className={` flex flex-col h-[79vh] ${
                     isCollapsed ? "w-12" : "w-[230px]"
-                } bg-forestGreen text-left text-white mx-[8px] my- font-poppins font-bold rounded-md transition-all duration-300`}
+                } bg-forestGreen text-left text-white mx-[8px] font-poppins font-bold rounded-md transition-all duration-300`}
             >
                 <div className="flex relative items-center">
-                    <i
-                        className="absolute top-3 right-3 cursor-pointer text-lg"
-                        id="btn"
-                        onClick={toggleSidebar}
+                    <button
+                        className="absolute top-3 right-3 flex flex-col justify-center items-center group"
+                        onClick={() => {
+                            setIsOpen(!isOpen);
+                            toggleSidebar();
+                        }}
                     >
-                        <img className="w-6" src={menuIcon} alt="burger" />
-                    </i>
+                        <div
+                            className={`${genericHamburgerLine} bg-white transform transition-all duration-300 ease-in-out ${
+                                isOpen
+                                    ? "rotate-45 translate-y-3"
+                                    : "translate-y-1 group-hover:translate-y-0"
+                            }`}
+                        />
+                        <div
+                            className={`${genericHamburgerLine} bg-white transform transition-all duration-300 ease-in-out ${
+                                isOpen ? "opacity-0" : "opacity-100"
+                            }`}
+                        />
+                        <div
+                            className={`${genericHamburgerLine} bg-white transform transition-all duration-300 ease-in-out ${
+                                isOpen
+                                    ? "-rotate-45 -translate-y-3"
+                                    : "-translate-y-1 group-hover:translate-y-0"
+                            }`}
+                        />
+                    </button>
                 </div>
                 <div className="flex-grow flex flex-col justify-center py-16">
                     <ul className="py-5">
                         <li>
                             <a
-                                href="/profile"
+                                href="/dashboard"
                                 className="flex py-3 px-3 hover:bg-darkGreen items-center"
                             >
                                 <img
@@ -182,7 +204,7 @@ function PraktikanNav() {
                         </li>
                         <li>
                             <a
-                                href=""
+                                href="/logout"
                                 className="flex py-3 px-3 hover:bg-darkGreen items-center"
                             >
                                 <img
@@ -209,5 +231,3 @@ function PraktikanNav() {
         </nav>
     );
 }
-
-export default PraktikanNav;

@@ -13,7 +13,6 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ["Figtree", ...defaultTheme.fontFamily.sans],
                 poppins: ['"poppins"'],
             },
             colors: {
@@ -22,6 +21,9 @@ export default {
                 sageGreen: "#b6c4b6",
                 ivory: "#eef0e5",
                 softIvory: "#F4F6EE",
+                gainsboro: "#d9d9d9",
+                rustyRed: "#A44C4C",
+                dustyBlue: "#868B95",
             },
         },
     },
