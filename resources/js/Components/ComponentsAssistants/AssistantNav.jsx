@@ -17,306 +17,306 @@ import announcementIcon from "../../../assets/nav/Icon-Annoucement.svg";
 import changePassIcon from "../../../assets/nav/Icon-GantiPassword.svg";
 import logoutIcon from "../../../assets/nav/Icon-Logout.svg";
 
-function AssistantNav() {
+export default function AssisstantNav({ openSendAnnouncement }) {
     return (
-        <nav className="h-screen flex items-center">
-            <div className="left-0 top-0 h-[91vh] w-[230px] bg-forestGreen text-left text-white m-[27px] font-poppins font-bold overflow-y-auto scrollbar-hidden scroll-smooth rounded-md ">
-                <div className="">
-                    <ul className="py-5">
-                        <li>
-                            <a
-                                href="/"
-                                className="flex py-3 px-5 hover:bg-darkGreen"
-                            >
-                                <img
-                                    className="w-6"
-                                    src={profileIcon}
-                                    alt="profile"
-                                />
-                                <span className="self-center text-sm ml-3">
-                                    Profile
-                                </span>
-                            </a>
-                        </li>
+        <>
+            <nav className="h-screen flex items-center">
+                <div className="left-0 top-0 h-[91vh] w-[230px] bg-forestGreen text-left text-white mx-[8px] my-[27px] font-poppins font-bold overflow-y-auto scrollbar-hidden scroll-smooth rounded-md ">
+                    <div className="">
+                        <ul className="py-5">
+                            <li>
+                                <a
+                                    href="#"
+                                    className="flex py-3 px-5 hover:bg-darkGreen"
+                                >
+                                    <img
+                                        className="w-6"
+                                        src={profileIcon}
+                                        alt="profile"
+                                    />
+                                    <span className="self-center text-sm ml-3">
+                                        Profile
+                                    </span>
+                                </a>
+                            </li>
 
-                        <li>
-                            <a
-                                href="/"
-                                className="flex py-3 px-5 hover:bg-darkGreen"
-                            >
-                                <img
-                                    className="w-6"
-                                    src={praktikumIcon}
-                                    alt="praktikum"
-                                />
-                                <span className="self-center text-sm ml-3">
-                                    Praktikum
-                                </span>
-                            </a>
-                        </li>
+                            <li>
+                                <a
+                                    href="#"
+                                    className="flex py-3 px-5 hover:bg-darkGreen"
+                                >
+                                    <img
+                                        className="w-6"
+                                        src={praktikumIcon}
+                                        alt="praktikum"
+                                    />
+                                    <span className="self-center text-sm ml-3">
+                                        Praktikum
+                                    </span>
+                                </a>
+                            </li>
 
-                        <li>
-                            <a
-                                href=""
-                                className="flex py-3 px-5 hover:bg-darkGreen"
-                            >
-                                <img
-                                    className="w-6"
-                                    src={nilaiIcon}
-                                    alt="nilai"
-                                />
-                                <span className="self-center text-sm ml-3">
-                                    Nilai
-                                </span>
-                            </a>
-                        </li>
+                            <li>
+                                <a
+                                    href=""
+                                    className="flex py-3 px-5 hover:bg-darkGreen"
+                                >
+                                    <img
+                                        className="w-6"
+                                        src={nilaiIcon}
+                                        alt="nilai"
+                                    />
+                                    <span className="self-center text-sm ml-3">
+                                        Nilai
+                                    </span>
+                                </a>
+                            </li>
 
-                        <li>
-                            <a
-                                href=""
-                                className="flex py-3 px-5 hover:bg-darkGreen"
-                            >
-                                <img
-                                    className="w-6"
-                                    src={historyIcon}
-                                    alt="history"
-                                />
-                                <span className="self-center text-sm ml-3">
-                                    History
-                                </span>
-                            </a>
-                        </li>
+                            <li>
+                                <a
+                                    href=""
+                                    className="flex py-3 px-5 hover:bg-darkGreen"
+                                >
+                                    <img
+                                        className="w-6"
+                                        src={historyIcon}
+                                        alt="history"
+                                    />
+                                    <span className="self-center text-sm ml-3">
+                                        History
+                                    </span>
+                                </a>
+                            </li>
 
-                        <li>
-                            <a
-                                href=""
-                                className="flex py-3 px-5 hover:bg-darkGreen"
-                            >
-                                <img
-                                    className="w-6"
-                                    src={laporanIcon}
-                                    alt="laporan"
-                                />
-                                <span className="self-center text-sm ml-3">
-                                    Laporan
-                                </span>
-                            </a>
-                        </li>
+                            <li>
+                                <a
+                                    href=""
+                                    className="flex py-3 px-5 hover:bg-darkGreen"
+                                >
+                                    <img
+                                        className="w-6"
+                                        src={laporanIcon}
+                                        alt="laporan"
+                                    />
+                                    <span className="self-center text-sm ml-3">
+                                        Laporan
+                                    </span>
+                                </a>
+                            </li>
 
-                        <li>
-                            <a
-                                href=""
-                                className="flex py-3 px-5 hover:bg-darkGreen"
-                            >
-                                <img
-                                    className="w-6"
-                                    src={inputSoalIcon}
-                                    alt="input soal"
-                                />
-                                <span className="self-center text-sm ml-3">
-                                    Input Soal
-                                </span>
-                            </a>
-                        </li>
+                            <li>
+                                <a
+                                    href=""
+                                    className="flex py-3 px-5 hover:bg-darkGreen"
+                                >
+                                    <img
+                                        className="w-6"
+                                        src={inputSoalIcon}
+                                        alt="input soal"
+                                    />
+                                    <span className="self-center text-sm ml-3">
+                                        Input Soal
+                                    </span>
+                                </a>
+                            </li>
 
-                        <li>
-                            <a
-                                href=""
-                                className="flex py-3 px-5 hover:bg-darkGreen"
-                            >
-                                <img
-                                    className="w-6"
-                                    src={kirimLaporanIcon}
-                                    alt="Kirim Laporan"
-                                />
-                                <span className="self-center text-sm ml-3">
-                                    Kirim Laporan
-                                </span>
-                            </a>
-                        </li>
+                            <li>
+                                <a
+                                    href=""
+                                    className="flex py-3 px-5 hover:bg-darkGreen"
+                                >
+                                    <img
+                                        className="w-6"
+                                        src={kirimLaporanIcon}
+                                        alt="Kirim Laporan"
+                                    />
+                                    <span className="self-center text-sm ml-3">
+                                        Kirim Laporan
+                                    </span>
+                                </a>
+                            </li>
 
-                        <li>
-                            <a
-                                href=""
-                                className="flex py-3 px-5 hover:bg-darkGreen"
-                            >
-                                <img
-                                    className="w-6"
-                                    src={ratingIcon}
-                                    alt="rating"
-                                />
-                                <span className="self-center text-sm ml-3">
-                                    Rating
-                                </span>
-                            </a>
-                        </li>
+                            <li>
+                                <a
+                                    href=""
+                                    className="flex py-3 px-5 hover:bg-darkGreen"
+                                >
+                                    <img
+                                        className="w-6"
+                                        src={ratingIcon}
+                                        alt="rating"
+                                    />
+                                    <span className="self-center text-sm ml-3">
+                                        Rating
+                                    </span>
+                                </a>
+                            </li>
 
-                        <li>
-                            <a
-                                href=""
-                                className="flex py-3 px-5 hover:bg-darkGreen"
-                            >
-                                <img
-                                    className="w-6"
-                                    src={rankingIcon}
-                                    alt="ranking"
-                                />
-                                <span className="self-center text-sm ml-3">
-                                    Ranking
-                                </span>
-                            </a>
-                        </li>
+                            <li>
+                                <a
+                                    href=""
+                                    className="flex py-3 px-5 hover:bg-darkGreen"
+                                >
+                                    <img
+                                        className="w-6"
+                                        src={rankingIcon}
+                                        alt="ranking"
+                                    />
+                                    <span className="self-center text-sm ml-3">
+                                        Ranking
+                                    </span>
+                                </a>
+                            </li>
 
-                        <li>
-                            <a
-                                href=""
-                                className="flex py-3 px-5 hover:bg-darkGreen"
-                            >
-                                <img
-                                    className="w-6"
-                                    src={pollingIcon}
-                                    alt="polling"
-                                />
-                                <span className="self-center text-sm ml-3">
-                                    Polling
-                                </span>
-                            </a>
-                        </li>
+                            <li>
+                                <a
+                                    href=""
+                                    className="flex py-3 px-5 hover:bg-darkGreen"
+                                >
+                                    <img
+                                        className="w-6"
+                                        src={pollingIcon}
+                                        alt="polling"
+                                    />
+                                    <span className="self-center text-sm ml-3">
+                                        Polling
+                                    </span>
+                                </a>
+                            </li>
 
-                        <li>
-                            <a
-                                href=""
-                                className="flex py-3 px-5 hover:bg-darkGreen"
-                            >
-                                <img
-                                    className="w-6"
-                                    src={plottingIcon}
-                                    alt="plotting"
-                                />
-                                <span className="self-center text-sm ml-3">
-                                    Plotting
-                                </span>
-                            </a>
-                        </li>
+                            <li>
+                                <a
+                                    href=""
+                                    className="flex py-3 px-5 hover:bg-darkGreen"
+                                >
+                                    <img
+                                        className="w-6"
+                                        src={plottingIcon}
+                                        alt="plotting"
+                                    />
+                                    <span className="self-center text-sm ml-3">
+                                        Plotting
+                                    </span>
+                                </a>
+                            </li>
 
-                        <li>
-                            <a
-                                href=""
-                                className="flex py-3 px-5 hover:bg-darkGreen"
-                            >
-                                <img
-                                    className="w-6"
-                                    src={piketLabIcon}
-                                    alt="piket laboratorium"
-                                />
-                                <span className="self-center text-sm ml-3">
-                                    Piket Laboratorium
-                                </span>
-                            </a>
-                        </li>
+                            <li>
+                                <a
+                                    href=""
+                                    className="flex py-3 px-5 hover:bg-darkGreen"
+                                >
+                                    <img
+                                        className="w-6"
+                                        src={piketLabIcon}
+                                        alt="piket laboratorium"
+                                    />
+                                    <span className="self-center text-sm ml-3">
+                                        Piket Laboratorium
+                                    </span>
+                                </a>
+                            </li>
 
-                        <li>
-                            <a
-                                href=""
-                                className="flex py-3 px-5 hover:bg-darkGreen"
-                            >
-                                <img
-                                    className="w-6"
-                                    src={praktikanIcon}
-                                    alt="praktikan"
-                                />
-                                <span className="self-center text-sm ml-3">
-                                    Praktikan
-                                </span>
-                            </a>
-                        </li>
+                            <li>
+                                <a
+                                    href=""
+                                    className="flex py-3 px-5 hover:bg-darkGreen"
+                                >
+                                    <img
+                                        className="w-6"
+                                        src={praktikanIcon}
+                                        alt="praktikan"
+                                    />
+                                    <span className="self-center text-sm ml-3">
+                                        Praktikan
+                                    </span>
+                                </a>
+                            </li>
 
-                        <li>
-                            <a
-                                href=""
-                                className="flex py-3 px-5 hover:bg-darkGreen"
-                            >
-                                <img
-                                    className="w-6"
-                                    src={pelanggaranIcon}
-                                    alt="pelanggaran"
-                                />
-                                <span className="self-center text-sm ml-3">
-                                    Pelanggaran
-                                </span>
-                            </a>
-                        </li>
+                            <li>
+                                <a
+                                    href=""
+                                    className="flex py-3 px-5 hover:bg-darkGreen"
+                                >
+                                    <img
+                                        className="w-6"
+                                        src={pelanggaranIcon}
+                                        alt="pelanggaran"
+                                    />
+                                    <span className="self-center text-sm ml-3">
+                                        Pelanggaran
+                                    </span>
+                                </a>
+                            </li>
 
-                        <li>
-                            <a
-                                href=""
-                                className="flex py-3 px-5 hover:bg-darkGreen"
-                            >
-                                <img
-                                    className="w-6"
-                                    src={konfigurasiIcon}
-                                    alt="konfigurasi"
-                                />
-                                <span className="self-center text-sm ml-3">
-                                    Konfigurasi
-                                </span>
-                            </a>
-                        </li>
+                            <li>
+                                <a
+                                    href=""
+                                    className="flex py-3 px-5 hover:bg-darkGreen"
+                                >
+                                    <img
+                                        className="w-6"
+                                        src={konfigurasiIcon}
+                                        alt="konfigurasi"
+                                    />
+                                    <span className="self-center text-sm ml-3">
+                                        Konfigurasi
+                                    </span>
+                                </a>
+                            </li>
 
-                        <li>
-                            <a
-                                href=""
-                                className="flex py-3 px-5 hover:bg-darkGreen"
-                            >
-                                <img
-                                    className="w-6"
-                                    src={announcementIcon}
-                                    alt="announcement"
-                                />
-                                <span className="self-center text-sm ml-3">
-                                    Announcement
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
+                            <li>
+                                <a
+                                    onClick={openSendAnnouncement}
+                                    className="flex py-3 px-5 hover:bg-darkGreen"
+                                >
+                                    <img
+                                        className="w-6"
+                                        src={announcementIcon}
+                                        alt="announcement"
+                                    />
+                                    <span className="self-center text-sm ml-3">
+                                        Announcement
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
 
-                    <ul className="py-5">
-                        <li>
-                            <a
-                                href=""
-                                className="flex py-3 px-5 hover:bg-darkGreen"
-                            >
-                                <img
-                                    className="w-6"
-                                    src={changePassIcon}
-                                    alt="change password"
-                                />
-                                <span className="self-center text-sm ml-3">
-                                    Change Password
-                                </span>
-                            </a>
-                        </li>
+                        <ul className="py-5">
+                            <li>
+                                <a
+                                    href=""
+                                    className="flex py-3 px-5 hover:bg-darkGreen"
+                                >
+                                    <img
+                                        className="w-6"
+                                        src={changePassIcon}
+                                        alt="change password"
+                                    />
+                                    <span className="self-center text-sm ml-3">
+                                        Change Password
+                                    </span>
+                                </a>
+                            </li>
 
-                        <li>
-                            <a
-                                href=""
-                                className="flex py-3 px-5 hover:bg-darkGreen"
-                            >
-                                <img
-                                    className="w-6"
-                                    src={logoutIcon}
-                                    alt="logout"
-                                />
-                                <span className="self-center text-sm ml-3">
-                                    Logout
-                                </span>
-                            </a>
-                        </li>
-                    </ul>
+                            <li>
+                                <a
+                                    href=""
+                                    className="flex py-3 px-5 hover:bg-darkGreen"
+                                >
+                                    <img
+                                        className="w-6"
+                                        src={logoutIcon}
+                                        alt="logout"
+                                    />
+                                    <span className="self-center text-sm ml-3">
+                                        Logout
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
+        </>
     );
 }
-
-export default AssistantNav;
