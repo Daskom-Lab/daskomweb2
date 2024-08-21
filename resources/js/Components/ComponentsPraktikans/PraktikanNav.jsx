@@ -29,7 +29,7 @@ export default function PraktikanNav() {
     return (
         <nav className="h-screen flex items-center">
             <div
-                className={` flex flex-col h-[79vh] ${
+                className={`flex flex-col h-[79vh] ${
                     isCollapsed ? "w-12" : "w-[230px]"
                 } bg-forestGreen text-left text-white mx-[8px] font-poppins font-bold rounded-md transition-all duration-300`}
             >

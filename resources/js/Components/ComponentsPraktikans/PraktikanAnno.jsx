@@ -5,7 +5,7 @@ import CloseButton from "../CloseButton";
 export default function PraktikanAnnouncement() {
     // State to manage popup visibility
     const [isPopupOpen, setIsPopupOpen] = useState(false);
-    const isHaveAnnounce = true;
+    const isAnnouncementExist = false;
 
     // Function to open the popup
     const openPopup = () => {
@@ -32,55 +32,35 @@ export default function PraktikanAnnouncement() {
                     />
                 </button>
             </div>
-            {isPopupOpen && isHaveAnnounce && (
-                <div
-                    id="upEdit"
-                    className="absolute z-40 h-screen w-screen bg-black bg-opacity-60 flex justify-center items-center"
-                >
+            {isPopupOpen && (
+                <div className="absolute z-40 h-screen w-screen bg-black bg-opacity-60 flex justify-center items-center">
                     <div className="bg-white w-[440px] h-[550px] rounded-md flex flex-col">
                         <div className="w-full text-right">
-                            <CloseButton closePopup={closePopup} />
+                            <CloseButton ButtonAction={closePopup} />
                         </div>
-                        <div className="font-poppins flex flex-col flex-grow p-4">
-                            <h2 className="text-[#D61B00] text-center text-2xl font-bold">
-                                Pengumuman
-                            </h2>
-                            <h1 className="text-black text-center text-3xl font-bold my-1">
-                                Praktikum Pengganti
-                            </h1>
-                            <hr className="w-[400px] mx-auto border-2 border-black my-6 rounded-sm" />
-                            <div className="flex-grow overflow-auto max-h-[340px] p-2">
-                                <p className="text-justify">{message}</p>
+                        {isAnnouncementExist ? (
+                            <div className="font-poppins flex flex-col flex-grow p-4">
+                                <h2 className="text-[#D61B00] text-center text-2xl font-bold">
+                                    Pengumuman
+                                </h2>
+                                <h1 className="text-black text-center text-3xl font-bold my-1">
+                                    Praktikum Pengganti
+                                </h1>
+                                <hr className="w-[400px] mx-auto border-2 border-black my-6 rounded-sm" />
+                                <div className="flex-grow overflow-auto max-h-[340px] p-2">
+                                    <p className="text-justify">{message}</p>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            )}
-            {isPopupOpen && !isHaveAnnounce && (
-                <div
-                    id="upEdit"
-                    className="absolute z-40 h-screen w-screen bg-black bg-opacity-60 flex justify-center items-center"
-                >
-                    <div className="bg-white w-[440px] h-[550px] rounded-md flex flex-col">
-                        <div className="w-full text-right">
-                            <button
-                                onClick={closePopup}
-                                className="bg-rustyRed text-white font-bold w-[40px] m-1 rounded-md shadow-lg hover:bg-red-900 focus:outline-none focus:ring-opacity-50"
-                            >
-                                X
-                            </button>
-                        </div>
-                        <div
-                            id="suka"
-                            className="font-poppins flex flex-col justify-center items-center flex-grow "
-                        >
-                            <h2 className="text-[#D61B00] text-2xl font-bold">
-                                Tidak Ada Pengumuman
-                            </h2>
-                            <h1 className="text-black text-3xl font-bold my-1">
-                                Praktikum Pengganti
-                            </h1>
-                        </div>
+                        ) : (
+                            <div className="font-poppins flex flex-col justify-center items-center flex-grow ">
+                                <h2 className="text-[#D61B00] text-2xl font-bold">
+                                    Tidak Ada Pengumuman
+                                </h2>
+                                <h1 className="text-black text-3xl font-bold my-1">
+                                    Praktikum Pengganti
+                                </h1>
+                            </div>
+                        )}
                     </div>
                 </div>
             )}
