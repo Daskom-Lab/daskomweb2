@@ -1,12 +1,12 @@
 export default function CloseButton({
-    ButtonAction,
+    buttonAction,
     className = "",
     ...props
 }) {
     return (
         <button
             {...props}
-            onClick={ButtonAction}
+            onClick={buttonAction}
             className={
                 "bg-rustyRed text-white font-bold p-0.5 m-1 rounded-md shadow-lg hover:bg-red-900 focus:outline-none focus:ring-opacity-50 " +
                 className
