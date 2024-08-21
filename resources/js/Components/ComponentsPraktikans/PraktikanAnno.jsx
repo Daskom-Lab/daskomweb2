@@ -36,7 +36,11 @@ export default function PraktikanAnnouncement() {
                 <div className="absolute z-40 h-screen w-screen bg-black bg-opacity-60 flex justify-center items-center">
                     <div className="bg-white w-[440px] h-[550px] rounded-md flex flex-col">
                         <div className="w-full text-right">
+<<<<<<< Updated upstream
                             <CloseButton ButtonAction={closePopup} />
+=======
+                            <CloseButton buttonAction={closePopup} />
+>>>>>>> Stashed changes
                         </div>
                         {isAnnouncementExist ? (
                             <div className="font-poppins flex flex-col flex-grow p-4">
