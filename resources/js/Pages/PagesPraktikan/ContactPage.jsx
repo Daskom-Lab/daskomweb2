@@ -1,11 +1,15 @@
-import ContactDescription from '../../Components/ComponentsPraktikans/ContactDescription.jsx';
-import Vector from '../../Components/ComponentsPraktikans/Vector.jsx';
+import { Head } from '@inertiajs/react';
+import ContactDescription from '@/Components/ComponentsPraktikans/ContactDescription';
+import Vector from '@/Components/ComponentsPraktikans/Vector';
 
-export default function ContactPage({ setCurrentPage }) {
+export default function ContactPage() {
     return (
-        <div className="bg-[#EBEBEB] flex mt-7 mx-auto rounded-lg shadow-xl max-w-4xl p-5">
-            <ContactDescription setCurrentPage={setCurrentPage} />
-            <Vector />
-        </div>
+        <>
+            <Head title="Contact Us - Daskom Laboratory" />
+            <div className="bg-lightGainsboro flex justify-center mt-[75px] mx-auto rounded-lg shadow-xl max-w-4xl p-5">
+                <ContactDescription />
+                <Vector />
+            </div>
+        </>
     );
 }

@@ -1,11 +1,13 @@
-import AboutDescription from '../../Components/ComponentsPraktikans/AboutDescription.jsx';
-import Vector from '../../Components/ComponentsPraktikans/Vector.jsx';
+import { Head } from '@inertiajs/react';
+import AboutDescription from '@/Components/ComponentsPraktikans/AboutDescription';
+import Vector from '@/Components/ComponentsPraktikans/Vector';
 
-export default function AboutPage({ setCurrentPage }){
+export default function AboutPage() {
     return (
         <>
-            <div className="bg-[#EBEBEB] flex mt-7 mx-auto rounded-lg shadow-xl max-w-4xl min-h-[475px] p-5">
-                <AboutDescription setCurrentPage={setCurrentPage} />
+            <Head title="About Us - Daskom Laboratory" />
+            <div className="bg-lightGainsboro flex justify-center mt-[75px] mx-auto rounded-lg shadow-xl max-w-4xl min-h-[475px] p-5">
+                <AboutDescription />
                 <Vector />
             </div>
         </>

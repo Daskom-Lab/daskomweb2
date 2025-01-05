@@ -8,29 +8,29 @@ export const contactData = [
     {
         name: "Official Account (OA)",
         details: [
-            { src: iconLine, text: "@875lgdsi" },
-            { src: iconInstagram, text: "@username_instagram" },
-            { src: iconYoutube, text: "@channel_youtube" }
-        ]
+            { src: iconLine, text: "@875lgdsi", alt: "Line Official Account" },
+            { src: iconInstagram, text: "@telu.daskom", alt: "Instagram Official Account" },
+            { src: iconYoutube, text: "@Daskom Tel-U", alt: "YouTube Channel" },
+        ],
     },
     {
-        name: "Zahira Aulia Husniah [JHS]",
+        name: "Indi Viska Rahmasari [VIS]",
         details: [
-            { src: iconWhatsapp, text: "@no_whatsapp" },
-            { src: iconLine, text: "@id_line" }
-        ]
+            { src: iconWhatsapp, text: "085802253573", alt: "WhatsApp Indi Viska Rahmasari" },
+            { src: iconLine, text: "indiviska", alt: "Line Indi Viska Rahmasari" },
+        ],
     },
     {
-        name: "Ghufron Adriansyah [GAA]",
+        name: "Dennytan Raharjo [TAN]",
         details: [
-            { src: iconWhatsapp, text: "@no_whatsapp" },
-            { src: iconLine, text: "@id_line" }
-        ]
+            { src: iconWhatsapp, text: "081395882733", alt: "WhatsApp Dennytan Raharjo" },
+            { src: iconLine, text: "dentan77", alt: "Line Dennytan Raharjo" },
+        ],
     },
     {
         name: "Email",
         details: [
-            { src: iconEmail, text: "daskom@labs.telkomuniversity.ac.id" }
-        ]
-    }
+            { src: iconEmail, text: "daskom@labs.telkomuniversity.ac.id", alt: "Email Daskom Lab" },
+        ],
+    },
 ];

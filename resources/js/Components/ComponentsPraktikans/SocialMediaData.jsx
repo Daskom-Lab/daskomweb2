@@ -7,21 +7,21 @@ export const socialMediaLinks = [
     {
         href: "https://www.instagram.com/telu.daskom/",
         src: instagramLogo,
-        alt: "Instagram DaskomLab"
+        alt: "Instagram DaskomLab",
     },
     {
         href: "https://www.linkedin.com/company/basic-computing-laboratorytelkom-university/",
         src: linkedinLogo,
-        alt: "LinkedIn DaskomLab"
+        alt: "LinkedIn DaskomLab",
     },
     {
         href: "https://www.youtube.com/@DaskomTelU",
         src: youtubeLogo,
-        alt: "YouTube DaskomLab"
+        alt: "YouTube DaskomLab",
     },
     {
         href: "https://github.com/Daskom-Lab",
         src: githubLogo,
-        alt: "GitHub DaskomLab"
-    }
+        alt: "GitHub DaskomLab",
+    },
 ];
