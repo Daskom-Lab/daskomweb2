@@ -42,4 +42,62 @@ Route::prefix('praktikan')->group(function () {
     })->name('dashboard');
 });
 
+
+// route for assiatant
+Route::get('/assistant', function () {
+    return Inertia::render('PagesAssistants/ProfileAssistant');
+})->name('assistant');
+
+Route::get('/ranking', function () {
+    return Inertia::render('PagesAssistants/RankingPraktikan');
+})->name('ranking');
+
+Route::get('/polling', function () {
+    return Inertia::render('PagesAssistants/PollingAssistant');
+})->name('polling');
+
+Route::get('/lihat-tp', function () {
+    return Inertia::render('PagesAssistants/LihatTP');
+})->name('lihat-tp');
+
+Route::get('/jawaban-tp', function () {
+    return Inertia::render('PagesAssistants/ResultLihatTP');
+})->name('jawaban-tp');
+
+Route::get('/list-laporan', function () {
+    return Inertia::render('PagesAssistants/ResultLaporan');
+})->name('list-laporan');
+
+Route::get('/set-praktikan', function () {
+    return Inertia::render('PagesAssistants/SetPraktikan');
+})->name('set-praktikan');
+
+Route::get('/pelanggaran', function () {
+    return Inertia::render('PagesAssistants/PelanggaranAssistant');
+})->name('pelanggaran');
+
+Route::get('/history', function () {
+    return Inertia::render('PagesAssistants/HistoryPraktikum');
+})->name('history');
+
+Route::get('/plottingan', function () {
+    return Inertia::render('PagesAssistants/PlottingAssistant');
+})->name('plottingan');
+
+Route::get('/manage-role', function () {
+    return Inertia::render('PagesAssistants/ManageRole');
+})->name('manage-role');
+
+Route::get('/nilai-praktikan', function () {
+    return Inertia::render('PagesAssistants/NilaiPraktikan');
+})->name('nilai-praktikan');
+
+Route::get('/praktikum', function () {
+    return Inertia::render('PagesAssistants/StartPraktikum');
+})->name('praktikum');
+
+Route::get('/module', function () {
+    return Inertia::render('PagesAssistants/ModulePraktikum.jsx');
+})->name('module');
+
 require __DIR__.'/auth.php';
