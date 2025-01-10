@@ -7,8 +7,8 @@ export default function ButtonResetPelanggaran({ onClose }) {
         console.log("Data telah direset.");
         setShowSuccessModal(true);
         setTimeout(() => {
-            setShowSuccessModal(false); 
-            onClose(); 
+            setShowSuccessModal(false);
+            onClose();
         }, 3000);
     };
 
@@ -22,9 +22,10 @@ export default function ButtonResetPelanggaran({ onClose }) {
                         <h2 className="text-xl font-bold text-red-600">
                             Konfirmasi Reset
                         </h2>
+                        {/* Tombol X untuk tutup */}
                         <button
                             onClick={onClose}
-                            className="text-xl font-bold text-darkBrown hover:text-red-500 transition duration-300"
+                            className="absolute top-2 right-2 text-2xl font-bold text-white bg-rustyRed hover:bg-softRed rounded-md w-7 h-7 flex justify-center items-center"
                         >
                             ×
                         </button>
