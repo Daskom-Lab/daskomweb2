@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 export default function ButtonResetPolling({ onClose }) {
     const [showSuccessModal, setShowSuccessModal] = useState(false);
 
     const handleSave = () => {
-        console.log("Data telah direset.");
         setShowSuccessModal(true);
         setTimeout(() => {
             setShowSuccessModal(false);

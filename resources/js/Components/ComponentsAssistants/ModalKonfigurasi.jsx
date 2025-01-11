@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 import editIcon from "../../../assets/nav/Icon-Edit.svg"
 

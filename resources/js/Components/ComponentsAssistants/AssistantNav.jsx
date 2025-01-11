@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from "react";
 import ModalPasswordAssistant from './ModalPasswordAssistant';
 import ModalLogout from './ModalLogout';
 import ModalKonfigurasi from './ModalKonfigurasi';
@@ -42,7 +42,6 @@ export default function AssisstantNav({ openSendAnnouncement }) {
     const closeOpenKJModal = () => setShowOpenKJ(false);
 
     const handleLogoutConfirm = () => {
-        console.log('Logout confirmed');
         closeLogoutModal();
     };
 

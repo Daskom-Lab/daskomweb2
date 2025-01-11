@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import DropdownPolling from "./DropdownPolling";
 import ButtonResetPolling from "./ModalResetPolling";
 import TablePolling from "./TablePolling";

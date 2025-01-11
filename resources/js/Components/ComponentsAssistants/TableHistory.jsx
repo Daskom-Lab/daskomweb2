@@ -1,5 +1,5 @@
-import ModalLaporan from "./ModalLaporan";
 import { useState } from "react";
+import ModalLaporan from "./ModalLaporan";
 
 export default function TableHistory() {
     const [isModalOpen, setIsModalOpen] = useState(false);

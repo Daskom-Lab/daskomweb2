@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ButtonAddPlotting from "./ModalAddPlotting";
 import ButtonResetPlotting from "./ModalResetPlottingan";
 import TablePlottingan from "./TablePlottingan";

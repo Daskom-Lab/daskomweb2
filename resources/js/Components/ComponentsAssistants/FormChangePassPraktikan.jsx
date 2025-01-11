@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from "react";
 
 export default function FormChangePassPraktikan() {
     const [nim, setNim] = useState('');
@@ -18,9 +18,6 @@ export default function FormChangePassPraktikan() {
         setModalMessage('Password Praktikan telah berhasil diganti.');
         setIsSuccess(true);
         setIsModalOpen(true);
-
-        console.log('NIM:', nim);
-        console.log('Password Baru:', newPassword);
     };
 
     const closeModal = () => {

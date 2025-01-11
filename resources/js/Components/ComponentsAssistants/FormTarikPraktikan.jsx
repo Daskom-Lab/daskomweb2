@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from "react";
 
 export default function FormTarikPraktikan() {
     const [nim, setNim] = useState('');
@@ -19,8 +19,6 @@ export default function FormTarikPraktikan() {
         setIsSuccess(true);
         setIsModalOpen(true);
 
-        console.log('NIM:', nim);
-        console.log('Modul:', module);
     };
 
     const closeModal = () => {

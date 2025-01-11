@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ButtonResetPelanggaran from "./ModalResetPelanggaran";
 import TablePelanggaran from "./TablePelanggaran";
 
