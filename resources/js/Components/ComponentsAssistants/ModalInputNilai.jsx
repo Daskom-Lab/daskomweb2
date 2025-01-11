@@ -27,7 +27,7 @@ export default function ModalInputNilai({ onClose, onConfirm }) {
 
     const handleCalculateTotal = () => {
         const total = (tp + ta + d1 + d2 + d3 + d4 + l1 + l2) / 8;
-        setTotalNilai(total || 0); // Pastikan tidak ada NaN
+        setTotalNilai(total || 0); // ga ada nun (aman)
     };
 
     useEffect(() => {
