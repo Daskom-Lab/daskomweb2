@@ -64,32 +64,30 @@ export default function TablePlottingan() {
                                         {/* Delete button */}
                                         <button
                                             onClick={handleOpenModalDelate}
-                                            className="flex justify-center items-center p-2 text-fireRed font-semibold hover:underline transition-all"
+                                            className="flex justify-center items-center p-1 border-2 border-fireRed rounded"
                                         >
                                             <img
-                                                className="w-6"
+                                                className="w-5"
                                                 src={trashIcon}
                                                 alt="delete icon"
                                             />
-                                            Delate
                                         </button>
 
                                         {/* Edit button */}
                                         <button
                                             onClick={handleOpenModalEdit}
-                                            className="flex justify-center items-center p-2 text-darkBrown font-semibold hover:underline transition-all"
+                                            className="flex justify-center items-center p-1 border-2 border-darkBrown rounded"
                                         >
                                             <img
-                                                className="w-6"
+                                                className="w-5"
                                                 src={editIcon}
                                                 alt="edit icon"
                                             />
-                                            Edit
                                         </button>
                                         {/* plot button */}
                                         <button
                                             onClick={handleOpenModalPlot}
-                                            className="flex justify-center items-center p-2 bg-forestGreen text-white rounded hover:bg-deepForestGreen transition-all"
+                                            className="flex justify-center items-center p-1 border-2 border-deepForestGreen text-deepForestGreen font-semibold rounded"
                                         >
                                             <svg
                                                 xmlns="http://www.w3.org/2000/svg"
@@ -97,7 +95,7 @@ export default function TablePlottingan() {
                                                 viewBox="0 0 24 24"
                                                 strokeWidth="2"
                                                 stroke="currentColor"
-                                                className="w-4 h-4"
+                                                className="w-5"
                                             >
                                                 <path
                                                     strokeLinecap="round"
