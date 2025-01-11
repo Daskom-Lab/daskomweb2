@@ -1,3 +1,4 @@
+const flowbite = require("flowbite-react/tailwind");
 import defaultTheme from "tailwindcss/defaultTheme";
 import forms from "@tailwindcss/forms";
 
@@ -8,6 +9,7 @@ export default {
         "./storage/framework/views/*.php",
         "./resources/views/**/*.blade.php",
         "./resources/js/**/*.jsx",
+        flowbite.content(),
     ],
 
     theme: {
@@ -27,9 +29,18 @@ export default {
                 lightGainsboro: "#EBEBEB",
                 rustyRed: "#A44C4C",
                 dustyBlue: "#868B95",
+                darkBrown: "#393D46",
+                softGray: "#F7F7F7",
+                softRed: "#7F3E3B",
+                lightGray: "#868B95",
+                redredDark: "#A02724",
+                fireRed: "#C81A01",
             },
         },
     },
 
-    plugins: [forms],
+    plugins: [
+        require('@tailwindcss/forms'), // Plugin forms
+        flowbite,                      // Plugin flowbite
+    ],
 };
