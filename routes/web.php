@@ -29,6 +29,7 @@ Route::prefix('praktikan')->group(function () {
     })->name('dashboard');
 });
 
+
 // route for assiatant
 Route::get('/assistant', function () {
     return Inertia::render('PagesAssistants/ProfileAssistant');
