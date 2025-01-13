@@ -86,5 +86,4 @@ Route::get('/module', function () {
     return Inertia::render('PagesAssistants/ModulePraktikum.jsx');
 })->name('module');
 
->>>>>>> upstream/main
 require __DIR__.'/auth.php';
