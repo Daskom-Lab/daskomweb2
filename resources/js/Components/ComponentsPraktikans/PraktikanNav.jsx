@@ -1,16 +1,43 @@
-import { useState } from "react";
-import menuIcon from "../../../assets/nav/Icon-Menu.svg";
+import React, { useState } from 'react';
 import profileIcon from "../../../assets/nav/Icon-Profile.svg";
 import praktikumIcon from "../../../assets/nav/Icon-Praktikum.svg";
 import nilaiIcon from "../../../assets/nav/Icon-Nilai.svg";
 import leaderboardIcon from "../../../assets/nav/Icon-Leaderboard.svg";
 import asistenIcon from "../../../assets/nav/Icon-Asisten.svg";
+import pollingIcon from "../../../assets/nav/Icon-Polling.svg";
 import changePassIcon from "../../../assets/nav/Icon-GantiPassword.svg";
 import logoutIcon from "../../../assets/nav/Icon-Logout.svg";
+import Modal from '../ComponentsPraktikans/Modal';
+import ModalChangePass from '../ComponentsPraktikans/ModalChangePass';
+import ModalChangePassSuccess from '../ComponentsPraktikans/ModalChangePassSuccess';
+import ModalChangePassFailed from '../ComponentsPraktikans/ModalChangePassFailed';
+import ModalLogout from '../ComponentsPraktikans/ModalLogout';
 
 export default function PraktikanNav() {
     const [isCollapsed, setIsCollapsed] = useState(true);
     const [isAnimating, setIsAnimating] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isChangePassSuccess, setIsChangePassSuccess] = useState(false);
+    const [isChangePassFailed, setIsChangePassFailed] = useState(false);
+    const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+
+    const handleOpenLogoutModal = () => {
+        setIsLogoutModalOpen(true);
+    };
+
+    const closeLogoutModal = () => {
+        setIsLogoutModalOpen(false);
+    };
+
+    const handleOpenModal = () => {
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setIsChangePassSuccess(false); 
+        setIsChangePassFailed(false); 
+    };
 
     const toggleSidebar = () => {
         if (!isCollapsed) {
@@ -66,7 +93,7 @@ export default function PraktikanNav() {
                     <ul className="py-5">
                         <li>
                             <a
-                                href="/dashboard"
+                                href="/praktikan"
                                 className="flex py-3 px-3 hover:bg-darkGreen items-center"
                             >
                                 <img
@@ -89,7 +116,7 @@ export default function PraktikanNav() {
                         </li>
                         <li>
                             <a
-                                href=""
+                                href="/praktikum"
                                 className="flex py-3 px-3 hover:bg-darkGreen items-center"
                             >
                                 <img
@@ -112,7 +139,7 @@ export default function PraktikanNav() {
                         </li>
                         <li>
                             <a
-                                href=""
+                                href="/score-praktikan"
                                 className="flex py-3 px-3 hover:bg-darkGreen items-center"
                             >
                                 <img
@@ -135,7 +162,7 @@ export default function PraktikanNav() {
                         </li>
                         <li>
                             <a
-                                href=""
+                                href="/leaderboard-praktikan"
                                 className="flex py-3 px-3 hover:bg-darkGreen items-center"
                             >
                                 <img
@@ -158,7 +185,7 @@ export default function PraktikanNav() {
                         </li>
                         <li>
                             <a
-                                href=""
+                                href="/contact-assistant"
                                 className="flex py-3 px-3 hover:bg-darkGreen items-center"
                             >
                                 <img
@@ -181,8 +208,31 @@ export default function PraktikanNav() {
                         </li>
                         <li>
                             <a
-                                href=""
+                                href="/polling-assistant"
                                 className="flex py-3 px-3 hover:bg-darkGreen items-center"
+                            >
+                                <img
+                                    className="w-6"
+                                    src={pollingIcon}
+                                    alt="polling"
+                                />
+                                <span
+                                    className={`self-center text-sm ml-3 transition-opacity duration-300 ${
+                                        isCollapsed
+                                            ? "opacity-0 delay-0"
+                                            : isAnimating
+                                            ? "opacity-0"
+                                            : "opacity-100 delay-300"
+                                    }`}
+                                >
+                                    Polling
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                className="flex py-3 px-3 hover:bg-darkGreen items-center cursor-pointer"
+                                onClick={handleOpenModal}
                             >
                                 <img
                                     className="w-6"
@@ -202,10 +252,39 @@ export default function PraktikanNav() {
                                 </span>
                             </a>
                         </li>
+                        {isModalOpen && !isChangePassSuccess && !isChangePassFailed && (
+                            <Modal isOpen={isModalOpen} onClose={closeModal} width="w-[370px]">
+                                <ModalChangePass
+                                    onSuccess={() => {
+                                        setIsChangePassSuccess(true);
+                                        setIsModalOpen(false); 
+                                    }}
+                                    onFailed={() => {
+                                        setIsChangePassFailed(true);
+                                        setIsModalOpen(false); 
+                                    }}
+                                />
+                            </Modal>
+                        )}
+                        {isChangePassSuccess && (
+                            <Modal isOpen={true} onClose={closeModal} width="w-[370px]">
+                                <ModalChangePassSuccess />
+                            </Modal>
+                        )}
+                        {isChangePassFailed && (
+                            <Modal isOpen={true} onClose={closeModal} width="w-[370px]">
+                                <ModalChangePassFailed
+                                    onRetry={() => {
+                                        setIsChangePassFailed(false);
+                                        setIsModalOpen(true); 
+                                    }}
+                                />
+                            </Modal>
+                        )}
                         <li>
                             <a
-                                href="/logout"
-                                className="flex py-3 px-3 hover:bg-darkGreen items-center"
+                                className="flex py-3 px-3 hover:bg-darkGreen items-center cursor-pointer"
+                                onClick={handleOpenLogoutModal}
                             >
                                 <img
                                     className="w-6"
@@ -225,6 +304,11 @@ export default function PraktikanNav() {
                                 </span>
                             </a>
                         </li>
+                        {isLogoutModalOpen && (
+                            <Modal isOpen={isLogoutModalOpen} onClose={closeLogoutModal} width="w-[370px]">
+                                <ModalLogout onClose={closeLogoutModal} />
+                            </Modal>
+                        )}
                     </ul>
                 </div>
             </div>
