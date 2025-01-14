@@ -93,7 +93,7 @@ export default function AssisstantNav({ openSendAnnouncement }) {
 
                             {/* Bagian Soal, Ranking, dan Polling */}
                             <li>
-                                <a href="" className="flex py-3 px-5 hover:bg-darkGreen">
+                                <a href="/soal" className="flex py-3 px-5 hover:bg-darkGreen">
                                     <img className="w-6" src={inputSoalIcon} alt="input soal" />
                                     <span className="self-center text-sm ml-3">Input Soal</span>
                                 </a>
