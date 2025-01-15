@@ -39,25 +39,25 @@ export default function TableLaporan() {
                         <>
                             <div
                                 key={`tanggal-${index}`}
-                                className="flex items-center justify-center h-full py-2 px-4 text-darkBrown border border-forestGreen"
+                                className="flex items-center justify-center h-full py-1 px-4 text-darkBrown border border-forestGreen"
                             >
                                 29/06/24, 11:34:57
                             </div>
                             <div
                                 key={`modul-${index}`}
-                                className="flex items-center justify-center h-full py-2 px-4 text-darkBrown border border-forestGreen"
+                                className="flex items-center justify-center h-full py-1 px-4 text-darkBrown border border-forestGreen"
                             >
                                 Pengantar Alogitma dan Pemrograman
                             </div>
                             <div
                                 key={`kelas-${index}`}
-                                className="flex items-center justify-center h-full py-2 px-4 text-darkBrown border border-forestGreen"
+                                className="flex items-center justify-center h-full py-1 px-4 text-darkBrown border border-forestGreen"
                             >
                                 [ TF-46-04 ] Sabtu 2
                             </div>
                             <div
                                 key={`review-${index}`}
-                                className="flex items-center justify-center h-full py-2 px-2 border border-forestGreen"
+                                className="flex items-center justify-center h-full py-1 px-2 border border-forestGreen"
                             >
                                 <button
                                     onClick={handleOpenModal}
