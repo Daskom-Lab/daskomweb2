@@ -9,7 +9,7 @@ export default function SoalInputForm() {
     const [isModalSaveOpen, setIsModalSaveOpen] = useState(false);
     const [isModalValidationOpen, setIsModalValidationOpen] = useState(false);
     const [isModalSuccesOpenAddSoal, setIsModalSuccesOpenAddSoal] = useState(false);
-    const [kategoriSoal, setKategoriSoal] = useState("");  // Kategori soal (Tes Awal, Pendahuluan, etc)
+    const [kategoriSoal, setKategoriSoal] = useState("");  
     const [modul, setModul] = useState("");
     const [soalList, setSoalList] = useState([]);
 
@@ -18,13 +18,13 @@ export default function SoalInputForm() {
         if (!soalList.some(soal => !soal.soal || soal.pilihan?.some(p => p === ""))) {
             setIsModalSaveOpen(true);
         } else {
-            setIsModalValidationOpen(true); // Tampilkan modal validasi jika ada soal yang belum lengkap
+            setIsModalValidationOpen(true); 
         }
     };
 
     const handleCloseModalSave = () => {
         setIsModalSaveOpen(false);
-        // Reset dropdown ke default setelah modal Save ditutup
+        // Reset dropdown ke default 
         setKategoriSoal("");
         setModul("");
     };

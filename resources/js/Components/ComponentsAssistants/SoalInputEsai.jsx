@@ -13,47 +13,47 @@ export default function SoalInputEssay({
     addSoal,
 }) {
     const [soal, setSoal] = useState("");
-    const [soalList, setSoalList] = useState([]); // State untuk menyimpan soal-soal yang ditambahkan
+    const [soalList, setSoalList] = useState([]);
     const [isModalOpenDelate, setIsModalOpenDelate] = useState(false);
-    const [selectedNomor, setSelectedNomor] = useState(null); 
-    const [isModalOpenSuccess, setIsModalOpenSuccess] = useState(false); 
-    const [isModalOpenEdit, setIsModalOpenEdit] = useState(false); 
-    const [editingSoal, setEditingSoal] = useState(null); 
+    const [selectedNomor, setSelectedNomor] = useState(null);
+    const [isModalOpenSuccess, setIsModalOpenSuccess] = useState(false);
+    const [isModalOpenEdit, setIsModalOpenEdit] = useState(false);
+    const [editingSoal, setEditingSoal] = useState(null);
 
     const handleTambahSoal = () => {
         if (!soal) {
-            onModalValidation(); // Jika soal kosong, tampilkan modal validasi
+            onModalValidation();
             return;
         }
 
         const soalBaru = {
-            nomor: soalList.length + 1, // Menentukan nomor soal berdasarkan jumlah soal yang ada
+            nomor: soalList.length + 1,
             tipeSoal,
             modul,
             soal,
         };
 
-        setSoalList([...soalList, soalBaru]); // Menambahkan soal baru ke dalam daftar soal
-        setSoal(""); // Reset soal setelah ditambahkan
-        onModalSuccess(); // Tampilkan modal sukses setelah soal ditambahkan
+        setSoalList([...soalList, soalBaru]);
+        setSoal("");
+        onModalSuccess();
     };
 
     const handleSaveSoal = () => {
         if (soalList.length === 0) {
-            onModalValidation(); // Jika tidak ada soal, tampilkan modal validasi
+            onModalValidation();
             return;
         }
 
-        soalList.forEach((soalBaru) => addSoal(soalBaru)); // Simpan semua soal yang ada
-        setIsModalOpenSuccess(true); // Tampilkan modal sukses
+        soalList.forEach((soalBaru) => addSoal(soalBaru));
+        setIsModalOpenSuccess(true);
     };
 
     const handleCloseSuccessModal = () => {
-        setIsModalOpenSuccess(false); // Tutup modal sukses
+        setIsModalOpenSuccess(false);
     };
 
     const handleOpenModalDelate = (nomor) => {
-        setSelectedNomor(nomor); // Simpan nomor soal yang akan dihapus
+        setSelectedNomor(nomor);
         setIsModalOpenDelate(true);
     };
 
@@ -63,18 +63,18 @@ export default function SoalInputEssay({
     };
 
     const handleConfirmDelete = () => {
-        setSoalList(soalList.filter((item) => item.nomor !== selectedNomor)); // Hapus soal berdasarkan nomor
-        handleCloseModalDelate(); // Tutup modal
+        setSoalList(soalList.filter((item) => item.nomor !== selectedNomor));
+        handleCloseModalDelate();
     };
 
     const handleOpenModalEdit = (soalItem) => {
-        setEditingSoal(soalItem); // Set soal yang akan diedit
-        setIsModalOpenEdit(true); // Buka modal edit
+        setEditingSoal(soalItem);
+        setIsModalOpenEdit(true);
     };
 
     const handleCloseModalEdit = () => {
-        setEditingSoal(null); // Reset soal yang sedang diedit
-        setIsModalOpenEdit(false); // Tutup modal edit
+        setEditingSoal(null);
+        setIsModalOpenEdit(false);
     };
 
     const handleConfirmEdit = (updatedSoal) => {
@@ -83,7 +83,7 @@ export default function SoalInputEssay({
                 item.nomor === updatedSoal.nomor ? { ...item, soal: updatedSoal.soal } : item
             )
         );
-        handleCloseModalEdit(); // Tutup modal edit setelah menyimpan perubahan
+        handleCloseModalEdit();
     };
 
     return (
@@ -124,12 +124,9 @@ export default function SoalInputEssay({
                             className="border border-gray-300 rounded-lg flex items-baseline bg-softIvory shadow-lg justify-between"
                         >
                             <div className="flex-1 p-4">
-                                <span className="text-sm font-semibold">
-                                    {soalItem.nomor}.
-                                </span>
-                                <span className="ml-2 font-semibold text-sm text-justify">
-                                    {soalItem.soal}
-                                </span>
+                                <strong>Soal: {soalItem.nomor}</strong>
+                                <br />
+                                <span className="ml-2 text-sm text-justify">{soalItem.soal}</span>
                             </div>
                             <div className="flex space-x-2 p-2">
                                 <button
@@ -159,9 +156,9 @@ export default function SoalInputEssay({
 
             {isModalOpenEdit && (
                 <ModalEditSoalEssay
-                    soal={editingSoal}
+                    initialSoal={editingSoal.soal}
                     onClose={handleCloseModalEdit}
-                    onConfirm={handleConfirmEdit}
+                    onSave={handleConfirmEdit} // Pass handleConfirmEdit as onSave prop
                 />
             )}
 
@@ -169,3 +166,4 @@ export default function SoalInputEssay({
         </div>
     );
 }
+

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ModalDelateSoal from "./ModalDelateSoal";
-import ModalEditSoalEssay from "./ModalEditSoalEssay";
+import ModalEditSoalPG from "./ModalEditSoalPG";
 import ModalSaveSoal from "./ModalSaveSoal";
 import trashIcon from "../../../assets/nav/Icon-Delete.svg";
 import editIcon from "../../../assets/nav/Icon-Edit.svg";
@@ -106,19 +106,19 @@ export default function SoalInputPG({
         setEditingSoal(soalItem);
         setIsModalOpenEdit(true);
     };
-
-    const handleCloseModalEdit = () => {
-        setEditingSoal(null);
-        setIsModalOpenEdit(false);
-    };
-
+    
     const handleConfirmEdit = (updatedSoal) => {
         setSoalList(
             soalList.map((item) =>
                 item.nomor === updatedSoal.nomor ? updatedSoal : item
             )
         );
-        handleCloseModalEdit();
+        setIsModalOpenEdit(false);
+    };
+
+    const handleCloseModalEdit = () => {
+        setEditingSoal(null);
+        setIsModalOpenEdit(false);
     };
 
     const handleModeSwitch = () => {
@@ -271,7 +271,7 @@ export default function SoalInputPG({
                 />
             )}
             {isModalOpenEdit && (
-                <ModalEditSoalEssay
+                <ModalEditSoalPG
                     soalItem={editingSoal}
                     onClose={handleCloseModalEdit}
                     onConfirm={handleConfirmEdit}
