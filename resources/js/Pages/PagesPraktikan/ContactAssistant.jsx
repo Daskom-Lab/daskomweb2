@@ -1,5 +1,5 @@
 import { Head } from "@inertiajs/react";
-import React, { useState } from "react";
+import { useState } from "react";
 import PraktikanAuthenticated from "@/Layouts/PraktikanAuthenticatedLayout";
 import ContactAssistantTable from "@/Components/ComponentsPraktikans/ContactAssistantTable";
 import Clock from "@/Components/ComponentsAssistants/Clock";

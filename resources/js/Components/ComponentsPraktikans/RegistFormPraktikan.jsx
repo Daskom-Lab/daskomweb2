@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useForm } from '@inertiajs/react';
 import eyeClose from '../../../assets/form/eyeClose.png';
 import eyeOpen from '../../../assets/form/eyeOpen.png';

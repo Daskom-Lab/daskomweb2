@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import profileIcon from "../../../assets/nav/Icon-Profile.svg";
 import praktikumIcon from "../../../assets/nav/Icon-Praktikum.svg";
 import nilaiIcon from "../../../assets/nav/Icon-Nilai.svg";

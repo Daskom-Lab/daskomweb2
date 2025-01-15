@@ -25,7 +25,7 @@ export default function LeaderboardTable() {
             <div className="border-b border-transparent mb-1">
                 <div className="border-2 border-black flex items-center justify-between px-2 py-1 shadow-sm shadow-black">
                     <span
-                        className={`ml-[18px] flex-none w-[40px] h-[40px] border-2 ${borderColor} rounded-md shadow-md flex items-center justify-center text-center font-bold`}
+                        className={`ml-[22px] flex-none w-[40px] h-[40px] border-2 ${borderColor} rounded-md shadow-md flex items-center justify-center text-center font-bold`}
                     >
                         {index + 1}
                     </span>
@@ -58,7 +58,7 @@ export default function LeaderboardTable() {
         <div className="bg-white rounded-lg py-4 px-4 max-w-4xl">
             <div className="bg-deepForestGreen rounded-sm py-2 px-2">
                 <div className="flex mr-10 ml-6 items-center">
-                    <div className="bg-deepForestGreen hover:bg-darkOliveGreen rounded-lg p-1 flex-none w-[40px]">
+                    <div className="bg-deepForestGreen hover:bg-darkOliveGreen rounded-lg p-1 flex-none w-[45px]">
                         <h1 className="font-bold text-white text-center">Rank</h1>
                     </div>
                     <div className="ml-[34px] bg-deepForestGreen hover:bg-darkOliveGreen rounded-lg p-1 flex-1">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import iconPPT from "../../../assets/practicum/iconPPT.svg";
 import iconVideo from "../../../assets/practicum/iconVideo.svg";
 import iconModule from "../../../assets/practicum/iconModule.svg";

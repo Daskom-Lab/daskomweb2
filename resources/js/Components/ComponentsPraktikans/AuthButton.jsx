@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Modal from '../ComponentsPraktikans/Modal';
 import ModalRegist from '../ComponentsPraktikans/ModalRegist';
 
