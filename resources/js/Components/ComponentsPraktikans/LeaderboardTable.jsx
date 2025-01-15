@@ -56,7 +56,7 @@ export default function LeaderboardTable() {
 
     return (
         <div className="bg-white rounded-lg py-4 px-4 max-w-4xl">
-            <div className="bg-deepForestGreen rounded-sm py-2 px-2">
+            <div className="bg-deepForestGreen rounded-lg py-2 px-2">
                 <div className="flex mr-10 ml-6 items-center">
                     <div className="bg-deepForestGreen hover:bg-darkOliveGreen rounded-lg p-1 flex-none w-[45px]">
                         <h1 className="font-bold text-white text-center">Rank</h1>

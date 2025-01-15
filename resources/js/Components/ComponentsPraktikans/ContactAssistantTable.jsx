@@ -61,7 +61,7 @@ export default function ContactAssistantTable() {
 
     return (
         <div className="bg-white rounded-lg py-4 px-4 max-w-4xl">
-            <div className="bg-deepForestGreen rounded-sm py-2 px-2">
+            <div className="bg-deepForestGreen rounded-lg py-2 px-2">
                 <div className="flex ml-[80px] mr-[50px] items-center justify-evenly">
                     <div className="bg-deepForestGreen hover:bg-darkOliveGreen rounded-lg p-1 flex-1">
                         <h1 className="ml-[-15px] font-bold text-white text-center">Nama</h1>
