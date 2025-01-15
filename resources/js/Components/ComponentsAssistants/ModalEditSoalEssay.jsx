@@ -5,14 +5,14 @@ export default function ModalEditSoalEssay({ onClose, initialSoal, onSave }) {
     const [showSuccessModal, setShowSuccessModal] = useState(false);
 
     const handleSave = () => {
-        // Call the parent function to save the edited question
+        // ini dipanggil
         onSave(soal); 
-
+        // di tunjukin
         setShowSuccessModal(true);
 
         setTimeout(() => {
             setShowSuccessModal(false);
-            onClose(); // Close the modal after a short delay
+            onClose(); 
         }, 3000);
     };
 

@@ -5,13 +5,7 @@ import ModalSaveSoal from "./ModalSaveSoal";
 import trashIcon from "../../../assets/nav/Icon-Delete.svg";
 import editIcon from "../../../assets/nav/Icon-Edit.svg";
 
-export default function SoalInputEssay({
-    tipeSoal,
-    modul,
-    onModalSuccess,
-    onModalValidation,
-    addSoal,
-}) {
+export default function SoalInputEssay({ tipeSoal, modul, onModalSuccess, onModalValidation, addSoal }) {
     const [soal, setSoal] = useState("");
     const [soalList, setSoalList] = useState([]);
     const [isModalOpenDelate, setIsModalOpenDelate] = useState(false);
@@ -147,21 +141,8 @@ export default function SoalInputEssay({
                 </ul>
             </div>
 
-            {isModalOpenDelate && (
-                <ModalDelateSoal
-                    onClose={handleCloseModalDelate}
-                    onConfirm={handleConfirmDelete}
-                />
-            )}
-
-            {isModalOpenEdit && (
-                <ModalEditSoalEssay
-                    initialSoal={editingSoal.soal}
-                    onClose={handleCloseModalEdit}
-                    onSave={handleConfirmEdit} // Pass handleConfirmEdit as onSave prop
-                />
-            )}
-
+            {isModalOpenDelate && ( <ModalDelateSoal onClose={handleCloseModalDelate} onConfirm={handleConfirmDelete} />)}
+            {isModalOpenEdit && ( <ModalEditSoalEssay initialSoal={editingSoal.soal} onClose={handleCloseModalEdit} onSave={handleConfirmEdit} />)}
             {isModalOpenSuccess && <ModalSaveSoal onClose={handleCloseSuccessModal} />}
         </div>
     );

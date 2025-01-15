@@ -61,7 +61,7 @@ export default function ModalEditSoalPG({ soalItem, onClose, onConfirm }) {
                         <textarea
                             key={index}
                             value={item}
-                            rows="10"  // Menambahkan pengaturan rows untuk textarea
+                            rows="10"  // nambah rows flexibel aja, tambahin @zaidan kalau kurang
                             onChange={(e) => handleSoalChange(index, e.target.value)}
                             placeholder="Edit soal..."
                             className="textarea w-full border border-gray-300 rounded-lg p-2 mb-4"

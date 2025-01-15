@@ -5,13 +5,7 @@ import ModalSaveSoal from "./ModalSaveSoal";
 import trashIcon from "../../../assets/nav/Icon-Delete.svg";
 import editIcon from "../../../assets/nav/Icon-Edit.svg";
 
-export default function SoalInputPG({
-    tipeSoal,
-    modul,
-    onModalSuccess,
-    onModalValidation,
-    addSoal,
-}) {
+export default function SoalInputPG({ tipeSoal, modul, onModalSuccess, onModalValidation, addSoal, }) {
     const [soal, setSoal] = useState([""]);
     const [pilihan, setPilihan] = useState(["", "", "", ""]);
     const [soalList, setSoalList] = useState([]);
@@ -22,7 +16,7 @@ export default function SoalInputPG({
     const [editingSoal, setEditingSoal] = useState(null);
     const [mode, setMode] = useState("text");
     const [deskripsi, setDeskripsi] = useState(["", "", ""]);
-    const [soalCounter, setSoalCounter] = useState(1); // Counter global untuk soal
+    const [soalCounter, setSoalCounter] = useState(1); // jgn di ilangin buat counter global untuk soal
 
     const handlePilihanChange = (index, value) => {
         const updatedPilihan = [...pilihan];
@@ -57,7 +51,7 @@ export default function SoalInputPG({
         }
 
         const soalBaru = {
-            nomor: soalCounter, // Menggunakan counter soal
+            nomor: soalCounter, // counter soal
             tipeSoal,
             modul,
             soal: mode === "text" ? soal : deskripsi,
@@ -69,7 +63,7 @@ export default function SoalInputPG({
         setSoal([""]);
         setPilihan(["", "", "", ""]);
         setDeskripsi(["", "", ""]);
-        setSoalCounter(soalCounter + 1); // Increment counter soal
+        setSoalCounter(soalCounter + 1); // pake increment ( 0 + 1 = 1)
         onModalSuccess();
     };
 
@@ -106,7 +100,7 @@ export default function SoalInputPG({
         setEditingSoal(soalItem);
         setIsModalOpenEdit(true);
     };
-    
+
     const handleConfirmEdit = (updatedSoal) => {
         setSoalList(
             soalList.map((item) =>
@@ -264,25 +258,9 @@ export default function SoalInputPG({
                 </ul>
             </div>
 
-            {isModalOpenDelate && (
-                <ModalDelateSoal
-                    onClose={handleCloseModalDelate}
-                    onConfirm={handleConfirmDelete}
-                />
-            )}
-            {isModalOpenEdit && (
-                <ModalEditSoalPG
-                    soalItem={editingSoal}
-                    onClose={handleCloseModalEdit}
-                    onConfirm={handleConfirmEdit}
-                />
-            )}
-            {isModalOpenSuccess && (
-                <ModalSaveSoal
-                    onClose={handleCloseSuccessModal}
-                    onConfirm={handleSaveSoal}
-                />
-            )}
+            {isModalOpenDelate && ( <ModalDelateSoal onClose={handleCloseModalDelate} onConfirm={handleConfirmDelete} />)}
+            {isModalOpenEdit && ( <ModalEditSoalPG soalItem={editingSoal} onClose={handleCloseModalEdit} onConfirm={handleConfirmEdit} /> )}
+            {isModalOpenSuccess && ( <ModalSaveSoal onClose={handleCloseSuccessModal} onConfirm={handleSaveSoal} /> )}
         </div>
     );
 }
