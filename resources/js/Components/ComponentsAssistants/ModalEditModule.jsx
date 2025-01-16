@@ -8,6 +8,7 @@ export default function ButtonEditModule({ onClose }) {
     const [link2, setLink2] = useState(""); // link ytb
     const [link3, setLink3] = useState(""); // link modul
     const [title, setTitle] = useState(""); // judul
+    const [isSwitchOn, setIsSwitchOn] = useState(false);
 
     const handleSave = () => {
         setShowSuccessModal(true);
@@ -35,6 +36,10 @@ export default function ButtonEditModule({ onClose }) {
             const newPoints = points.filter((_, i) => i !== index);
             setPoints(newPoints);
         }
+    };
+
+    const toggleSwitch = () => {
+        setIsSwitchOn(!isSwitchOn);
     };
 
     return (
@@ -150,20 +155,39 @@ export default function ButtonEditModule({ onClose }) {
                     />
                 </div>
 
-                {/* Tombol Simpan */}
-                <div className="mt-4 text-right">
-                    <button
-                        onClick={onClose}
-                        className="px-6 py-2 bg-gray-300 text-darkBrown font-semibold rounded-md shadow hover:bg-gray-400 transition duration-300 mr-2"
-                    >
-                        Batal
-                    </button>
-                    <button
-                        onClick={handleSave}
-                        className="px-6 py-2 bg-deepForestGreen text-white font-semibold rounded-md shadow hover:bg-darkGreen transition duration-300"
-                    >
-                        Simpan
-                    </button>
+                <div className="flex justify-between">
+                    {/* switch isEnglish */}
+                    <div className="flex items-center gap-2">
+                        <label className="text-sm font-medium text-gray-700">
+                            isEnglish
+                        </label>
+                        <div
+                            onClick={toggleSwitch}
+                            className={`w-10 h-5 flex items-center rounded-full p-1 cursor-pointer transition ${isSwitchOn ? "bg-deepForestGreen" : "bg-fireRed"
+                                }`}
+                        >
+                            <div
+                                className={`w-4 h-4 bg-white rounded-full shadow-md transform transition ${isSwitchOn ? "translate-x-5" : "translate-x-0"
+                                    }`}
+                            />
+                        </div>
+                    </div>
+
+                    {/* Tombol Simpan */}
+                    <div className="mt-4 text-right">
+                        <button
+                            onClick={onClose}
+                            className="px-6 py-2 bg-gray-300 text-darkBrown font-semibold rounded-md shadow hover:bg-gray-400 transition duration-300 mr-2"
+                        >
+                            Batal
+                        </button>
+                        <button
+                            onClick={handleSave}
+                            className="px-6 py-2 bg-deepForestGreen text-white font-semibold rounded-md shadow hover:bg-darkGreen transition duration-300"
+                        >
+                            Simpan
+                        </button>
+                    </div>
                 </div>
             </div>
 
