@@ -7,13 +7,14 @@ import Vector from '@/Components/ComponentsPraktikans/Vector';
 export default function RegistPage() {
     const { ziggy } = usePage().props;  
 
-    const currentMode = new URL(ziggy.location).searchParams.get('mode') || 'praktikan'; 
-    const [mode, setMode] = useState(currentMode);
-    console.log("Ziggy location changed:", ziggy.location);  
+    const [mode, setMode] = useState();
 
     useEffect(() => {
+        const currentMode = ziggy?.location
+            ? new URL(ziggy.location).searchParams.get('mode') || 'praktikan'
+            : 'praktikan';
         setMode(currentMode);
-    }, [ziggy.location]); 
+    }, [ziggy?.location]);
 
     return (
         <>

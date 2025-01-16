@@ -8,8 +8,7 @@ import ButtonGroup from '@/Components/ComponentsPraktikans/ButtonGroup';
 export default function LoginPage() {
     const { ziggy } = usePage().props; 
     
-    const currentMode = new URL(ziggy.location).searchParams.get('mode') || 'praktikan'; 
-    const [mode, setMode] = useState(currentMode);
+    const [mode, setMode] = useState();
 
     useEffect(() => {
         const currentMode = ziggy?.location
