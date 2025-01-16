@@ -87,7 +87,7 @@ export default function AssisstantNav({ openSendAnnouncement }) {
                             <li>
                                 <a href="/module" className="flex py-3 px-5 hover:bg-darkGreen">
                                     <img className="w-6" src={moduleIcon} alt="moduleIcon" />
-                                    <span className="self-center text-sm ml-3">Module</span>
+                                    <span className="self-center text-sm ml-3">Modul</span>
                                 </a>
                             </li>
 

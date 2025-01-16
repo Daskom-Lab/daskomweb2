@@ -83,9 +83,9 @@ Route::get('/praktikum', function () {
     return Inertia::render('PagesAssistants/StartPraktikum');
 })->name('praktikum');
 
-// Route::get('/module', function () {
-//     return Inertia::render('PagesAssistants/ModulePraktikum');
-// })->name('module');
+Route::get('/module', function () {
+    return Inertia::render('PagesAssistants/ModulePraktikum');
+})->name('module');
 
 Route::get('/soal', function () {
     return Inertia::render('PagesAssistants/SoalPraktikum');
