@@ -9,6 +9,14 @@ Route::get('/', function () {
     return Inertia::render('LandingPage');
 })->name('landing');
 
+Route::get('/login', function () {
+    return Inertia::render('LoginPage');
+})->name('login');
+
+Route::get('/register', function () {
+    return Inertia::render('RegistPage');
+})->name('register');
+
 Route::get('/contact', function () {
     return Inertia::render('PagesPraktikan/ContactPage');
 })->name('contact');
@@ -28,7 +36,6 @@ Route::prefix('praktikan')->group(function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
 });
-
 
 // route for assiatant
 Route::get('/assistant', function () {
@@ -90,5 +97,27 @@ Route::get('/module', function () {
 Route::get('/soal', function () {
     return Inertia::render('PagesAssistants/SoalPraktikum');
 })->name('soal');
+
+// route for praktikan
+Route::get('/praktikan', function () {
+    return Inertia::render('PagesPraktikan/ProfilePraktikan');
+})->name('praktikan');
+
+Route::get('/praktikum', function () {
+    return Inertia::render('PagesPraktikan/ModulePage');
+})->name('praktikum');
+
+Route::get('/score-praktikan', function () {
+    return Inertia::render('PagesPraktikan/ScorePraktikan');
+})->name('score-praktikan');
+
+Route::get('/leaderboard-praktikan', function () {
+    return Inertia::render('PagesPraktikan/LeaderboardPraktikan');
+})->name('leaderboard-praktikan');
+
+Route::get('/contact-assistant', function () {
+    return Inertia::render('PagesPraktikan/ContactAssistant');
+})->name('contact-assistant');
+
 
 require __DIR__.'/auth.php';
