@@ -1,12 +1,15 @@
 import { useState } from "react";
 import ButtonEditStartPraktikum from "./ModalEditStartPraktikum";
+import ModalLaporanPraktikum from "./SendLaporanPraktikum";
 import editIcon from "../../../assets/nav/Icon-Edit.svg";
+import laporanIcon from "../../../assets/nav/Icon-Laporan.svg";
 import rankingIcon from "../../../assets/nav/Icon-Ranking.svg";
 import pollingIcon from "../../../assets/nav/Icon-Polling.svg";
 import plottingIcon from "../../../assets/nav/Icon-Plotting.svg";
 
 export default function TabelStartPraktikum() {
     const [isModalOpenEdit, setIsModalOpenEdit] = useState(false);
+    const [isModalOpenSend, setIsModalOpenSend] = useState(false);
     const [openIndex, setOpenIndex] = useState(null);
 
     const handleOpenModalEdit = () => {
@@ -15,6 +18,14 @@ export default function TabelStartPraktikum() {
 
     const handleCloseModalEdit = () => {
         setIsModalOpenEdit(false);
+    };
+
+    const handleOpenModalSend = () => {
+        setIsModalOpenSend(true);
+    };
+
+    const handleCloseModalSend = () => {
+        setIsModalOpenSend(false);
     };
 
     const toggleAccordion = (index) => {
@@ -213,13 +224,20 @@ export default function TabelStartPraktikum() {
 
 
                                     {/* Tombol Edit */}
-                                    <span className="flex justify-end pr-3">
+                                    <span className="flex space-x-3 justify-end pr-3">
                                         <button
                                             onClick={handleOpenModalEdit}
                                             className="flex justify-center items-center p-2 text-darkBrown font-semibold hover:underline transition-all"
                                         >
                                             <img className="w-5" src={editIcon} alt="edit icon" />
                                             Edit
+                                        </button>
+                                        <button
+                                            onClick={handleOpenModalSend}
+                                            className="flex gap-1 justify-center items-center text-deepForestGreen font-semibold hover:underline transition-all"
+                                        >
+                                            <img className="w-6 bg-deepForestGreen rounded-full p-1" src={laporanIcon} alt="edit icon" />
+                                            Done
                                         </button>
                                     </span>
                                 </div>
@@ -233,6 +251,9 @@ export default function TabelStartPraktikum() {
             {/* modal */}
             {isModalOpenEdit && (
                 <ButtonEditStartPraktikum onClose={handleCloseModalEdit} />
+            )}
+            {isModalOpenSend && (
+                <ModalLaporanPraktikum onClose={handleCloseModalSend} />
             )}
         </div>
     );
