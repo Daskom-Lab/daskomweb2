@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from "@inertiajs/react";
 import profileIcon from "../../../assets/nav/Icon-Profile.svg";
 import praktikumIcon from "../../../assets/nav/Icon-Praktikum.svg";
 import nilaiIcon from "../../../assets/nav/Icon-Nilai.svg";
@@ -92,7 +93,7 @@ export default function PraktikanNav() {
                 <div className="flex-grow flex flex-col justify-center py-16">
                     <ul className="py-5">
                         <li>
-                            <a
+                            <Link
                                 href="/praktikan"
                                 className="flex py-3 px-3 hover:bg-darkGreen items-center"
                             >
@@ -112,10 +113,10 @@ export default function PraktikanNav() {
                                 >
                                     Profile
                                 </span>
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a
+                            <Link
                                 href="/praktikum"
                                 className="flex py-3 px-3 hover:bg-darkGreen items-center"
                             >
@@ -135,10 +136,10 @@ export default function PraktikanNav() {
                                 >
                                     Praktikum
                                 </span>
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a
+                            <Link
                                 href="/score-praktikan"
                                 className="flex py-3 px-3 hover:bg-darkGreen items-center"
                             >
@@ -158,10 +159,10 @@ export default function PraktikanNav() {
                                 >
                                     Nilai
                                 </span>
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a
+                            <Link
                                 href="/leaderboard-praktikan"
                                 className="flex py-3 px-3 hover:bg-darkGreen items-center"
                             >
@@ -181,10 +182,10 @@ export default function PraktikanNav() {
                                 >
                                     Leaderboard
                                 </span>
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a
+                            <Link
                                 href="/contact-assistant"
                                 className="flex py-3 px-3 hover:bg-darkGreen items-center"
                             >
@@ -204,10 +205,10 @@ export default function PraktikanNav() {
                                 >
                                     Asisten
                                 </span>
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a
+                            <Link
                                 href="/polling-assistant"
                                 className="flex py-3 px-3 hover:bg-darkGreen items-center"
                             >
@@ -227,10 +228,10 @@ export default function PraktikanNav() {
                                 >
                                     Polling
                                 </span>
-                            </a>
+                            </Link>
                         </li>
                         <li>
-                            <a
+                            <Link
                                 className="flex py-3 px-3 hover:bg-darkGreen items-center cursor-pointer"
                                 onClick={handleOpenModal}
                             >
@@ -250,7 +251,7 @@ export default function PraktikanNav() {
                                 >
                                     Change Password
                                 </span>
-                            </a>
+                            </Link>
                         </li>
                         {isModalOpen && !isChangePassSuccess && !isChangePassFailed && (
                             <Modal isOpen={isModalOpen} onClose={closeModal} width="w-[370px]">
@@ -282,7 +283,7 @@ export default function PraktikanNav() {
                             </Modal>
                         )}
                         <li>
-                            <a
+                            <Link
                                 className="flex py-3 px-3 hover:bg-darkGreen items-center cursor-pointer"
                                 onClick={handleOpenLogoutModal}
                             >
@@ -302,7 +303,7 @@ export default function PraktikanNav() {
                                 >
                                     Logout
                                 </span>
-                            </a>
+                            </Link>
                         </li>
                         {isLogoutModalOpen && (
                             <Modal isOpen={isLogoutModalOpen} onClose={closeLogoutModal} width="w-[370px]">

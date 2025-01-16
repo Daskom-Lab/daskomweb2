@@ -9,15 +9,13 @@ Route::get('/', function () {
     return Inertia::render('LandingPage');
 })->name('landing');
 
-Route::get('login', [AuthenticatedSessionController::class, 'create'])
-    ->name('login');
+Route::get('/login', function () {
+    return Inertia::render('LoginPage');
+})->name('login');
 
-Route::get('/regist', function () {
+Route::get('/register', function () {
     return Inertia::render('RegistPage');
-})->name('regist');
-
-Route::get('/register', [RegisteredUserController::class, 'store'])
-    ->name('register');
+})->name('register');
 
 Route::get('/contact', function () {
     return Inertia::render('PagesPraktikan/ContactPage');
@@ -93,7 +91,7 @@ Route::get('/praktikum', function () {
 })->name('praktikum');
 
 Route::get('/module', function () {
-    return Inertia::render('PagesAssistants/ModulePraktikum.jsx');
+    return Inertia::render('PagesAssistants/ModulePraktikum');
 })->name('module');
 
 // route for praktikan

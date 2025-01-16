@@ -1,17 +1,27 @@
 import { Head, usePage } from '@inertiajs/react';
+import { useEffect, useState } from 'react';
 import LoginFormPraktikan from '@/Components/ComponentsPraktikans/LoginFormPraktikan';
 import LoginFormAssistant from '@/Components/ComponentsAssistants/LoginFormAssistant';
 import Vector from '@/Components/ComponentsPraktikans/Vector';
 import ButtonGroup from '@/Components/ComponentsPraktikans/ButtonGroup';
 
 export default function LoginPage() {
-    const { url } = usePage();
-    const mode = new URLSearchParams(url.split('?')[1]).get('mode') || 'praktikan'; 
+    const { ziggy } = usePage().props; 
+    
+    const currentMode = new URL(ziggy.location).searchParams.get('mode') || 'praktikan'; 
+    const [mode, setMode] = useState(currentMode);
+
+    useEffect(() => {
+        const currentMode = ziggy?.location
+            ? new URL(ziggy.location).searchParams.get('mode') || 'praktikan'
+            : 'praktikan';
+        setMode(currentMode);
+    }, [ziggy?.location]);
 
     return (
         <>
             <Head title={mode === 'praktikan' ? "Login - Praktikan" : "Login - Asisten"} />
-            
+
             <div className="bg-lightGainsboro flex items-center mt-14 mx-auto rounded-lg shadow-xl max-w-4xl p-5">
                 {mode === 'praktikan' ? (
                     <LoginFormPraktikan mode={mode} />

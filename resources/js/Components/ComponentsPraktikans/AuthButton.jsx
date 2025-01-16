@@ -30,7 +30,7 @@ export default function AuthButton({ order, openModal, mode }) {
                 </button>
             </Link>
             <Separator />
-            <Link href={`/regist?mode=${mode}`}>
+            <Link href={`/register?mode=${mode}`}>
                 <button className="w-full mt-1 p-1 bg-deepForestGreen text-lg text-white font-bold rounded-sm mb-3 hover:bg-deepForestGreenDark duration-300">
                     Daftar
                 </button>
