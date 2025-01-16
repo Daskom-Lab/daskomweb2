@@ -1,16 +1,12 @@
 import { useState } from "react";
-import ButtonEditModule from "./ModalEditModule";
-import ButtonDeleteModule from "./ButtonDelateModule";
+import ButtonEditStartPraktikum from "./ModalEditStartPraktikum";
 import editIcon from "../../../assets/nav/Icon-Edit.svg";
-import trashIcon from "../../../assets/nav/Icon-Delete.svg";
 import rankingIcon from "../../../assets/nav/Icon-Ranking.svg";
 import pollingIcon from "../../../assets/nav/Icon-Polling.svg";
 import plottingIcon from "../../../assets/nav/Icon-Plotting.svg";
 
-export default function TabelModulePraktikum() {
+export default function TabelStartPraktikum() {
     const [isModalOpenEdit, setIsModalOpenEdit] = useState(false);
-    const [isModalOpenDelete, setIsModalOpenDelete] = useState(false);
-    const [message, setMessage] = useState("");
     const [openIndex, setOpenIndex] = useState(null);
 
     const handleOpenModalEdit = () => {
@@ -19,18 +15,6 @@ export default function TabelModulePraktikum() {
 
     const handleCloseModalEdit = () => {
         setIsModalOpenEdit(false);
-    };
-
-    const handleOpenModalDelete = () => {
-        setIsModalOpenDelete(true);
-    };
-
-    const handleCloseModalDelete = () => {
-        setIsModalOpenDelete(false);
-    };
-
-    const handleConfirmDelete = () => {
-        setMessage("Modul berhasil dihapus");
     };
 
     const toggleAccordion = (index) => {
@@ -196,17 +180,40 @@ export default function TabelModulePraktikum() {
                                         </span>
                                     </div>
 
-                                    <span className="flex justify-end pr-3">
-                                        {/* Tombol Hapus */}
-                                        <button
-                                            onClick={handleOpenModalDelete}
-                                            className="flex justify-center items-center p-2 text-fireRed font-semibold hover:underline transition-all"
-                                        >
-                                            <img className="w-5" src={trashIcon} alt="delete icon" />
-                                            Delete
-                                        </button>
+                                    <div className="overflow-x-auto mt-4 mb-2">
+                                        <table className="table-auto w-auto text-left">
+                                            <tbody>
+                                                <tr>
+                                                    <td className="px-4 py-1 text-black font-medium">Tes Awal</td>
+                                                    <td className="px-4 py-1 text-darkGreen font-medium">17/08/2024, 18.00</td>
+                                                    <td className="px-4 py-1 text-darkGreen font-medium">-</td>
+                                                    <td className="px-4 py-1 text-darkGreen font-medium">21/08/2024, 18.00</td>
+                                                </tr>
+                                                <tr>
+                                                    <td className="px-4 py-1 text-black font-medium">Jurnal</td>
+                                                    <td className="px-4 py-1 text-darkGreen font-medium">17/08/2024, 18.00</td>
+                                                    <td className="px-4 py-1 text-darkGreen font-medium">-</td>
+                                                    <td className="px-4 py-1 text-darkGreen font-medium">21/08/2024, 18.00</td>
+                                                </tr>
+                                                <tr>
+                                                    <td className="px-4 py-1 text-black font-medium">Mandiri</td>
+                                                    <td className="px-4 py-1 text-darkGreen font-medium">17/08/2024, 18.00</td>
+                                                    <td className="px-4 py-1 text-darkGreen font-medium">-</td>
+                                                    <td className="px-4 py-1 text-darkGreen font-medium">21/08/2024, 18.00</td>
+                                                </tr>
+                                                <tr>
+                                                    <td className="px-4 py-1 text-black font-medium">Tes Keterampilan</td>
+                                                    <td className="px-4 py-1 text-darkGreen font-medium">17/08/2024, 18.00</td>
+                                                    <td className="px-4 py-1 text-darkGreen font-medium">-</td>
+                                                    <td className="px-4 py-1 text-darkGreen font-medium">21/08/2024, 18.00</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
 
-                                        {/* Tombol Edit */}
+
+                                    {/* Tombol Edit */}
+                                    <span className="flex justify-end pr-3">
                                         <button
                                             onClick={handleOpenModalEdit}
                                             className="flex justify-center items-center p-2 text-darkBrown font-semibold hover:underline transition-all"
@@ -224,11 +231,8 @@ export default function TabelModulePraktikum() {
             </div>
 
             {/* modal */}
-            {isModalOpenDelete && ( <ButtonDeleteModule onClose={handleCloseModalDelete} onConfirm={handleConfirmDelete} message={message}/>
-            )}
-
             {isModalOpenEdit && (
-                <ButtonEditModule onClose={handleCloseModalEdit} />
+                <ButtonEditStartPraktikum onClose={handleCloseModalEdit} />
             )}
         </div>
     );
