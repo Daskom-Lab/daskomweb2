@@ -2,6 +2,7 @@ import { useState } from "react";
 
 export default function ModalEditPlotting({ onClose }) {
     const [showSuccessModal, setShowSuccessModal] = useState(false);
+    const [isSwitchOn, setIsSwitchOn] = useState(false);
 
     const handleSave = () => {
         setShowSuccessModal(true);
@@ -9,7 +10,11 @@ export default function ModalEditPlotting({ onClose }) {
         setTimeout(() => {
             setShowSuccessModal(false);
             onClose();
-        }, 3000); 
+        }, 3000);
+    };
+
+    const toggleSwitch = () => {
+        setIsSwitchOn(!isSwitchOn);
     };
 
     return (
@@ -112,6 +117,23 @@ export default function ModalEditPlotting({ onClose }) {
                     >
                         Simpan
                     </button>
+                </div>
+
+                {/* Switch On/Off */}
+                <div className="absolute bottom-4 left-4 flex items-center gap-2">
+                    <label className="text-sm font-medium text-gray-700">
+                        isEnglish
+                    </label>
+                    <div
+                        onClick={toggleSwitch}
+                        className={`w-10 h-5 flex items-center rounded-full p-1 cursor-pointer transition ${isSwitchOn ? "bg-deepForestGreen" : "bg-fireRed"
+                            }`}
+                    >
+                        <div
+                            className={`w-4 h-4 bg-white rounded-full shadow-md transform transition ${isSwitchOn ? "translate-x-5" : "translate-x-0"
+                                }`}
+                        />
+                    </div>
                 </div>
             </div>
 

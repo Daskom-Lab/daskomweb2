@@ -8,7 +8,7 @@ export default function ButtonAddRole({ onClose }) {
     };
 
     const handleSave = () => {
-        // Tampilkan notifikasi simpan berhasil
+        //  notifikasi simpan berhasil
         setShowSuccessModal(true);
 
         setTimeout(() => {
@@ -54,6 +54,7 @@ export default function ButtonAddRole({ onClose }) {
                         "Fitur Aslab (Software & Koordas)",
                         "Fitur Aslab (Regular)",
                         "Fitur Asprak (ATC)",
+                        "Fitur Asprak (RDC)",
                         "Fitur Asprak (Default)",
                     ].map((permission, index) => (
                         <div

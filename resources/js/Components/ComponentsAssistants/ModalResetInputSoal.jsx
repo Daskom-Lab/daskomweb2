@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function ButtonResetPelanggaran({ onClose }) {
+export default function ButtonResetInputSoal({ onClose }) {
     const [showSuccessModal, setShowSuccessModal] = useState(false);
 
     const handleSave = () => {
@@ -33,7 +33,7 @@ export default function ButtonResetPelanggaran({ onClose }) {
                     {/* Deskripsi Reset Modal */}
                     <div className="text-center mb-6">
                         <p className="text-black">
-                            Semua data pelanggaran assiten akan dihapus dan dikembalikan ke kondisi awal.
+                            Semua data soal praktikum akan dihapus dan dikembalikan ke kondisi awal.
                             Apakah Anda yakin ingin mereset data?
                         </p>
                     </div>

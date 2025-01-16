@@ -94,6 +94,10 @@ Route::get('/module', function () {
     return Inertia::render('PagesAssistants/ModulePraktikum');
 })->name('module');
 
+Route::get('/soal', function () {
+    return Inertia::render('PagesAssistants/SoalPraktikum');
+})->name('soal');
+
 // route for praktikan
 Route::get('/praktikan', function () {
     return Inertia::render('PagesPraktikan/ProfilePraktikan');
@@ -114,5 +118,6 @@ Route::get('/leaderboard-praktikan', function () {
 Route::get('/contact-assistant', function () {
     return Inertia::render('PagesPraktikan/ContactAssistant');
 })->name('contact-assistant');
+
 
 require __DIR__.'/auth.php';

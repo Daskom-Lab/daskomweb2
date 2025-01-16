@@ -16,7 +16,7 @@ export default function CardAssistant() {
             <div className="flex justify-center items-center">
                 <div className="bg-softIvory w-[450px] h-[500px] p-4 rounded-lg shadow-lg shadow-deepForestGreen text-center">
                     {/* Edit Button */}
-                    <div className="flex justify-end items-center space-x-2">
+                    <div className="flex justify-end items-center">
                         <img
                             className="w-6"
                             src={editIcon}

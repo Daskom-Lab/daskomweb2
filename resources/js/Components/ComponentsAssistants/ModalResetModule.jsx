@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function ButtonResetPolling({ onClose }) {
+export default function ButtonResetModule({ onClose }) {
     const [showSuccessModal, setShowSuccessModal] = useState(false);
 
     const handleSave = () => {
@@ -33,7 +33,7 @@ export default function ButtonResetPolling({ onClose }) {
                     {/* Deskripsi Reset Modal */}
                     <div className="text-center mb-6">
                         <p className="text-black">
-                            Semua data polling assiten akan dihapus dan dikembalikan ke kondisi awal.
+                            Semua data module praktikum akan dihapus dan dikembalikan ke kondisi awal.
                             Apakah Anda yakin ingin mereset data?
                         </p>
                     </div>
