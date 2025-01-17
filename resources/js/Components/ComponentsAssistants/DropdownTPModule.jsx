@@ -1,4 +1,4 @@
-export default function DropdownTPModul({ program }) {
+export default function DropdownTPModule({ program }) {
     // Modul berdasarkan klas
     const regulerModul = ["Modul 1", "Modul 2", "Modul 3"];
     const interModul = ["Modul A", "Modul B", "Modul C"];

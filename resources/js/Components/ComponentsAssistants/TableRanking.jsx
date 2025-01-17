@@ -1,49 +1,37 @@
 export default function TableRanking() {
   return (
     <div className="mt-5">
-      {/* Kontainer scroll */}
-      <div className="overflow-x-auto">
-        <div className="max-h-[400px] overflow-y-auto border border-forestGreen rounded-md">
-          <table className="min-w-full table-auto border-collapse">
-            <thead>
-              <tr className="bg-deepForestGreen text-md text-center text-white">
-                <th className="py-2 px-7 border-b">Ranking</th>
-                <th className="py-2 px-7 border-b">Nama</th>
-                <th className="py-2 px-7 border-b">NIM</th>
-                <th className="py-2 px-7 border-b">Nilai</th>
-              </tr>
-            </thead>
-            <tbody className="bg-softIvory">
-              <tr className="text-darkBrown">
-                <td className="py-2 px-4 border-b text-center">1</td>
-                <td className="py-2 px-4 border-b">John Doe</td>
-                <td className="py-2 px-4 border-b text-center">1101223083</td>
-                <td className="py-2 px-4 border-b text-center">95</td>
-              </tr>
-              <tr className="text-darkBrown">
-                <td className="py-2 px-4 border-b text-center">2</td>
-                <td className="py-2 px-4 border-b">Jane Smith</td>
-                <td className="py-2 px-4 border-b text-center">1101223089</td>
-                <td className="py-2 px-4 border-b text-center">88</td>
-              </tr>
-              <tr className="text-darkBrown">
-                <td className="py-2 px-4 border-b text-center">3</td>
-                <td className="py-2 px-4 border-b">Mark Johnson</td>
-                <td className="py-2 px-4 border-b text-center">1101223079</td>
-                <td className="py-2 px-4 border-b text-center">85</td>
-              </tr>
-             
-              {Array.from({ length: 10 }).map((_, index) => (
-                <tr key={index} className="text-darkBrown">
-                  <td className="py-2 px-4 border-b text-center">{index + 4}</td>
-                  <td className="py-2 px-4 border-b">Nama {index + 4}</td>
-                  <td className="py-2 px-4 border-b text-center">11012230{70 + index}</td>
-                  <td className="py-2 px-4 border-b text-center">{80 - index}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      {/* Header dengan div */}
+      <div className="bg-deepForestGreen rounded-lg py-2 px-2 mb-2">
+        <div className="grid grid-cols-4 gap-1">
+          <div className="bg-deepForestGreen hover:bg-darkOliveGreen rounded-lg p-1">
+            <h1 className="font-bold text-white text-center">Rank</h1>
+          </div>
+          <div className="bg-deepForestGreen hover:bg-darkOliveGreen rounded-lg p-1">
+            <h1 className="font-bold text-white text-center">Nama</h1>
+          </div>
+          <div className="bg-deepForestGreen hover:bg-darkOliveGreen rounded-lg p-1">
+            <h1 className="font-bold text-white text-center">NIM</h1>
+          </div>
+          <div className="bg-deepForestGreen hover:bg-darkOliveGreen rounded-lg p-1">
+            <h1 className="font-bold text-white text-center">Nilai</h1>
+          </div>
         </div>
+      </div>
+
+      {/* Kontainer untuk tabel scrollable */}
+      <div className="overflow-x-auto max-h-96">
+        {[...Array(10)].map((_, index) => (
+          <div
+            key={index}
+            className="grid grid-cols-4 gap-1 bg-white border border-forestGreen py-1 px-2 mb-2 rounded-lg"
+          >
+            <div className="flex items-center justify-center h-full py-1 px-2 ">{index + 1}</div>
+            <div className="flex items-center justify-center h-full py-1 px-2">Aliza Nurfitrian M</div>
+            <div className="flex items-center justify-center h-full py-1 px-2">1101223083{index + 1}</div>
+            <div className="flex items-center justify-center h-full py-1 px-2">95</div>
+          </div>
+        ))}
       </div>
     </div>
   );

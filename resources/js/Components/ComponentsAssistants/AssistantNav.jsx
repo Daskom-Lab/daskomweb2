@@ -3,6 +3,7 @@ import ModalPasswordAssistant from './ModalPasswordAssistant';
 import ModalLogout from './ModalLogout';
 import ModalKonfigurasi from './ModalKonfigurasi';
 import ModalOpenKJ from './ModalOpenKJ';
+import ModalActiveTP from "./ModalActiveTP";
 
 import profileIcon from "../../../assets/nav/Icon-Profile.svg";
 import praktikumIcon from "../../../assets/nav/Icon-Praktikum.svg";
@@ -22,12 +23,14 @@ import changePassIcon from "../../../assets/nav/Icon-GantiPassword.svg";
 import logoutIcon from "../../../assets/nav/Icon-Logout.svg";
 import jawabanTP from "../../../assets/nav/Icon-Rating.svg"
 import moduleIcon from "../../../assets/nav/Icon-Module.svg"
+import tpModuleIcon from "../../../assets/nav/Icon-TP.svg"
 
 export default function AssisstantNav({ openSendAnnouncement }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [showLogoutModal, setShowLogoutModal] = useState(false);
     const [showConfigModal, setShowConfigModal] = useState(false);
     const [showOpenKJ, setShowOpenKJ] = useState(false);
+    const [showOpenTP, setShowOpenTP] = useState(false);
 
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
@@ -40,6 +43,9 @@ export default function AssisstantNav({ openSendAnnouncement }) {
 
     const openOpenKJModal = () => setShowOpenKJ(true);
     const closeOpenKJModal = () => setShowOpenKJ(false);
+
+    const openOpenTPModal = () => setShowOpenTP(true);
+    const closeOpenTPModal = () => setShowOpenTP(false);
 
     const handleLogoutConfirm = () => {
         closeLogoutModal();
@@ -59,7 +65,7 @@ export default function AssisstantNav({ openSendAnnouncement }) {
                                 </a>
                             </li>
                             <li>
-                                <a href="/praktikum" className="flex py-3 px-5 hover:bg-darkGreen">
+                                <a href="/start-praktikum" className="flex py-3 px-5 hover:bg-darkGreen">
                                     <img className="w-6" src={praktikumIcon} alt="praktikum" />
                                     <span className="self-center text-sm ml-3">Praktikum</span>
                                 </a>
@@ -87,13 +93,13 @@ export default function AssisstantNav({ openSendAnnouncement }) {
                             <li>
                                 <a href="/module" className="flex py-3 px-5 hover:bg-darkGreen">
                                     <img className="w-6" src={moduleIcon} alt="moduleIcon" />
-                                    <span className="self-center text-sm ml-3">Module</span>
+                                    <span className="self-center text-sm ml-3">Modul</span>
                                 </a>
                             </li>
 
                             {/* Bagian Soal, Ranking, dan Polling */}
                             <li>
-                                <a href="" className="flex py-3 px-5 hover:bg-darkGreen">
+                                <a href="/soal" className="flex py-3 px-5 hover:bg-darkGreen">
                                     <img className="w-6" src={inputSoalIcon} alt="input soal" />
                                     <span className="self-center text-sm ml-3">Input Soal</span>
                                 </a>
@@ -133,12 +139,6 @@ export default function AssisstantNav({ openSendAnnouncement }) {
 
                             {/* Bagian Kunci Jawaban, manage role dan Konfigurasi */}
                             <li>
-                                <a onClick={openOpenKJModal} className="flex py-3 px-5 hover:bg-darkGreen">
-                                    <img className="w-6" src={announcementIcon} alt="open-jawaban" />
-                                    <span className="self-center text-sm ml-3">Open Kunci Jawaban</span>
-                                </a>
-                            </li>
-                            <li>
                                 <a href="/manage-role" className="flex py-3 px-5 hover:bg-darkGreen">
                                     <img className="w-6" src={praktikanIcon} alt="manage role" />
                                     <span className="self-center text-sm ml-3">Manage Role</span>
@@ -148,6 +148,18 @@ export default function AssisstantNav({ openSendAnnouncement }) {
                                 <a href="/lihat-tp" className="flex py-3 px-5 hover:bg-darkGreen">
                                     <img className="w-6" src={jawabanTP} alt="lihat tp" />
                                     <span className="self-center text-sm ml-3">Lihat TP</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a onClick={openOpenKJModal} className="flex py-3 px-5 hover:bg-darkGreen">
+                                    <img className="w-6" src={announcementIcon} alt="open-jawaban" />
+                                    <span className="self-center text-sm ml-3">Open Jawaban</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a onClick={openOpenTPModal} className="flex py-3 px-5 hover:bg-darkGreen cursor-pointer">
+                                    <img className="w-6" src={tpModuleIcon} alt="konfigurasi" />
+                                    <span className="self-center text-sm ml-3">Tugas Pendahuluan</span>
                                 </a>
                             </li>
                             <li>
@@ -184,6 +196,7 @@ export default function AssisstantNav({ openSendAnnouncement }) {
             )}
             {showConfigModal && <ModalKonfigurasi onClose={closeConfigModal} />}
             {showOpenKJ && <ModalOpenKJ onClose={closeOpenKJModal} />}
+            {showOpenTP && <ModalActiveTP onClose={closeOpenTPModal} />}
         </>
     );
 }

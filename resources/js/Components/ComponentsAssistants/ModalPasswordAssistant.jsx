@@ -1,22 +1,31 @@
 import { useState } from "react";
+import closeIcon from "../../../assets/modal/iconClose.svg";
+import failedIcon from "../../../assets/modal/failedSymbol.png"
 
 export default function ModalPasswordAssistant({ onClose }) {
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [isSuccess, setIsSuccess] = useState(false); 
+    const [isSuccess, setIsSuccess] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const handleChangePassword = () => {
-        if (newPassword !== confirmPassword) {
-            alert('Passwords do not match');
+        if (!newPassword || !confirmPassword) {
+            setErrorMessage('Semua kolom harus diisi.');
+        } else if (newPassword !== confirmPassword) {
+            setErrorMessage('Password tidak cocok.');
         } else {
-            console.log('Password changed successfully');
-            setIsSuccess(true); // Menampilkan modal sukses
+            setErrorMessage('');
+            setIsSuccess(true);
         }
     };
 
     const closeSuccessModal = () => {
-        setIsSuccess(false); // Menutup modal sukses
-        onClose(); // Menutup modal utama
+        setIsSuccess(false);
+        onClose();
+    };
+
+    const closeErrorModal = () => {
+        setErrorMessage('');
     };
 
     return (
@@ -27,9 +36,9 @@ export default function ModalPasswordAssistant({ onClose }) {
                     {/* Tombol X untuk tutup */}
                     <button
                         onClick={onClose}
-                        className="absolute top-2 right-2 text-2xl font-bold text-white bg-rustyRed hover:bg-softRed rounded-md w-7 h-7 flex justify-center items-center"
+                        className="absolute top-2 right-2 flex justify-center items-center"
                     >
-                        ×
+                        <img className="w-9" src={closeIcon} alt="closeIcon" />
                     </button>
 
                     <h2 className="text-3xl font-bold text-center mt-4 mb-9">Ganti Password</h2>
@@ -38,7 +47,7 @@ export default function ModalPasswordAssistant({ onClose }) {
                     <div className="mb-4">
                         <input
                             type="password"
-                            placeholder='Password Baru'
+                            placeholder="Password Baru"
                             value={newPassword}
                             onChange={(e) => setNewPassword(e.target.value)}
                             className="w-full p-2 border border-gray-300 rounded"
@@ -48,7 +57,7 @@ export default function ModalPasswordAssistant({ onClose }) {
                     <div className="mb-4">
                         <input
                             type="password"
-                            placeholder='Konfirmasi Password Baru'
+                            placeholder="Konfirmasi Password Baru"
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             className="w-full p-2 border border-gray-300 rounded"
@@ -64,14 +73,26 @@ export default function ModalPasswordAssistant({ onClose }) {
                 </div>
             </div>
 
-            {/* Modal konfirmasi sukses */}
-            {isSuccess && (
+            {errorMessage && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-                    <div className="bg-white p-8 rounded shadow-lg w-[30%] text-center">
-                        <h2 className="text-2xl font-bold mb-4">Berhasil Disimpan</h2>
-                        <p className="mb-6">Password Anda telah berhasil diganti.</p>
+                    <div className="bg-softGray p-8 rounded shadow-lg w-[30%] relative flex flex-col items-center">
+                        {/* Tombol X untuk tutup */}
                         <button
-                            onClick={closeSuccessModal}
+                            onClick={closeErrorModal}
+                            className="absolute top-2 right-2 flex justify-center items-center"
+                        >
+                            <img className="w-9" src={closeIcon} alt="closeIcon" />
+                        </button>
+
+                        {/* Ikon error */}
+                        <img className="w-28 mb-4" src={failedIcon} alt="failedIcon" />
+
+                        {/* Pesan error */}
+                        <p className="text-center mb-6 text-xl font-semibold text-darkGreen">{errorMessage}</p>
+
+                        {/* Tombol OK */}
+                        <button
+                            onClick={closeErrorModal}
                             className="w-full p-2 bg-deepForestGreen text-white font-semibold rounded hover:bg-darkGreen"
                         >
                             OK
@@ -79,6 +100,25 @@ export default function ModalPasswordAssistant({ onClose }) {
                     </div>
                 </div>
             )}
+
+            {isSuccess && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+                    <div className="bg-softGray p-8 rounded shadow-lg w-[30%] relative flex flex-col items-center">
+                        {/* Tombol X untuk tutup */}
+                        <button
+                            onClick={closeSuccessModal}
+                            className="absolute top-2 right-2 flex justify-center items-center"
+                        >
+                            <img className="w-9" src={closeIcon} alt="closeIcon" />
+                        </button>
+
+                        {/* Pesan sukses */}
+                        <p className="text-center mt-4 text-xl font-semibold text-darkGreen">Password Anda telah berhasil diganti.</p>
+
+                    </div>
+                </div>
+            )}
+
         </div>
     );
 }

@@ -1,14 +1,7 @@
-import { useState } from "react";
 import DropdownPolling from "./DropdownPolling";
-import ButtonResetPolling from "./ModalResetPolling";
 import TablePolling from "./TablePolling";
 
 export default function ContentPolling() {
-    const [showModalResetPolling, setShowModalResetPolling] = useState(false);
-
-    const handleOpenModalResetPolling = () => setShowModalResetPolling(true);
-    const handleCloseModalResetPolling = () => setShowModalResetPolling(false);
-
     return (
         <section>
             {/* button praktikan - kelas */}
@@ -19,23 +12,12 @@ export default function ContentPolling() {
 
                 {/* Panggil komponen dropdown */}
                 <DropdownPolling />
-
-                {/* Button Reset Polling */}
-                <button
-                    onClick={handleOpenModalResetPolling}
-                    className="text-white text-md font-semibold px-4 py-1 rounded-md shadow-md bg-redredDark hover:bg-rustyRed transition mt-[2px]"
-                >
-                    Reset Polling
-                </button>
             </div>
 
             {/* Table data polling */}
             <div className="">
                 <TablePolling />
             </div>
-
-            {/* Modal Reset polling */}
-            {showModalResetPolling && <ButtonResetPolling onClose={handleCloseModalResetPolling} />}
         </section>
     );
 }

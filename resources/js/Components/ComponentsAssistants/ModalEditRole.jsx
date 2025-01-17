@@ -1,22 +1,23 @@
 import React, { useState } from "react";
+import closeIcon from "../../../assets/modal/iconClose.svg"
 
 export default function ModalEditRole({ onClose }) {
-    const roles = ["Aslab(SK)","Aslab(R)", "ATC", "HRD", "DDC", "MLC", "CMD", "RDC"];
-    const [selectedRole, setSelectedRole] = useState(""); 
-    const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false); 
+    const roles = ["Aslab(SK)", "Aslab(R)", "ATC", "HRD", "DDC", "MLC", "CMD", "RDC"];
+    const [selectedRole, setSelectedRole] = useState("");
+    const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
     const handleRoleChange = (event) => {
-        setSelectedRole(event.target.value); 
+        setSelectedRole(event.target.value);
     };
 
     const handleSave = () => {
         if (selectedRole) {
-            setIsSuccessModalOpen(true); 
+            setIsSuccessModalOpen(true);
 
             setTimeout(() => {
-                setIsSuccessModalOpen(false); 
-                onClose(); 
-            }, 3000); 
+                setIsSuccessModalOpen(false);
+                onClose();
+            }, 3000);
         }
     };
 
@@ -26,14 +27,14 @@ export default function ModalEditRole({ onClose }) {
             <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
                 <div className="bg-white p-6 rounded-lg shadow-xl w-[430px] text-center relative">
                     {/* Header */}
-                    <div className="flex justify-between items-center mb-6">
-                        <h2 className="text-xl text-center font-bold text-darkGreen">Upgrade Role</h2>
+                    <div className="flex justify-between items-center mb-6 border-b border-deepForestGreen">
+                        <h2 className="text-2xl text-center font-bold text-darkGreen">Upgrade Role</h2>
                         {/* Tombol X untuk tutup */}
                         <button
                             onClick={onClose}
-                            className="absolute top-2 right-2 text-2xl font-bold text-white bg-rustyRed hover:bg-softRed rounded-md w-9 h-7 flex justify-center items-center"
+                            className="absolute top-2 right-2 flex justify-center items-center"
                         >
-                            ×
+                            <img className="w-9" src={closeIcon} alt="closeIcon" />
                         </button>
                     </div>
 
