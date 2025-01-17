@@ -1,23 +1,23 @@
 import { useState } from "react";
 
-export default function FormChangePassPraktikan() {
+export default function FormLihatTP() {
     const [nim, setNim] = useState('');
-    const [newPassword, setNewPassword] = useState('');
+    const [module, setModule] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
-    const [isSuccess, setIsSuccess] = useState(false);
+    const [isSuccess, setIsSuccess] = useState(false); 
 
     const handleSubmit = () => {
-        if (!nim || !newPassword) {
+        if (!nim || !module) {
             setModalMessage('Harap isi semua kolom, jangan tertinggal!');
             setIsSuccess(false);
             setIsModalOpen(true);
             return;
         }
 
-        setModalMessage('Password Praktikan telah berhasil diganti.');
+        setModalMessage('Data praktikan berhasil ditarik');
         setIsSuccess(true);
-        setIsModalOpen(true);
+        setIsModalOpen(false); 
     };
 
     const closeModal = () => {
@@ -25,9 +25,9 @@ export default function FormChangePassPraktikan() {
     };
 
     return (
-        <div className="bg-softIvory p-6 rounded shadow-lg shadow-deepForestGreen -[750px]">
-            <h2 className="text-xl font-bold mb-6 text-start text-black">Ganti Password Praktikan</h2>
-            <div className="flex items-center gap-4">
+        <div className="bg-softIvory p-6 rounded shadow-lg shadow-deepForestGreen w-[750px]">
+            <h2 className="text-xl font-bold mb-6 text-start text-black">Lihat TP Praktikan</h2>
+            <div className="items-center gap-4 space-y-5">
                 {/* Input NIM */}
                 <div className="flex-1">
                     <label htmlFor="nim" className="block text-sm font-medium mb-2">
@@ -39,30 +39,38 @@ export default function FormChangePassPraktikan() {
                         value={nim}
                         onChange={(e) => setNim(e.target.value)}
                         placeholder="1101223083"
-                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
                     />
                 </div>
-                {/* Input Password Baru */}
+                {/* Dropdown Modul */}
                 <div className="flex-1">
-                    <label htmlFor="password" className="block text-sm font-medium mb-2">
-                        Password Baru
+                    <label htmlFor="module" className="block text-sm font-medium mb-2">
+                        Modul
                     </label>
-                    <input
-                        type="password"
-                        id="password"
-                        value={newPassword}
-                        onChange={(e) => setNewPassword(e.target.value)}
-                        placeholder="Jangan Lupa ya"
-                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    />
+                    <select
+                        id="module"
+                        value={module}
+                        onChange={(e) => setModule(e.target.value)}
+                        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+                    >
+                        <option value="" disabled>
+                            Pilih Modul
+                        </option>
+                        <option value="Modul 1">Modul 1</option>
+                        <option value="Modul 2">Modul 2</option>
+                        <option value="Modul 3">Modul 3</option>
+                        <option value="Modul 4">Modul 4</option>
+                        <option value="Modul 5">Modul 5</option>
+                        <option value="Modul 6">Modul 6</option>
+                    </select>
                 </div>
-                {/* Tombol Simpan */}
-                <div className="flex-shrink-0 mt-6">
+                {/* Tombol Tarik */}
+                <div className="flex-shrink-0 mt-6 flex justify-end">
                     <button
                         onClick={handleSubmit}
-                        className="h-10 px-6 bg-deepForestGreen text-white font-semibold rounded hover:bg-darkGreen transition duration-200"
+                        className="h-10 px-6 bg-deepForestGreen text-white font-bold rounded hover:bg-darkGreen transition duration-200"
                     >
-                        Simpan
+                        Cari
                     </button>
                 </div>
             </div>
@@ -72,7 +80,7 @@ export default function FormChangePassPraktikan() {
                 <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
                     <div className="bg-white p-8 rounded shadow-lg w-[30%]">
                         <h3 className="text-2xl font-bold mb-4 text-center">
-                            {isSuccess ? 'Berhasil Disimpan' : 'Gagal Disimpan'}
+                            {isSuccess ? 'Berhasil Ditambahkan' : 'Gagal Ditambahkan'}
                         </h3>
                         <p className="text-center text-md mt-6">{modalMessage}</p>
                         <div className="mt-6 text-center">

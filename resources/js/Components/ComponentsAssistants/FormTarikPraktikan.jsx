@@ -35,7 +35,7 @@ export default function FormTarikPraktikan() {
                         NIM
                     </label>
                     <input
-                        type="text"
+                        type="number"
                         id="nim"
                         value={nim}
                         onChange={(e) => setNim(e.target.value)}

@@ -14,7 +14,7 @@ export default function TableRanking() {
             <h1 className="font-bold text-white text-center">NIM</h1>
           </div>
           <div className="bg-deepForestGreen hover:bg-darkOliveGreen rounded-lg p-1">
-            <h1 className="font-bold text-white text-center">NIM</h1>
+            <h1 className="font-bold text-white text-center">Nilai</h1>
           </div>
         </div>
       </div>

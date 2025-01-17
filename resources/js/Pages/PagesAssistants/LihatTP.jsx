@@ -1,5 +1,5 @@
 import AssisstantNav from "@/Components/ComponentsAssistants/AssistantNav";
-import BarSearchingTP from "@/Components/ComponentsAssistants/BarSearchingTP";
+import FormLihatTP from "@/Components/ComponentsAssistants/FormLihatTP";
 import Clock from "@/Components/ComponentsAssistants/Clock";
 import ModalSoftware from "@/Components/ComponentsAssistants/ModalSoftware";
 
@@ -14,7 +14,7 @@ export default function LihatTP() {
                     </div>
                     {/* Card */}
                     <div className="flex-grow md:w-3/4 flex items-center justify-center">
-                        <BarSearchingTP />
+                        <FormLihatTP />
                     </div>
                 </div>
                 {/* Clock in top-right corner */}
