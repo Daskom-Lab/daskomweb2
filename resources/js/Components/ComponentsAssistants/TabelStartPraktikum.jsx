@@ -195,6 +195,12 @@ export default function TabelStartPraktikum() {
                                         <table className="table-auto w-auto text-left">
                                             <tbody>
                                                 <tr>
+                                                    <td className="px-4 py-1 text-black font-medium">Tugas Pendahuluan</td>
+                                                    <td className="px-4 py-1 text-darkGreen font-medium">Rabu, 18.00</td>
+                                                    <td className="px-4 py-1 text-darkGreen font-medium">-</td>
+                                                    <td className="px-4 py-1 text-darkGreen font-medium">Sabtu, 18.00</td>
+                                                </tr>
+                                                <tr>
                                                     <td className="px-4 py-1 text-black font-medium">Tes Awal</td>
                                                     <td className="px-4 py-1 text-darkGreen font-medium">17/08/2024, 18.00</td>
                                                     <td className="px-4 py-1 text-darkGreen font-medium">-</td>

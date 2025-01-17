@@ -4,7 +4,7 @@ import editIcon from "../../../assets/nav/Icon-Edit.svg"
 
 export default function ModalKonfigurasi({ onClose }) {
     const [config, setConfig] = useState({
-        startTugasPendahuluan: false,
+        tugasPendahuluan: false,
         registrasiAsisten: false,
         registrasiPraktikan: false,
         tugasBesar: false,
