@@ -1,9 +1,10 @@
 import { useState } from "react";
+import closeIcon from "../../../assets/modal/iconClose.svg"
 
 export default function ModalPasswordAssistant({ onClose }) {
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [isSuccess, setIsSuccess] = useState(false); 
+    const [isSuccess, setIsSuccess] = useState(false);
 
     const handleChangePassword = () => {
         if (newPassword !== confirmPassword) {
@@ -27,9 +28,9 @@ export default function ModalPasswordAssistant({ onClose }) {
                     {/* Tombol X untuk tutup */}
                     <button
                         onClick={onClose}
-                        className="absolute top-2 right-2 text-2xl font-bold text-white bg-rustyRed hover:bg-softRed rounded-md w-7 h-7 flex justify-center items-center"
+                        className="absolute top-2 right-2 flex justify-center items-center"
                     >
-                        ×
+                        <img className="w-9" src={closeIcon} alt="closeIcon" />
                     </button>
 
                     <h2 className="text-3xl font-bold text-center mt-4 mb-9">Ganti Password</h2>

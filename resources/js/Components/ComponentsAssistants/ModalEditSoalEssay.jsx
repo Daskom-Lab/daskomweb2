@@ -1,4 +1,5 @@
 import { useState } from "react";
+import closeIcon from "../../../assets/modal/iconClose.svg"
 
 export default function ModalEditSoalEssay({ onClose, initialSoal, onSave }) {
     const [soal, setSoal] = useState(initialSoal || "");
@@ -21,13 +22,14 @@ export default function ModalEditSoalEssay({ onClose, initialSoal, onSave }) {
             {/* Modal Utama */}
             <div className="bg-white rounded-lg p-6 w-[800px] shadow-lg relative">
                 {/* Header */}
-                <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-xl font-bold text-darkGreen">Edit Soal</h2>
+                <div className="flex justify-between items-center mb-6 border-b border-deepForestGreen">
+                    <h2 className="text-2xl font-bold text-darkGreen">Edit Soal</h2>
+                    {/* Tombol X untuk tutup */}
                     <button
                         onClick={onClose}
-                        className="absolute top-2 right-2 text-2xl font-bold text-white bg-rustyRed hover:bg-softRed rounded-md w-9 h-7 flex justify-center items-center"
-                    >
-                        ×
+                        className="absolute top-2 right-2 flex justify-center items-center"
+                    >        
+                        <img className="w-9" src={closeIcon} alt="closeIcon" />
                     </button>
                 </div>
 

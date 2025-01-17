@@ -86,9 +86,9 @@ Route::get('/nilai-praktikan', function () {
     return Inertia::render('PagesAssistants/NilaiPraktikan');
 })->name('nilai-praktikan');
 
-Route::get('/praktikum', function () {
+Route::get('/start-praktikum', function () {
     return Inertia::render('PagesAssistants/StartPraktikum');
-})->name('praktikum');
+})->name('start-praktikum');
 
 Route::get('/module', function () {
     return Inertia::render('PagesAssistants/ModulePraktikum');

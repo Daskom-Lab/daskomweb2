@@ -59,7 +59,7 @@ export default function AssisstantNav({ openSendAnnouncement }) {
                                 </a>
                             </li>
                             <li>
-                                <a href="/praktikum" className="flex py-3 px-5 hover:bg-darkGreen">
+                                <a href="/start-praktikum" className="flex py-3 px-5 hover:bg-darkGreen">
                                     <img className="w-6" src={praktikumIcon} alt="praktikum" />
                                     <span className="self-center text-sm ml-3">Praktikum</span>
                                 </a>

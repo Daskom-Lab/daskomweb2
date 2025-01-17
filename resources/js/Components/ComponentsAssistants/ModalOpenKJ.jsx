@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import closeIcon from "../../../assets/modal/iconClose.svg"
 import editIcon from "../../../assets/nav/Icon-Edit.svg"
 
 export default function ModalOpenKJ({ onClose }) {
@@ -44,7 +44,7 @@ export default function ModalOpenKJ({ onClose }) {
             <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
                 <div className="bg-white rounded-lg p-6 w-[550px] shadow-lg relative">
                     {/* Header */}
-                    <div className="flex justify-between items-center mb-4">
+                    <div className="flex justify-between items-center mb-4 border-b border-deepForestGreen">
                         <h2 className="text-xl font-semibold flex items-center gap-2">
                             <img
                                 className="w-8"
@@ -55,9 +55,9 @@ export default function ModalOpenKJ({ onClose }) {
                         {/* Tombol X untuk tutup */}
                         <button
                             onClick={onClose}
-                            className="absolute top-2 right-2 text-2xl font-bold text-white bg-rustyRed hover:bg-softRed rounded-md w-9 h-7 flex justify-center items-center"
+                            className="absolute top-2 right-2 flex justify-center items-center"
                         >
-                            ×
+                            <img className="w-9" src={closeIcon} alt="closeIcon" />
                         </button>
                     </div>
 

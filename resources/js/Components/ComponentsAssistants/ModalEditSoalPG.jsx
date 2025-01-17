@@ -1,4 +1,5 @@
 import { useState } from "react";
+import closeIcon from "../../../assets/modal/iconClose.svg"
 
 export default function ModalEditSoalPG({ soalItem, onClose, onConfirm }) {
     const [soal, setSoal] = useState(soalItem.soal);
@@ -25,13 +26,16 @@ export default function ModalEditSoalPG({ soalItem, onClose, onConfirm }) {
     return (
         <div className="modal fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
             <div className="modal-content bg-white rounded-lg p-6 w-[1000px] max-h-[90vh] shadow-lg overflow-y-auto relative">
-                <h2 className="text-xl font-bold text-darkGreen mb-4">Edit Soal</h2>
-                <button
+                <span className="border-b border-deepForestGreen">
+                    <h2 className="text-2xl font-bold text-darkGreen mb-4">Edit Soal</h2>
+                    {/* Tombol X untuk tutup */}
+                    <button
                         onClick={onClose}
-                        className="absolute top-2 right-2 text-2xl font-bold text-white bg-rustyRed hover:bg-softRed rounded-md w-9 h-7 flex justify-center items-center"
+                        className="absolute top-2 right-2 flex justify-center items-center"
                     >
-                        ×
+                        <img className="w-9" src={closeIcon} alt="closeIcon" />
                     </button>
+                </span>
                 {mode === "kode" ? (
                     <div>
                         <input
