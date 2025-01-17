@@ -63,7 +63,7 @@ export default function SoalInputPG({ tipeSoal, modul, onModalSuccess, onModalVa
         setSoal([""]);
         setPilihan(["", "", "", ""]);
         setDeskripsi(["", "", ""]);
-        setSoalCounter(soalCounter + 1); // pake increment ( 0 + 1 = 1)
+        setSoalCounter(soalCounter + 1); 
         onModalSuccess();
     };
 

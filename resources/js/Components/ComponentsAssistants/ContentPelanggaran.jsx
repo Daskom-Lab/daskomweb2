@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ButtonResetPelanggaran from "./ModalReserPelanggaran";
+import ButtonResetPelanggaran from "./ModalResetPelanggaran";
 import TablePelanggaran from "./TablePelanggaran";
 
 export default function ContentPelanggaran() {

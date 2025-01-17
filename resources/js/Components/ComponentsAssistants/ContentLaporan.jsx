@@ -1,4 +1,4 @@
-import DropdownLaporanModul from "./DropdownLaporanModul"
+import DropdownLaporanModule from "./DropdownLaporanModule"
 import TableLaporan from "./TableLaporan"
 
 export default function ContentLaporan() {
@@ -11,7 +11,7 @@ export default function ContentLaporan() {
                 </div>
 
                 {/* Panggil komponen dropdown */}
-                <DropdownLaporanModul />
+                <DropdownLaporanModule />
             </div>
 
             {/* Table data laporan */}

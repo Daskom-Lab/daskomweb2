@@ -34,7 +34,7 @@ export default function TabelModulePraktikum() {
     };
 
     const toggleAccordion = (index) => {
-        // logika accordian by flowbite
+        // accordion yang disederhanakan
         setOpenIndex(openIndex === index ? null : index);
     };
 

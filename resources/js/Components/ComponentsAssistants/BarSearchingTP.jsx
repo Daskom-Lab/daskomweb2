@@ -1,4 +1,4 @@
-import DropdownTPModul from "./DropdownTPModul";
+import DropdownTPModule from "./DropdownTPModule";
 import { FaSearch } from "react-icons/fa";
 import { useState } from "react";
 
@@ -46,7 +46,7 @@ export default function BarSearchingTP() {
                 />
 
                 {/* Dropdown Modul */}
-                <DropdownTPModul program={program} />
+                <DropdownTPModule program={program} />
             </div>
 
             {/* Search Button */}

@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function DropdownLaporanModul() {
+export default function DropdownLaporanModule() {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState("-- Pilih Laporan Modul --");
 
