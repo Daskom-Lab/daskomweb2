@@ -3,9 +3,9 @@ import ButtonEditStartPraktikum from "./ModalEditStartPraktikum";
 import ModalLaporanPraktikum from "./SendLaporanPraktikum";
 import editIcon from "../../../assets/nav/Icon-Edit.svg";
 import laporanIcon from "../../../assets/nav/Icon-Laporan.svg";
-import rankingIcon from "../../../assets/nav/Icon-Ranking.svg";
-import pollingIcon from "../../../assets/nav/Icon-Polling.svg";
-import plottingIcon from "../../../assets/nav/Icon-Plotting.svg";
+import iconPPT from "../../../assets/practicum/iconPPT.svg";
+import iconVideo from "../../../assets/practicum/iconVideo.svg";
+import iconModule from "../../../assets/practicum/iconModule.svg";
 
 export default function TabelStartPraktikum() {
     const [isModalOpenEdit, setIsModalOpenEdit] = useState(false);
@@ -153,7 +153,7 @@ export default function TabelStartPraktikum() {
                                     <div className="mt-2 mb-8">
                                         {/* link ppt */}
                                         <span className="flex items-center mt-2">
-                                            <img src={rankingIcon} alt="Icon PPT" className="w-6 h-6 p-[2px] bg-green-700 rounded-full" />
+                                            <img src={iconPPT} alt="Icon PPT" className="w-6 h-6 p-[2px] bg-green-700 rounded-full" />
                                             <a
                                                 href=""
                                                 target="_blank"
@@ -166,7 +166,7 @@ export default function TabelStartPraktikum() {
 
                                         {/* link youtube */}
                                         <span className="flex items-center mt-2">
-                                            <img src={pollingIcon} alt="Icon Video" className="w-6 h-6 p-[2px] bg-red-700 rounded-full" />
+                                            <img src={iconVideo} alt="Icon Video" className="w-6 h-6 p-[2px] bg-red-700 rounded-full" />
                                             <a
                                                 href=""
                                                 target="_blank"
@@ -179,7 +179,7 @@ export default function TabelStartPraktikum() {
 
                                         {/* link pdf module */}
                                         <span className="flex items-center mt-2">
-                                            <img src={plottingIcon} alt="Icon Module" className="w-6 h-6 p-[2px] bg-blue-700 rounded-full" />
+                                            <img src={iconModule} alt="Icon Module" className="w-6 h-6 p-[2px] bg-blue-700 rounded-full" />
                                             <a
                                                 href=""
                                                 target="_blank"
