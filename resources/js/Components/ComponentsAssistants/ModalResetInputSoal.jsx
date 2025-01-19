@@ -1,6 +1,7 @@
 import { useState } from "react";
+import closeIcon from "../../../assets/modal/iconClose.svg"
 
-export default function ButtonResetPolling({ onClose }) {
+export default function ButtonResetInputSoal({ onClose }) {
     const [showSuccessModal, setShowSuccessModal] = useState(false);
 
     const handleSave = () => {
@@ -24,16 +25,16 @@ export default function ButtonResetPolling({ onClose }) {
                         {/* Tombol X untuk tutup */}
                         <button
                             onClick={onClose}
-                            className="absolute top-2 right-2 text-2xl font-bold text-white bg-rustyRed hover:bg-softRed rounded-md w-7 h-7 flex justify-center items-center"
+                            className="absolute top-2 right-2 flex justify-center items-center"
                         >
-                            ×
+                            <img className="w-9" src={closeIcon} alt="closeIcon" />
                         </button>
                     </div>
 
                     {/* Deskripsi Reset Modal */}
                     <div className="text-center mb-6">
                         <p className="text-black">
-                            Semua data polling assiten akan dihapus dan dikembalikan ke kondisi awal.
+                            Semua data soal praktikum akan dihapus dan dikembalikan ke kondisi awal.
                             Apakah Anda yakin ingin mereset data?
                         </p>
                     </div>

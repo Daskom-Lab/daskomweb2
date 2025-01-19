@@ -86,13 +86,17 @@ Route::get('/nilai-praktikan', function () {
     return Inertia::render('PagesAssistants/NilaiPraktikan');
 })->name('nilai-praktikan');
 
-Route::get('/praktikum', function () {
+Route::get('/start-praktikum', function () {
     return Inertia::render('PagesAssistants/StartPraktikum');
-})->name('praktikum');
+})->name('start-praktikum');
 
 Route::get('/module', function () {
     return Inertia::render('PagesAssistants/ModulePraktikum');
 })->name('module');
+
+Route::get('/soal', function () {
+    return Inertia::render('PagesAssistants/SoalPraktikum');
+})->name('soal');
 
 // route for praktikan
 Route::get('/praktikan', function () {
@@ -115,4 +119,8 @@ Route::get('/contact-assistant', function () {
     return Inertia::render('PagesPraktikan/ContactAssistant');
 })->name('contact-assistant');
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> upstream/main
 require __DIR__.'/auth.php';

@@ -1,7 +1,9 @@
 import { useState } from "react";
+import closeIcon from "../../../assets/modal/iconClose.svg"
 
 export default function ModalEditPlotting({ onClose }) {
     const [showSuccessModal, setShowSuccessModal] = useState(false);
+    const [isSwitchOn, setIsSwitchOn] = useState(false);
 
     const handleSave = () => {
         setShowSuccessModal(true);
@@ -9,7 +11,11 @@ export default function ModalEditPlotting({ onClose }) {
         setTimeout(() => {
             setShowSuccessModal(false);
             onClose();
-        }, 3000); 
+        }, 3000);
+    };
+
+    const toggleSwitch = () => {
+        setIsSwitchOn(!isSwitchOn);
     };
 
     return (
@@ -17,14 +23,14 @@ export default function ModalEditPlotting({ onClose }) {
             {/* Modal Utama */}
             <div className="bg-white rounded-lg p-6 w-[700px] shadow-lg relative">
                 {/* Header */}
-                <div className="flex justify-between items-center mb-6">
-                    <h2 className="text-xl font-bold text-darkGreen">Edit Jadwal</h2>
+                <div className="flex justify-between items-center mb-6 border-b border-deepForestGreen">
+                    <h2 className="text-2xl font-bold text-darkGreen">Edit Jadwal</h2>
                     {/* Tombol X untuk tutup */}
                     <button
                         onClick={onClose}
-                        className="absolute top-2 right-2 text-2xl font-bold text-white bg-rustyRed hover:bg-softRed rounded-md w-9 h-7 flex justify-center items-center"
+                        className="absolute top-2 right-2 flex justify-center items-center"
                     >
-                        ×
+                        <img className="w-9" src={closeIcon} alt="closeIcon" />
                     </button>
                 </div>
 
@@ -112,6 +118,23 @@ export default function ModalEditPlotting({ onClose }) {
                     >
                         Simpan
                     </button>
+                </div>
+
+                {/* Switch On/Off */}
+                <div className="absolute bottom-4 left-4 flex items-center gap-2">
+                    <label className="text-sm font-medium text-gray-700">
+                        isEnglish
+                    </label>
+                    <div
+                        onClick={toggleSwitch}
+                        className={`w-10 h-5 flex items-center rounded-full p-1 cursor-pointer transition ${isSwitchOn ? "bg-deepForestGreen" : "bg-fireRed"
+                            }`}
+                    >
+                        <div
+                            className={`w-4 h-4 bg-white rounded-full shadow-md transform transition ${isSwitchOn ? "translate-x-5" : "translate-x-0"
+                                }`}
+                        />
+                    </div>
                 </div>
             </div>
 

@@ -3,10 +3,11 @@ import ButtonResetPelanggaran from "./ModalResetPelanggaran";
 import TablePelanggaran from "./TablePelanggaran";
 
 export default function ContentPelanggaran() {
-    const [showModalResetPelanggaran, setShowModalResetPelanggaran] = useState(false);
+    const [showModalReset, setShowModalReset] = useState(false); 
 
-    const handleOpenModalResetPelanggaran = () => setShowModalResetPelanggaran(true);
-    const handleCloseModalResetPelanggaran = () => setShowModalResetPelanggaran(false);
+    const handleOpenModalReset = () => setShowModalReset(true);
+    const handleCloseModalReset = () => setShowModalReset(false);
+
     return (
         <section>
             {/* button pelanggaran */}
@@ -15,9 +16,9 @@ export default function ContentPelanggaran() {
                     <h6 className="text-md text-darkBrown text-center py-1 font-semibold px-24">Pelanggaran Assistant</h6>
                 </div>
 
-                {/* Button Reset Pelanggaran */}
-                <button
-                    onClick={handleOpenModalResetPelanggaran}
+                 {/* Button Reset Plottingan */}
+                 <button
+                    onClick={handleOpenModalReset}
                     className="text-white text-md font-semibold px-4 py-1 rounded-md shadow-md bg-redredDark hover:bg-rustyRed transition mt-[2px]"
                 >
                     Reset Pelanggaran
@@ -28,8 +29,9 @@ export default function ContentPelanggaran() {
             <div className="">
                 <TablePelanggaran />
             </div>
-            {/* Modal Reset pelanggaran */}
-            {showModalResetPelanggaran && <ButtonResetPelanggaran onClose={handleCloseModalResetPelanggaran} />}
+
+            {/* Modal Reset Plottingan */}
+                        {showModalReset && <ButtonResetPelanggaran onClose={handleCloseModalReset} />} 
         </section>
     );
 }

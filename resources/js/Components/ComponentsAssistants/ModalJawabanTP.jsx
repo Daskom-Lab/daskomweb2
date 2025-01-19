@@ -1,13 +1,15 @@
+import closeIcon from "../../../assets/modal/iconClose.svg"
+
 export default function ModalJawabanTP({ onClose }) {
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
             <div className="bg-white p-6 rounded shadow-lg w-3/4 relative">
-                {/* Tombol X untuk tutup dengan background merah */}
+                {/* Tombol X untuk tutup */}
                 <button
                     onClick={onClose}
-                    className="absolute top-2 right-2 text-2xl font-bold text-white bg-rustyRed hover:bg-red-700 rounded-md w-8 h-8 flex justify-center items-center"
+                    className="absolute top-2 right-2 flex justify-center items-center"
                 >
-                    ✕
+                    <img className="w-9" src={closeIcon} alt="closeIcon" />
                 </button>
 
                 {/* kelas - tanggal */}

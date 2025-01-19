@@ -1,3 +1,5 @@
+import closeIcon from "../../../assets/modal/iconClose.svg"
+
 export default function ModalPlotTeam({ onClose }) {
     // Exm data
     const exampleData = [
@@ -25,16 +27,16 @@ export default function ModalPlotTeam({ onClose }) {
             {/* Main Modal */}
             <div className="bg-white rounded-lg p-6 w-[800px] h-[500px] overflow-y-auto shadow-xl relative transform transition-all duration-300 ease-in-out scale-95 hover:scale-100">
                 {/* Header */}
-                <div className="flex justify-between items-center mb-6">
+                <div className="flex justify-between items-center mb-6 border-b border-deepForestGreen">
                     <h2 className="text-2xl font-bold text-darkGreen">
                         {exampleData[0]?.kelas} - Shift {exampleData[0]?.shift}
                     </h2>
-                    {/* Close Button */}
+                    {/* Tombol X untuk tutup */}
                     <button
                         onClick={onClose}
-                        className="absolute top-2 right-2 text-2xl font-bold text-white bg-rustyRed hover:bg-softRed rounded-md w-9 h-9 flex justify-center items-center"
+                        className="absolute top-2 right-2 flex justify-center items-center"
                     >
-                        ×
+                        <img className="w-9" src={closeIcon} alt="closeIcon" />
                     </button>
                 </div>
 

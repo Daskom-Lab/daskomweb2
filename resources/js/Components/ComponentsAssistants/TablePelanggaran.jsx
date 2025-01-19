@@ -1,64 +1,58 @@
 export default function TablePelanggaran() {
-    // Data dummy untuk tabel pelanggaran
-    const dataPelanggaran = [
-      { no: 1, nama: "John Doe", kode: "ALL", status: "Belum Input", jumlahBelumInput: 3 },
-      { no: 2, nama: "Jane Smith", kode: "DEY", status: "Aman", jumlahBelumInput: 0 },
-      { no: 3, nama: "Mark Johnson", kode: "FYN", status: "Belum Input", jumlahBelumInput: 1 },
-    ];
-  
-    return (
-      <div className="mt-5">
-        {/* Kontainer scroll tabel */}
-        <div className="overflow-x-auto">
-          <div className="max-h-[400px] overflow-y-auto border border-forestGreen rounded-md">
-            <table className="min-w-full table-auto border-collapse">
-              <thead>
-                <tr className="bg-deepForestGreen text-md text-center text-white">
-                  <th className="py-2 px-7 border-b">No</th>
-                  <th className="py-2 px-7 border-b">Nama</th>
-                  <th className="py-2 px-7 border-b">Kode</th>
-                  <th className="py-2 px-7 border-b">Status</th>
-                </tr>
-              </thead>
-              <tbody className="bg-softIvory">
-                {dataPelanggaran.map((item, index) => (
-                  <tr key={index} className="text-darkBrown">
-                    <td className="py-2 px-4 border-b text-center">{item.no}</td>
-                    <td className="py-2 px-4 border-b">{item.nama}</td>
-                    <td className="py-2 px-4 border-b text-center">{item.kode}</td>
-                    <td
-                      className={`py-2 px-4 border-b text-center ${
-                        item.status === "Belum Input" ? "text-red-600 font-bold" : ""
-                      }`}
-                    >
-                      {item.status === "Belum Input"
-                        ? `Belum Input ${item.jumlahBelumInput} Nilai`
-                        : "Aman"}
-                    </td>
-                  </tr>
-                ))}
-                {/* baris dummy untuk uji scroll */}
-                {Array.from({ length: 10 }).map((_, index) => (
-                  <tr key={index + dataPelanggaran.length} className="text-darkBrown">
-                    <td className="py-2 px-4 border-b text-center">{index + 4}</td>
-                    <td className="py-2 px-4 border-b">Nama {index + 4}</td>
-                    <td className="py-2 px-4 border-b text-center">KODE{index + 1}</td>
-                    <td
-                      className={`py-2 px-4 border-b text-center ${
-                        index % 2 === 0 ? "text-red-600 font-bold" : ""
-                      }`}
-                    >
-                      {index % 2 === 0
-                        ? `Belum Input ${index + 1} Nilai`
-                        : "Aman"}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+  // Data dummy untuk tabel pelanggaran
+  const dataPelanggaran = [
+    { no: 1, nama: "John Doe", kode: "ALL", status: "Belum Input", jumlahBelumInput: 3 },
+    { no: 2, nama: "Jane Smith", kode: "DEY", status: "Aman", jumlahBelumInput: 0 },
+    { no: 3, nama: "Mark Johnson", kode: "FYN", status: "Belum Input", jumlahBelumInput: 1 },
+    { no: 4, nama: "Emily Davis", kode: "GTY", status: "Aman", jumlahBelumInput: 0 },
+    { no: 5, nama: "Chris Brown", kode: "CVX", status: "Belum Input", jumlahBelumInput: 2 },
+    { no: 6, nama: "Alice Green", kode: "RPR", status: "Aman", jumlahBelumInput: 0 },
+    { no: 7, nama: "Michael White", kode: "QTY", status: "Belum Input", jumlahBelumInput: 4 },
+    { no: 8, nama: "Sarah Miller", kode: "SHR", status: "Aman", jumlahBelumInput: 0 },
+    { no: 9, nama: "David Clark", kode: "STL", status: "Belum Input", jumlahBelumInput: 5 },
+    { no: 10, nama: "Olivia Moore", kode: "OPL", status: "Aman", jumlahBelumInput: 0 },
+  ];
+
+  return (
+    <div className="mt-5">
+      {/* Header dengan div */}
+      <div className="bg-deepForestGreen rounded-lg py-2 px-2 mb-2">
+        <div className="grid grid-cols-4 gap-1">
+          <div className="bg-deepForestGreen hover:bg-darkOliveGreen rounded-lg p-1">
+            <h1 className="font-bold text-white text-center">No</h1>
+          </div>
+          <div className="bg-deepForestGreen hover:bg-darkOliveGreen rounded-lg p-1">
+            <h1 className="font-bold text-white text-center">Nama</h1>
+          </div>
+          <div className="bg-deepForestGreen hover:bg-darkOliveGreen rounded-lg p-1">
+            <h1 className="font-bold text-white text-center">Kode</h1>
+          </div>
+          <div className="bg-deepForestGreen hover:bg-darkOliveGreen rounded-lg p-1">
+            <h1 className="font-bold text-white text-center">Status</h1>
           </div>
         </div>
       </div>
-    );
-  }
-  
+
+      {/* Kontainer untuk tabel scrollable */}
+      <div className="overflow-x-auto max-h-96">
+        {[...Array(10)].map((_, index) => (
+          <div
+            key={index}
+            className="grid grid-cols-4 gap-1 bg-white border border-forestGreen py-1 px-2 mb-2 rounded-lg"
+          >
+            <div className="flex items-center justify-center h-full py-1 px-2 ">{index + 1}</div>
+            <div className="flex items-center justify-center h-full py-1 px-2">Aliza Nurfitrian M</div>
+            <div className="flex items-center justify-center h-full py-1 px-2">1101223083{index + 1}</div>
+            <div
+              className={`flex items-center justify-center h-full py-1 px-2 ${
+                index % 2 === 0 ? "text-fireRed font-bold" : ""
+              }`}
+            >
+              {index % 2 === 0 ? `Belum Input ${index + 1} Nilai` : "Aman"}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}

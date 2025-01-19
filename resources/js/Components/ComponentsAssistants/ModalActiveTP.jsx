@@ -2,7 +2,7 @@ import { useState } from "react";
 import closeIcon from "../../../assets/modal/iconClose.svg";
 import editIcon from "../../../assets/nav/Icon-Edit.svg";
 
-export default function ModalOpenKJ({ onClose }) {
+export default function ModalActiveTP({ onClose }) {
     const [config, setConfig] = useState({
         PengenalanAlgoritmanDanPemrograman: false,
         SintaksDasarDanStrukturProgramC: false,
@@ -55,7 +55,7 @@ export default function ModalOpenKJ({ onClose }) {
                     {/* Header */}
                     <div className="flex justify-between items-center mb-4 border-b border-gray-300">
                         <h2 className="text-xl font-semibold flex items-center gap-2">
-                            <img className="w-8" src={editIcon} alt="praktikum" /> LOCK / UNLOCK
+                            <img className="w-8" src={editIcon} alt="praktikum" /> Tugas Pendahuluan
                         </h2>
                         {/* Tombol X untuk tutup */}
                         <button

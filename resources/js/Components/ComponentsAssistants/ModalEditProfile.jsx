@@ -1,4 +1,5 @@
 import { useState } from "react";
+import closeIcon from "../../../assets/modal/iconClose.svg"
 
 export default function ModalEditProfile({ isOpen, onClose }) {
     const [isSuccessModalOpen, setSuccessModalOpen] = useState(false);
@@ -33,9 +34,9 @@ export default function ModalEditProfile({ isOpen, onClose }) {
                     {/* Tombol X untuk tutup */}
                     <button
                         onClick={onClose}
-                        className="absolute top-2 right-2 text-2xl font-bold text-white bg-rustyRed hover:bg-softRed rounded-md w-7 h-7 flex justify-center items-center"
-                    >
-                        ×
+                        className="absolute top-2 right-2 flex justify-center items-center"
+                    >        
+                        <img className="w-9" src={closeIcon} alt="closeIcon" />
                     </button>
 
                     <form>
