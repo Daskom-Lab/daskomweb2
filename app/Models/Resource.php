@@ -34,7 +34,8 @@ class Resource extends Model
 	protected $fillable = [
 		'modul_id',
 		'modul_link',
-		'ppt_link'
+		'ppt_link',
+		'video_link',
 	];
 
 	public function modul()

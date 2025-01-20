@@ -41,7 +41,7 @@ class KumpulTp extends Model
 		'praktikan_id'
 	];
 
-	public function kela()
+	public function kelas()
 	{
 		return $this->belongsTo(Kelas::class, 'kelas_id');
 	}

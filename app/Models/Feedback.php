@@ -51,7 +51,7 @@ class Feedback extends Model
 		return $this->belongsTo(Asisten::class);
 	}
 
-	public function kela()
+	public function kelas()
 	{
 		return $this->belongsTo(Kelas::class, 'kelas_id');
 	}

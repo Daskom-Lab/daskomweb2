@@ -33,8 +33,6 @@ class LaporanPraktikan extends Model
 	protected $table = 'laporan_praktikans';
 
 	protected $casts = [
-		'rating_asisten' => 'float',
-		'rating_praktikum' => 'float',
 		'praktikan_id' => 'int',
 		'asisten_id' => 'int',
 		'modul_id' => 'int'
@@ -42,8 +40,6 @@ class LaporanPraktikan extends Model
 
 	protected $fillable = [
 		'pesan',
-		'rating_asisten',
-		'rating_praktikum',
 		'praktikan_id',
 		'asisten_id',
 		'modul_id'

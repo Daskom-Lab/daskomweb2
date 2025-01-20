@@ -7,8 +7,9 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Class SoalFitb
@@ -28,6 +29,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class SoalFitb extends Model
 {
+	use HasFactory;
 	protected $table = 'soal_fitbs';
 
 	protected $casts = [
