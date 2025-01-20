@@ -120,4 +120,5 @@ Route::get('/contact-assistant', function () {
 })->name('contact-assistant');
 
 
+
 require __DIR__.'/auth.php';
