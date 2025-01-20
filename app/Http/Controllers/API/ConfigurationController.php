@@ -58,7 +58,6 @@ class ConfigurationController extends Controller
             'registrationPraktikan_activation' => 'required|integer',            
             'registrationAsisten_activation' => 'required|integer',
             'kode_asisten' => "required|string",
-            // 'kode_asisten' => Auth::guard('asisten')->user()->kode_asisten,
         ]);
 
         $config->tp_activation = $request->tp_activation;
@@ -67,7 +66,7 @@ class ConfigurationController extends Controller
         $config->secretfeature_activation = $request->secretfeature_activation;
         $config->registrationPraktikan_activation = $request->registrationPraktikan_activation;
         $config->registrationAsisten_activation = $request->registrationAsisten_activation;
-        $config->kode_asisten = $request->kode_asisten;
+        $config->kode_asisten = $request->kode_asisten?? auth('sanctum')->user()->kode;
         $config->save();
         return response()->json([
             'message' => 'Configuration updated successfully.'

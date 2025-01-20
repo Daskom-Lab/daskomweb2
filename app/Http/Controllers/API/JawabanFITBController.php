@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\Modul;
 use App\Models\JawabanFitb;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -46,11 +47,18 @@ class JawabanFITBController extends Controller
      */
     public function show($idModul)
     {
-        $jawaban = JawabanFitb::where('praktikan_id', Auth::guard('praktikan')->user()->id)
-        ->where('modul_id', $idModul)->get();
+        $modul = Modul::findOrFail($idModul);
+        if($modul->isUnlocked){
+            $jawaban = JawabanFitb::where('praktikan_id', auth('sanctum')->user()->id)
+            ->where('modul_id', $idModul)->get();
+            return response()->json([
+                "status" => "success",
+                "jawaban_fitb" => $jawaban
+            ]);
+        }
         return response()->json([
             "status" => "success",
-            "jawaban_fitb" => $jawaban
+            'messages' => "Jawaban Masih Terkunci"
         ]);
     }
 

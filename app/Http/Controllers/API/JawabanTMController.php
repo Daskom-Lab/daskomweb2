@@ -47,7 +47,7 @@ class JawabanTMController extends Controller
      */
     public function show($idModul)
     {   
-        $jawaban = JawabanMandiri::where('praktikan_id', Auth::guard('praktikan')->user()->id)->where('modul_id', $idModul)->get();
+        $jawaban = JawabanMandiri::where('praktikan_id', auth('sanctum')->user()->id)->where('modul_id', $idModul)->get();
         return response()->json([
             "status" => "success",
             "jawaban_mandiri" => $jawaban

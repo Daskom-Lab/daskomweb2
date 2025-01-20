@@ -50,7 +50,7 @@ class AsistenController extends Controller
             'deskripsi' => 'required',    
         ]);
 
-        $asisten = Asisten::find($request->id);
+        $asisten = Asisten::find(auth('sanctum')->user()->id);
         $asisten->nomor_telepon = $request->nomor_telepon;
         $asisten->id_line = $request->id_line;
         $asisten->instagram = $request->instagram;

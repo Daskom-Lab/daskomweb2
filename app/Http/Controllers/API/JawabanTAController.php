@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\Modul;
 use App\Models\SoalTa;
 use App\Models\JawabanTa;
 use Illuminate\Http\Request;
@@ -61,46 +62,54 @@ class JawabanTAController extends Controller
      */
     public function show(string $id)
     {
-        $jawaban = JawabanTa::where('jawaban_tas.praktikan_id', Auth::guard('praktikan')->user()->id)
-        ->where('jawaban_tas.modul_id', $id) // Specify the table for modul_id
-        ->leftJoin('soal_tas', 'soal_tas.id', '=', 'jawaban_tas.soal_id')
-        ->select(
-            'soal_tas.pertanyaan as pertanyaan',
-            'soal_tas.pengantar as pengantar',
-            'soal_tas.kodingan as kodingan',
-            'soal_tas.jawaban_salah1 as jawaban_salah1',
-            'soal_tas.jawaban_salah2 as jawaban_salah2',
-            'soal_tas.jawaban_salah3 as jawaban_salah3',
-            'soal_tas.jawaban_benar as jawaban_benar',
-            'jawaban_tas.soal_id as soal_id',
-            'jawaban_tas.jawaban as jawaban'
-        )
-        ->get();
-
-        if($jawaban->isEmpty()){
+        $modul = Modul::findOrFail($id);
+        if ($modul->isUnlocked) {
+            $jawaban = JawabanTa::where('jawaban_tas.praktikan_id', auth('sanctum')->user()->id)
+            ->where('jawaban_tas.modul_id', $id) // Specify the table for modul_id
+            ->leftJoin('soal_tas', 'soal_tas.id', '=', 'jawaban_tas.soal_id')
+            ->select(
+                'soal_tas.pertanyaan as pertanyaan',
+                'soal_tas.pengantar as pengantar',
+                'soal_tas.kodingan as kodingan',
+                'soal_tas.jawaban_salah1 as jawaban_salah1',
+                'soal_tas.jawaban_salah2 as jawaban_salah2',
+                'soal_tas.jawaban_salah3 as jawaban_salah3',
+                'soal_tas.jawaban_benar as jawaban_benar',
+                'jawaban_tas.soal_id as soal_id',
+                'jawaban_tas.jawaban as jawaban'
+            )
+            ->get();
+    
+            if($jawaban->isEmpty()){
+                return response()->json([
+                    "message" => "Tidak ada jawaban"
+                ]);
+            }
+    
+            // Map the data to associate jawaban1-4 with soal_ta id
+            $mappedJawaban = $jawaban->map(function ($item) {
+                return [
+                    'pertanyaan' => $item->pertanyaan,
+                    'pengantar' => $item->pengantar,
+                    'kodingan' => $item->kodingan,
+                    'soal_id' => $item->soal_id,
+                    'jawaban' => $item->jawaban,
+                    'jawaban1' => $item->jawaban_salah2,
+                    'jawaban2' => $item->jawaban_salah3,
+                    'jawaban3' => $item->jawaban_benar,
+                    'jawaban4' => $item->jawaban_salah1,
+                ];
+            });
+    
             return response()->json([
-                "message" => "Tidak ada jawaban"
+                'status' => 'success',
+                'jawaban_ta' => $mappedJawaban,
             ]);
+
         }
-
-        // Map the data to associate jawaban1-4 with soal_ta id
-        $mappedJawaban = $jawaban->map(function ($item) {
-            return [
-                'pertanyaan' => $item->pertanyaan,
-                'pengantar' => $item->pengantar,
-                'kodingan' => $item->kodingan,
-                'soal_id' => $item->soal_id,
-                'jawaban' => $item->jawaban,
-                'jawaban1' => $item->jawaban_salah2,
-                'jawaban2' => $item->jawaban_salah3,
-                'jawaban3' => $item->jawaban_benar,
-                'jawaban4' => $item->jawaban_salah1,
-            ];
-        });
-
         return response()->json([
-            'status' => 'success',
-            'jawaban_ta' => $mappedJawaban,
+            "status" => "success",
+            'messages' => "Jawaban Masih Terkunci"
         ]);
     }
 

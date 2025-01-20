@@ -64,7 +64,7 @@ class NilaiController extends Controller
      */
     public function show()
     {
-        $nilai = Nilai::where('praktikan_id', auth('praktikan')->user()->id)->get();
+        $nilai = Nilai::where('praktikan_id', auth('sanctum')->user()->id)->get();
         return response()->json([
             'nilai' => $nilai
         ]);

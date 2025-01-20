@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\Modul;
 use Illuminate\Http\Request;
 use App\Models\JawabanJurnal;
 use App\Http\Controllers\Controller;
@@ -41,10 +42,17 @@ class JawabanJurnalController extends Controller
      */
     public function show($idModul)
     {
-        $jawaban = JawabanJurnal::where('praktikan_id', Auth::guard('praktikan')->user()->id)->where('modul_id', $idModul)->get();
+        $modul = Modul::findOrFail($idModul);
+        if($modul->isUnlocked){
+            $jawaban = JawabanJurnal::where('praktikan_id', auth('sanctum')->user()->id)->where('modul_id', $idModul)->get();
+            return response()->json([
+                "status" => "success",
+                "jawaban_jurnal" => $jawaban
+            ]);
+        }
         return response()->json([
             "status" => "success",
-            "jawaban_jurnal" => $jawaban
+            'messages' => "Jawaban Masih Terkunci"
         ]);
     }
 

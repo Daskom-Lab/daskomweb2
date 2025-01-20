@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\Modul;
 use App\Models\SoalTk;
 use App\Models\JawabanTk;
 use Illuminate\Http\Request;
@@ -61,7 +62,9 @@ class JawabanTKController extends Controller
      */
     public function show($idModul)
     {
-        $jawaban = JawabanTk::where('jawaban_tks.praktikan_id', Auth::guard('praktikan')->user()->id)
+        $modul = Modul::findOrFail($idModul);
+        if ($modul->isUnlocked) {
+            $jawaban = JawabanTk::where('jawaban_tks.praktikan_id', auth('sanctum')->user()->id)
             ->where('jawaban_tks.modul_id', $idModul) // Specify the table for modul_id
             ->leftJoin('soal_tks', 'soal_tks.id', '=', 'jawaban_tks.soal_id')
             ->select(
@@ -77,32 +80,38 @@ class JawabanTKController extends Controller
             )
             ->get();
 
-        if ($jawaban->isEmpty()) {
+            if ($jawaban->isEmpty()) {
+                return response()->json([
+                    "message" => "Tidak ada jawaban"
+                ]);
+            }
+
+            // Map the data to associate jawaban1-4 with soal_ta id
+            $mappedJawaban = $jawaban->map(function ($item) {
+                return [
+                    'pertanyaan' => $item->pertanyaan,
+                    'pengantar' => $item->pengantar,
+                    'kodingan' => $item->kodingan,
+                    'soal_id' => $item->soal_id,
+                    'jawaban' => $item->jawaban,
+                    'jawaban1' => $item->jawaban_salah2,
+                    'jawaban2' => $item->jawaban_salah3,
+                    'jawaban3' => $item->jawaban_benar,
+                    'jawaban4' => $item->jawaban_salah1,
+                ];
+            });
+
+
             return response()->json([
-                "message" => "Tidak ada jawaban"
+                'status' => 'success',
+                'jawaban_tk' => $mappedJawaban,
             ]);
         }
-
-        // Map the data to associate jawaban1-4 with soal_ta id
-        $mappedJawaban = $jawaban->map(function ($item) {
-            return [
-                'pertanyaan' => $item->pertanyaan,
-                'pengantar' => $item->pengantar,
-                'kodingan' => $item->kodingan,
-                'soal_id' => $item->soal_id,
-                'jawaban' => $item->jawaban,
-                'jawaban1' => $item->jawaban_salah2,
-                'jawaban2' => $item->jawaban_salah3,
-                'jawaban3' => $item->jawaban_benar,
-                'jawaban4' => $item->jawaban_salah1,
-            ];
-        });
-
-
         return response()->json([
-            'status' => 'success',
-            'jawaban_tk' => $mappedJawaban,
+            "status" => "success",
+            'messages' => "Jawaban Masih Terkunci"
         ]);
+        
     }
       
 }

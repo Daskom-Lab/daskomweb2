@@ -61,14 +61,14 @@ class LaporanPjController extends Controller
             'shift' => $kelas->shift,
             'laporan' => $request->laporan,
             'praktikum_id' => $request->praktikum_id,
-            'pj_id' => Auth::guard('asisten')->user()->id,
+            'pj_id' => auth('sanctum')->user()->id,
             'created_at' => now(),
             'updated_at' => now()
         ]);
 
         //buat history jaga
         HistoryJaga::create([
-            'asisten_id' => Auth::guard('asisten')->user()->id,
+            'asisten_id' => auth('sanctum')->user()->id,
             'laporan_pj_id' =>$laporan->id,
             'modul_id' => $request->modul_id,
             'created_at' => now(),

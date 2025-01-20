@@ -43,7 +43,7 @@ class HistoryJagaController extends Controller
         ]);
 
         HistoryJaga::create([
-            'asisten_id' => auth()->guard('asisten')->user()->id,
+            'asisten_id' => auth('sanctum')->user()->id,
             'hari' => $request->hari,
             'shift' => $request->shift,
             'laporan_pj_id' => $request->laporan_pj_id,

@@ -40,7 +40,7 @@ class JawabanTPController extends Controller
                 JawabanTp::create([
                     'jawaban' => $request->$data[$i]['jawaban'] ?? '-',
                     'soal_id' => $request->$data[$i]['soal_id'],
-                    'praktikan_id' => $request->$data[$i]['praktikan_id'] ?? Auth::guard('praktikan')->user()->id,
+                    'praktikan_id' => $request->$data[$i]['praktikan_id'] ?? auth('sanctum')->user()->id,
                     'modul_id' => $request->$data[$i]['modul_id'],
                     'crated_at' => now(),
                     'updated_at' => now(),
@@ -49,7 +49,7 @@ class JawabanTPController extends Controller
 
             return response()->json([
                 "status" => "success",
-                'messages' => "Berhasil menambahkan jawaban"
+                'messages' => "Berhasil Menyimpan Jawaban"
             ]);
         }
     }
@@ -59,7 +59,7 @@ class JawabanTPController extends Controller
      */
     public function show($idModul)
     {
-        $jawaban = JawabanTp::where('praktikan_id', Auth::guard('praktikan')->user()->id)
+        $jawaban = JawabanTp::where('praktikan_id', auth('sanctum')->user()->id)
         ->where('modul_id', $idModul)->get();
         if ($jawaban->isEmpty()) {
             return response()->json([
