@@ -33,9 +33,25 @@ class ConfirmablePasswordController extends Controller
                 'password' => __('auth.password'),
             ]);
         }
+        elseif(! Auth::guard('asisten')->validate([
+            'kode' => $request->user()->kode,
+            'password' => $request->password,
+        ])) {
+            throw ValidationException::withMessages([
+                'password' => __('auth.password'),
+            ]);
+        } 
+        elseif (! Auth::guard('praktikan')->validate([
+            'nim' => $request->user()->nim,
+            'password' => $request->password,
+        ])) {
+            throw ValidationException::withMessages([
+                'password' => __('auth.password'),
+            ]);
+        }
 
         $request->session()->put('auth.password_confirmed_at', time());
 
-        return redirect()->intended(route('dashboard', absolute: false));
+        return redirect()->intended(route('landing', absolute: false));
     }
 }
