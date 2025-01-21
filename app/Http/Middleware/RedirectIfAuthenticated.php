@@ -15,7 +15,7 @@ class RedirectIfAuthenticated
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $user = $request->user()->guard;
+        $user = $request->user()->role->guard_name;
         switch ($user) {
             case 'asisten':
                 return redirect()->route('assistant');
