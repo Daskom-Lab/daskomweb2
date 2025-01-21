@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Models\Asisten;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 
 class AsistenController extends Controller
@@ -65,8 +66,14 @@ class AsistenController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $asisten = Asisten::findOrFail($id);
+        $role = Role::findOrFail($asisten->role_id);
+        $asisten->removeRole($role->name);
+        $asisten->delete();
+        return response()->json([
+            'message' => 'Asisten deleted successfully.'
+        ], 200);
     }
 }

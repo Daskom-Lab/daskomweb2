@@ -1,41 +1,42 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\ProfileController;
+use Illuminate\Auth\Middleware\RedirectIfAuthenticated;
 
 Route::get('/', function () {
     return Inertia::render('LandingPage');
-})->name('landing');
+})->name('landing')->middleware('guest');
 
 Route::get('/login', function () {
     return Inertia::render('LoginPage');
-})->name('login');
+})->name('login')->middleware('guest');
 
 Route::get('/register', function () {
     return Inertia::render('RegistPage');
-})->name('register');
+})->name('register')->middleware('guest');
 
 Route::get('/contact', function () {
     return Inertia::render('PagesPraktikan/ContactPage');
-})->name('contact');
+})->name('contact')->middleware('guest');
 
 Route::get('/about', function () {
     return Inertia::render('PagesPraktikan/AboutPage');
-})->name('about');
+})->name('about')->middleware('guest');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
 
 Route::prefix('praktikan')->group(function () {
     Route::get('/', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
-});
+})->middleware(['auth:sanctum', 'ability:lihat-profile']);
 
 // route for assiatant
 Route::get('/assistant', function () {
@@ -120,5 +121,9 @@ Route::get('/contact-assistant', function () {
 })->name('contact-assistant');
 
 
+Route::fallback(function () {
+    return redirect('/');
+})->middleware(RedirectIfAuthenticated::class);
 
-require __DIR__.'/auth.php';
+
+require __DIR__ . '/auth.php';

@@ -18,6 +18,7 @@ class KelasController extends Controller
 {
 
     public function index(){
+        // dd(auth('sanctum')->user()->role);
         $kelas = Kelas::all();
         return response()->json([
             'message'=>'Kelas retrieved successfully.',
@@ -61,22 +62,22 @@ class KelasController extends Controller
                 $praktikum = Praktikum::create([
                     'kelas_id' => $kelas->id,
                     'modul_id' => $modul->id,
-                    "start_time" => "00:00:00",
-                    "end_time" => "00:00:00",
+                    "start_time" => "00:00",
+                    "end_time" => "00:00",
                     "isActive" => 0,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
                 $deadline = Deadline::create([
                     'praktikums_id' => $praktikum->id,
-                    'start_TA' => "00:00:00",
-                    'end_TA' => "00:00:00", 
-                    'start_jurnal' => "00:00:00",
-                    'end_jurnal' => "00:00:00",
-                    'start_TM' => "00:00:00",
-                    'end_TM' => "00:00:00",
-                    'start_TK' => "00:00:00",
-                    'end_TK' => "00:00:00",
+                    'start_TA' => "00:00",
+                    'end_TA' => "00:00", 
+                    'start_jurnal' => "00:00",
+                    'end_jurnal' => "00:00",
+                    'start_TM' => "00:00",
+                    'end_TM' => "00:00",
+                    'start_TK' => "00:00",
+                    'end_TK' => "00:00",
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
@@ -86,22 +87,22 @@ class KelasController extends Controller
                 $praktikum = Praktikum::create([
                     'kelas_id' => $kelas->id,
                     'modul_id' => $modul->id,
-                    "start_time" => "00:00:00",
-                    "end_time" => "00:00:00",
+                    "start_time" => "00:00",
+                    "end_time" => "00:00",
                     "isActive" => 0,
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
                 $deadline = Deadline::create([
                     'praktikums_id' => $praktikum->id,
-                    'start_TA' => "00:00:00",
-                    'end_TA' => "00:00:00",
-                    'start_jurnal' => "00:00:00",
-                    'end_jurnal' => "00:00:00",
-                    'start_TM' => "00:00:00",
-                    'end_TM' => "00:00:00",
-                    'start_TK' => "00:00:00",
-                    'end_TK' => "00:00:00",
+                    'start_TA' => "00:00",
+                    'end_TA' => "00:00",
+                    'start_jurnal' => "00:00",
+                    'end_jurnal' => "00:00",
+                    'start_TM' => "00:00",
+                    'end_TM' => "00:00",
+                    'start_TK' => "00:00",
+                    'end_TK' => "00:00",
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);

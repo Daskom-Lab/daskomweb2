@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use Carbon\Carbon;
 use App\Models\Deadline;
+use App\Models\Praktikum;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -53,7 +54,7 @@ class DeadlineController extends Controller
 
             
             $request->validate([
-                'start_TA' => 'required|date_format:d-m-Y H:i|after:now',
+                'start_TA' => 'required|date_format:d-m-Y H:i|before:now',
                 'end_TA' => 'required|date_format:d-m-Y H:i|after:start_TA',
                 'start_TK' => 'required|date_format:d-m-Y H:i|after:now',  
                 'end_TK' => 'required|date_format:d-m-Y H:i|after:start_TK',  
@@ -101,5 +102,38 @@ class DeadlineController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function reset($idPraktikum)
+    {
+        $praktikum=Praktikum::findOrFail($idPraktikum);
+        if($praktikum->isActive){
+            $deadline = Deadline::where('praktikums_id', $idPraktikum)->first();
+            $timeString = "00:00";
+            $time = Carbon::createFromFormat('d-m-Y H:i', $timeString);
+            $praktikum->isActive = 0;
+            $deadline->start_TA = $time;
+            $deadline->end_TA = $time;
+            $deadline->start_TK = $time;
+            $deadline->end_TK = $time;
+            $deadline->start_TM = $time;
+            $deadline->end_TM = $time;
+            $deadline->start_jurnal = $time;
+            $deadline->end_jurnal = $time;
+            $deadline->updated_at = now();
+            $praktikum->updated_at = now();
+            $praktikum->save();
+            $deadline->save();
+            return response()->json([
+                'deadline' => $deadline,
+                'message' => 'Deadline successfully reset'
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'message' => 'Praktikum is not active'
+            ], 500);
+        }
+
     }
 }
