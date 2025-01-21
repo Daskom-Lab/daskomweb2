@@ -19,7 +19,7 @@ export default function ScorePraktikan({ auth }) {
             >
                 <Head title="Leaderboard Praktikan" />
         
-                <div className="relative mt-[70px] min-h-[calc(100vh-60px)]">
+                <div className="relative mt-[12vh] h-screen">
                     <div className="mt-0">
                         <ScoreTable />
                     </div>

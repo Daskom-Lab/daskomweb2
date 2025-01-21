@@ -119,8 +119,8 @@ Route::get('/contact-assistant', function () {
     return Inertia::render('PagesPraktikan/ContactAssistant');
 })->name('contact-assistant');
 
-<<<<<<< HEAD
-=======
+Route::get('/polling-assistant', function () { 
+    return Inertia::render('PagesPraktikan/PollingPage'); 
+})->name('polling-assistant');
 
->>>>>>> upstream/main
 require __DIR__.'/auth.php';

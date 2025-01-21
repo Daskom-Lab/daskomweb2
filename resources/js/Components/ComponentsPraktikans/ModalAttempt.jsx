@@ -1,11 +1,9 @@
-import React from 'react';
-
 export default function ModalAttempt({ taskKey, onAttemptComplete }) {
     const handleAttemptClick = () => {
         if (onAttemptComplete && taskKey) {
-            onAttemptComplete(taskKey); 
+            onAttemptComplete(taskKey);
         }
-    };
+    };    
 
     return (
         <div className="flex flex-col items-center justify-center">

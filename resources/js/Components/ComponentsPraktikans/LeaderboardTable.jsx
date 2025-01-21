@@ -11,6 +11,11 @@ export default function LeaderboardTable() {
         { nama: "Muh Zaidan Fauzan", nim: "1104xxxxxxxxxx", kelas: "TF-46-03", nilai: "[ 999 ]" },
         { nama: "Muh Zaidan Fauzan", nim: "1104xxxxxxxxxx", kelas: "TF-46-03", nilai: "[ 999 ]" },
         { nama: "Muh Zaidan Fauzan", nim: "1104xxxxxxxxxx", kelas: "TF-46-03", nilai: "[ 999 ]" },
+        { nama: "Muh Zaidan Fauzan", nim: "1104xxxxxxxxxx", kelas: "TF-46-03", nilai: "[ 999 ]" },
+        { nama: "Muh Zaidan Fauzan", nim: "1104xxxxxxxxxx", kelas: "TF-46-03", nilai: "[ 999 ]" },
+        { nama: "Muh Zaidan Fauzan", nim: "1104xxxxxxxxxx", kelas: "TF-46-03", nilai: "[ 999 ]" },
+        { nama: "Muh Zaidan Fauzan", nim: "1104xxxxxxxxxx", kelas: "TF-46-03", nilai: "[ 999 ]" },
+        { nama: "Muh Zaidan Fauzan", nim: "1104xxxxxxxxxx", kelas: "TF-46-03", nilai: "[ 999 ]" },
         { nama: "Muh Zaidan Fauzan", nim: "1104xxxxxxxxxx", kelas: "TF-46-03", nilai: "[ 999 ]" }
     ];
 
@@ -75,7 +80,7 @@ export default function LeaderboardTable() {
                     </div>
                 </div>
             </div>
-            <div className="mt-4 mx-auto max-w-[790px] max-h-[355px] overflow-y-auto">
+            <div className="mt-[2.5vh] mx-auto max-w-[856px] h-[60vh] overflow-y-auto">
                 {rows.map((row, index) => (
                     <RowComponent
                         key={index}

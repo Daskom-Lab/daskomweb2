@@ -11,11 +11,18 @@ export default function ScoreTable() {
         { tanggal: "dd/mm/yyyy", modul: "Modul 1", nilai: "tp/ta/d1/d2/d3/d4/l1/l2", asisten: "DEY" },
         { tanggal: "dd/mm/yyyy", modul: "Modul 2", nilai: "tp/ta/d1/d2/d3/d4/l1/l2", asisten: "DEY" },
         { tanggal: "dd/mm/yyyy", modul: "Modul 3", nilai: "tp/ta/d1/d2/d3/d4/l1/l2", asisten: "DEY" },
+        { tanggal: "dd/mm/yyyy", modul: "Modul 3", nilai: "tp/ta/d1/d2/d3/d4/l1/l2", asisten: "DEY" },
+        { tanggal: "dd/mm/yyyy", modul: "Modul 3", nilai: "tp/ta/d1/d2/d3/d4/l1/l2", asisten: "DEY" },
+        { tanggal: "dd/mm/yyyy", modul: "Modul 3", nilai: "tp/ta/d1/d2/d3/d4/l1/l2", asisten: "DEY" },
+        { tanggal: "dd/mm/yyyy", modul: "Modul 3", nilai: "tp/ta/d1/d2/d3/d4/l1/l2", asisten: "DEY" },
+        { tanggal: "dd/mm/yyyy", modul: "Modul 3", nilai: "tp/ta/d1/d2/d3/d4/l1/l2", asisten: "DEY" },
+        { tanggal: "dd/mm/yyyy", modul: "Modul 3", nilai: "tp/ta/d1/d2/d3/d4/l1/l2", asisten: "DEY" },
+        { tanggal: "dd/mm/yyyy", modul: "Modul 3", nilai: "tp/ta/d1/d2/d3/d4/l1/l2", asisten: "DEY" },
         { tanggal: "dd/mm/yyyy", modul: "Modul 4", nilai: "tp/ta/d1/d2/d3/d4/l1/l2", asisten: "DEY" }
     ];
 
     const Table = ({ rows }) => (
-        <div className="mt-4 max-h-[400px] overflow-y-auto">
+        <div className="mt-[3vh] h-[68vh] overflow-y-auto">
             <table className="min-w-full border-collapse border-2 border-black">
                 <tbody>
                     {rows.map((row, index) => (

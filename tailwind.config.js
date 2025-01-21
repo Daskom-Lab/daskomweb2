@@ -41,7 +41,8 @@ export default {
                 dustyBlue: "#868A95",
                 softPearl: "#F2F3ED",
                 sageIvory: "#DADCD0",
-                goldenAmber: "#D4AF37"
+                goldenAmber: "#D4AF37",
+                darkGray: "#3F4145"
             },
         },
     },

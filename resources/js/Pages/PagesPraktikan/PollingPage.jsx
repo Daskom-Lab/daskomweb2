@@ -1,36 +1,30 @@
 import { Head } from "@inertiajs/react";
 import { useState } from "react";
 import PraktikanAuthenticated from "@/Layouts/PraktikanAuthenticatedLayout";
-import ContactAssistantTable from "@/Components/ComponentsPraktikans/ContactAssistantTable";
 import Clock from "@/Components/ComponentsAssistants/Clock";
 import ModalSoftware from "@/Components/ComponentsAssistants/ModalSoftware";
+import PollingHeader from "@/Components/ComponentsPraktikans/PollingHeader";
+import PollingContent from "@/Components/ComponentsPraktikans/PollingContent";
 
-export default function ContactAssistant({ auth }) {
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
-    const toggleSidebar = () => {
-        setIsSidebarOpen(!isSidebarOpen);
-    };
+export default function PollingPage({ auth }) {
+    const [activeCategory, setActiveCategory] = useState("Tercantik");
 
     return (
         <>
             <PraktikanAuthenticated
                 user={auth.user}
-                customWidth="w-[80%]"
+                customWidth="w-[65%]"
                 header={
                     <h2 className="font-semibold text-xl text-gray-800 leading-tight">
                         Dashboard
                     </h2>
                 }
             >
-                <Head title="Contact Assistant" />
-
-                <div className="mt-[8vh] flex mx-auto h-screen">
-                    <div 
-                        className={`transition-all duration-300 flex-1 ${isSidebarOpen ? 'ml-[240px]' : 'ml-14'}`}
-                    >
-                        <ContactAssistantTable />
-                    </div>
+                <Head title="Leaderboard Praktikan" />
+        
+                <div className="relative mt-[11vh] h-screen">
+                    <PollingHeader onCategoryClick={(category) => setActiveCategory(category)} />
+                    <PollingContent activeCategory={activeCategory} />
                 </div>
             </PraktikanAuthenticated>
             <Clock />
