@@ -85,6 +85,7 @@ class ConfigurationController extends Controller
             $config->kode_asisten = $request->kode_asisten ?? auth('sanctum')->user()->kode;
             $config->save();
             return response()->json([
+                'config' => $config,
                 'success' => true,
                 'message' => 'Configuration updated successfully.'
             ], 200);

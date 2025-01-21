@@ -86,7 +86,7 @@ Route::get('/laporan-pj/{id}', [LaporanPjController::class, 'show'])->name('show
 // Route::delete('/laporan-pj/{id}', [LaporanPjController::class, 'destroy'])->name('delete.laporanPJ'); //in audit for rollback feature maybe
 
 // Configuration
-Route::get('/config', [ConfigurationController::class, 'index'])->name('get.config')->middleware(['auth:sanctum', 'ability:lms-configuration']);
+Route::get('/config', [ConfigurationController::class, 'index'])->name('get.config')->middleware(['auth:sanctum', 'ability:lms-configuration, tp-configuration, praktikan-regist']);
 Route::put('/config', [ConfigurationController::class, 'update'])->name('update.config')->middleware(['auth:sanctum', 'ability:lms-configuration, tp-configuration, praktikan-regist']);
 
 // Pelanggaran
