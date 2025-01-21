@@ -18,7 +18,6 @@ class KelasController extends Controller
 {
 
     public function index(){
-        // dd(auth('sanctum')->user()->role);
         $kelas = Kelas::all();
         return response()->json([
             'message'=>'Kelas retrieved successfully.',
@@ -37,13 +36,12 @@ class KelasController extends Controller
 
         $modulEng = Modul::where('isEnglish', $request->isEnglish)->get();
         $modulReg = Modul::where('isEnglish', !$request->isEnglish)->get();
-        // dd($modulEng);
 
         if($modulEng->isEmpty() && $modulReg->isEmpty())
             return response()->json(['message'=>'Modul belum ada, silahkan tambahkan modul terlebih dahulu']);
 
         $countSameShift = Kelas::where('shift', $request->shift)->where('hari', $request->hari)->count();
-        foreach(Kelas::all() as $kelas) //ini masih bakal berubah
+        foreach(Kelas::all() as $kelas)
             if($countSameShift >= 2)
                 return response()->json(['message'=>"shift ini sudah ada 2"]);
 
