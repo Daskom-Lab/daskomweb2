@@ -25,6 +25,8 @@ return Application::configure(basePath: dirname(__DIR__))
                 'throttle:api',
                 \Illuminate\Routing\Middleware\SubstituteBindings::class,
             ],
+            'loggedIn' => \App\Http\Middleware\CheckLoggedIn::class,
+            'redirectIfAuthenticated' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         ]);
         $middleware->web(append: [
             \App\Http\Middleware\HandleInertiaRequests::class,
