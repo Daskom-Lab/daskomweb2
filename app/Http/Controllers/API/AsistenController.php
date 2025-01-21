@@ -14,13 +14,22 @@ class AsistenController extends Controller
      */
     public function index() //buat card asistens & foto polling
     {
-        $asisten = Asisten::leftJoin('roles', 'roles.id', '=', 'asistens.role_id')
-        ->select('nama', 'kode', 'roles.name as role', 'role_id', 'nomor_telepon', 'id_line', 'instagram', 'deskripsi')
-        ->get();
-        return response()->json([
-            'asisten' => $asisten,
-            'message' => 'Asisten retrieved successfully.'
-        ], 200);
+        try {
+            $asisten = Asisten::leftJoin('roles', 'roles.id', '=', 'asistens.role_id')
+                ->select('nama', 'kode', 'roles.name as role', 'role_id', 'nomor_telepon', 'id_line', 'instagram', 'deskripsi')
+                ->get();
+            return response()->json([
+                'success' => true,
+                'asisten' => $asisten,
+                'message' => 'Asisten retrieved successfully.',
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to retrieve Asisten.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     /**
@@ -42,38 +51,69 @@ class AsistenController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request) //edit profile
+    public function update(Request $request)
     {
-        $request->validate([  
-            'nomor_telepon' => 'required',    
-            'id_line' => 'required',    
-            'instagram' => 'required',    
-            'deskripsi' => 'required',    
+        $request->validate([
+            'nomor_telepon' => 'required|string',
+            'id_line' => 'required|string',
+            'instagram' => 'required|string',
+            'deskripsi' => 'required|string',
         ]);
-
-        $asisten = Asisten::find(auth('sanctum')->user()->id);
-        $asisten->nomor_telepon = $request->nomor_telepon;
-        $asisten->id_line = $request->id_line;
-        $asisten->instagram = $request->instagram;
-        $asisten->deskripsi = $request->deskripsi;
-        $asisten->save();
-        return response()->json([
-            'message' => 'Asisten updated successfully.'
-        ], 200);
-        
+        try {
+            $asisten = Asisten::find(auth('sanctum')->user()->id);
+            if (!$asisten) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Asisten not found.',
+                ], 404);
+            }
+            $asisten->nomor_telepon = $request->nomor_telepon;
+            $asisten->id_line = $request->id_line;
+            $asisten->instagram = $request->instagram;
+            $asisten->deskripsi = $request->deskripsi;
+            $asisten->save();
+            return response()->json([
+                'success' => true,
+                'message' => 'Asisten updated successfully.',
+                'asisten' => $asisten,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to update Asisten.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
+    
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy($id)
     {
-        $asisten = Asisten::findOrFail($id);
-        $role = Role::findOrFail($asisten->role_id);
-        $asisten->removeRole($role->name);
-        $asisten->delete();
-        return response()->json([
-            'message' => 'Asisten deleted successfully.'
-        ], 200);
+        try {
+            $asisten = Asisten::findOrFail($id);
+            $role = Role::findOrFail($asisten->role_id);
+            $asisten->removeRole($role->name);
+            $asisten->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'Asisten deleted successfully.',
+            ], 200);
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Asisten or Role not found.',
+                'error' => $e->getMessage(),
+            ], 404);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to delete Asisten.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
+    
 }
