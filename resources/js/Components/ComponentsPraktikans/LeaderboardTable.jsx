@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function LeaderboardTable() {
     const rows = [
         { nama: "Fauzan, Muhammad Zaidan", nim: "1104xxxxxxxxxx", kelas: "TF-46-INT", nilai: "[ 999 ]" },

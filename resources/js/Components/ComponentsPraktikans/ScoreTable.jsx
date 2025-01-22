@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function ScoreTable() {
     const rows = [
         { tanggal: "99/12/2025", modul: "Modul 1", nilai: "95/100/95/95/95/95/100/95", asisten: "FYN" },

@@ -1,5 +1,4 @@
 import { Head } from "@inertiajs/react";
-import React from "react";
 import PraktikanAuthenticated from "@/Layouts/PraktikanAuthenticatedLayout";
 import Clock from "@/Components/ComponentsAssistants/Clock";
 import ModalSoftware from "@/Components/ComponentsAssistants/ModalSoftware";
