@@ -19,8 +19,6 @@ export default function PollingPage({ auth }) {
         setIsSubmitted(true);
 
         localStorage.setItem("submittedCards", JSON.stringify(selectedCards));
-        console.log("Submitted data:", selectedCards);
-
         router.visit(`${ziggy.url}/polling-assistant`);
     };
 

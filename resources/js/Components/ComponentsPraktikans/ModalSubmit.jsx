@@ -7,7 +7,6 @@ export default function ModalSubmit({ isOpen, onClose, onConfirm, activeTask }) 
 
     const handleConfirm = () => {
         if (activeTask === "TesKeterampilan") {
-            console.log("Opening Feedback Modal for TesKeterampilan");
             setIsFeedbackModalOpen(true);
         } else {
             onConfirm(); 
