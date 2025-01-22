@@ -15,7 +15,7 @@ export default function TugasPendahuluan({
         "Apa yang dimaksud dengan nested loop? Berikan contoh penggunaannya dalam bahasa C!",
         "Jelaskan apa itu struktur data 'struct' dalam bahasa C dan bagaimana cara mendeklarasikannya!",
         "Jelaskan apa itu fungsi rekursif dalam bahasa C dan berikan contoh penggunaannya!",
-        "Apa perbedaan antara deklarasi variabel global dan lokal dalam bahasa C? Berikan contohnya!",
+        "//Lengkapi Codingan di bawah ini!\n#include <___> //(A) Tentukan library\n\nint main(){\n    int i, n, sum = 0;\n\n    // Input\n    printf(\"Masukkan jumlah bilangan: \");\n    scanf(\"%d\", &n);\n\n    // Operasi Perulangan\n    for (i = 1; i <= n; i++) {\n        sum += ___; //(B) Tambahkan angka ke dalam total\n    }\n\n    // Output\n    printf(\"Jumlah total dari 1 sampai %d adalah %d\", n, ___); //(C) Tentukan variabel\n    return 0;\n}",
     ];
 
     const [userAnswers, setUserAnswers] = useState(() => {
@@ -59,6 +59,13 @@ export default function TugasPendahuluan({
         }
     };
 
+    const determineMode = (question) => {
+        const simpleKeywords = [";", "{", "}", "#", "//"];
+        return simpleKeywords.some((keyword) => question.includes(keyword)) 
+            ? "bg-gray-200" 
+            : "bg-softIvory";
+    };
+
     return (
         <div className="mt-[1vh] p-5 transition-all duration-300 max-w-4xl mx-auto rounded-lg">
             <div className="flex bg-deepForestGreen rounded-lg py-2 px-2 mb-4 justify-center">
@@ -66,17 +73,27 @@ export default function TugasPendahuluan({
                     Tugas Pendahuluan
                 </h1>
             </div>
-            <div className="mt-5 p-4 bg-softIvory rounded-lg border-4 border-softPearl transition-colors duration-300">
-                <p className="text-lg font-medium">
-                    {currentQuestion}. {questions[currentQuestion - 1]}
+
+            <div className="mt-5 max-h-[55vh] p-4 rounded-lg border-4 bg-softIvory border-softPearl transition-colors duration-300 overflow-y-auto overflow-x-hidden">
+                <p className="text-lg font-medium mb-4">
+                    <b>Soal: {currentQuestion}</b>
                 </p>
+    
+                <pre
+                    className={`p-4 rounded-lg text-sm shadow-lg ${determineMode(questions[currentQuestion - 1])}`}
+                    style={{ whiteSpace: "pre-wrap", overflowX: "hidden", overflowY: "auto" }}
+                >
+                    <code>{questions[currentQuestion - 1]}</code>
+                </pre>
+    
                 <textarea
-                    className="mt-3 w-full bg-gainsboro h-24 p-2 border border-gray-300 rounded-md"
+                    className="mt-5 shadow-lg w-full bg-gainsboro h-24 p-2 border border-gray-300 rounded-md"
                     placeholder="Jawaban"
                     value={userAnswers[currentQuestion - 1]}
                     onChange={handleInputChange}
                 ></textarea>
             </div>
+
             <div className="mt-5 flex justify-between">
                 <button
                     onClick={handlePrevious}

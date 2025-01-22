@@ -1,4 +1,24 @@
-export default function ModalSubmit({ isOpen, onClose, onConfirm }) {
+import { useState } from "react";
+import Modal from "./Modal";
+import ModalFeedback from "./ModalFeedback";
+
+export default function ModalSubmit({ isOpen, onClose, onConfirm, activeTask }) {
+    const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
+
+    const handleConfirm = () => {
+        if (activeTask === "TesKeterampilan") {
+            console.log("Opening Feedback Modal for TesKeterampilan");
+            setIsFeedbackModalOpen(true);
+        } else {
+            onConfirm(); 
+        }
+    };
+
+    const closeFeedbackModal = () => {
+        setIsFeedbackModalOpen(false);
+        onConfirm();
+    };
+
     if (!isOpen) return null;
 
     return (
@@ -13,11 +33,21 @@ export default function ModalSubmit({ isOpen, onClose, onConfirm }) {
                 </button>
                 <button
                     className="mx-2 py-1 px-10 bg-softRed text-white text-lg font-bold rounded-sm shadow-sm shadow-black hover:bg-darkRed hover:shadow-white"
-                    onClick={onConfirm}
+                    onClick={handleConfirm}
                 >
                     Ya
                 </button>
             </div>
+
+            {isFeedbackModalOpen && (
+                <Modal
+                    isOpen={true}
+                    onClose={closeFeedbackModal}
+                    width="w-[57vw] h-[57vh]"
+                >
+                    <ModalFeedback onClose={closeFeedbackModal} />
+                </Modal>
+            )}
         </div>
     );
 }

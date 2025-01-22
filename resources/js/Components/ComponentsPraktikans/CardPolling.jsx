@@ -5,13 +5,18 @@ export default function CardPolling({
     onClick,
     isDimmed,
     isSelected,
+    isDisabled,
 }) {
     return (
         <div
-            className={`shadow-lg bg-softIvory rounded-lg p-4 text-center transition-all cursor-pointer hover:scale-105 duration-300 ${
-                isDimmed || isSelected ? "opacity-50 blur-[1px]" : "opacity-100"
-            }`} 
-            onClick={onClick}
+            className={`shadow-lg bg-softIvory rounded-lg p-4 text-center transition-all duration-300 ${
+                isDimmed ? "opacity-50" : "opacity-100"
+            } ${
+                isDisabled
+                    ? "cursor-not-allowed"
+                    : "cursor-pointer hover:scale-105"
+            }`}
+            onClick={!isDisabled ? onClick : undefined}
         >
             <img
                 src={image}

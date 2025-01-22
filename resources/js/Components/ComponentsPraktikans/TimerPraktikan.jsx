@@ -1,3 +1,4 @@
+// TimerPraktikan.jsx
 import { useState, useEffect } from "react";
 import iconSwipeLeft from "../../../assets/timer/iconSwipeLeft.svg";
 import iconSwipeRight from "../../../assets/timer/iconSwipeRight.svg";
@@ -5,6 +6,7 @@ import iconSwipeLeftHover from "../../../assets/timer/iconSwipeLeftHover.svg";
 import iconSwipeRightHover from "../../../assets/timer/iconSwipeRightHover.svg";
 import Modal from "../ComponentsPraktikans/Modal";
 import ModalSubmit from "../ComponentsPraktikans/ModalSubmit";
+import ModalFeedback from "../ComponentsPraktikans/ModalFeedback";
 
 export default function TimerPraktikan({
     isRunning,
@@ -52,11 +54,11 @@ export default function TimerPraktikan({
     }, [isRunning, setIsRunning]);
 
     useEffect(() => {
-        if (!answers || answers.length === 0) {
+        if (!answers || answers.length === 0 || answers.length !== questions.length) {
             const initializedAnswers = Array(questions.length).fill(null);
             setAnswers(initializedAnswers);
         }
-    }, [questions]);    
+    }, [questions]);
 
     const formatTime = (timeInSeconds) => {
         const hours = Math.floor(timeInSeconds / 3600);
@@ -79,25 +81,20 @@ export default function TimerPraktikan({
 
     const confirmTaskSubmission = () => {
         if (onTaskSubmit && Array.isArray(answers)) {
-            const storageKey =
-                activeTask === "TugasPendahuluan"
-                    ? "tpAnswers"
-                    : activeTask === "TesAwal"
-                    ? "taAnswers"
-                    : activeTask === "Jurnal"
-                    ? "jurnalAnswer"
-                    : activeTask === "Mandiri"
-                    ? "mandiriAnswer"
-                    : activeTask === "TesKeterampilan"
-                    ? "tkAnswer"
-                    : null;
-            if (storageKey) {
-                localStorage.setItem(storageKey, JSON.stringify(answers));
-            }
             onTaskSubmit(activeTask, answers);
         }
         setIsSubmitModalOpen(false);
     };
+
+    const navigateToModuleSection = () => {
+        setIsRunning(false);
+        setIsHidden(true);
+    };
+
+    const handleFeedbackSubmit = () => {
+        setIsFeedbackModalOpen(true);
+        navigateToModuleSection();
+    };    
 
     return (
         <div>
@@ -131,28 +128,28 @@ export default function TimerPraktikan({
                 </div>
 
                 <div className="grid grid-cols-5 gap-2 text-center pt-[5vh] mb-10">
-                {Array.from({ length: questionsCount }, (_, index) => {
-                    const isAnswered =
-                        (activeTask === "TesAwal" || activeTask === "TesKeterampilan")
-                            ? answers[index] !== undefined && answers[index] !== null
-                            : typeof answers[index] === "string" && answers[index].trim().length > 0;
+                    {Array.from({ length: questionsCount }, (_, index) => {
+                        const isAnswered =
+                            (activeTask === "TesAwal" || activeTask === "TesKeterampilan")
+                                ? answers[index] !== undefined && answers[index] !== null
+                                : typeof answers[index] === "string" && answers[index].trim().length > 0;
 
-                    return (
-                        <div
-                            key={index}
-                            className={`p-2 border border-gray-300 rounded 
+                        return (
+                            <div
+                                key={index}
+                                className={`p-2 border border-gray-300 rounded 
                                 ${
                                     isAnswered
                                         ? "bg-deepForestGreen text-white hover:bg-darkOliveGreen"
                                         : "bg-softPearl hover:bg-softGray"
                                 } 
                                 font-semibold cursor-pointer shadow-md`}
-                            onClick={() => handleClick(index + 1)}
-                        >
-                            {index + 1}
-                        </div>
-                    );
-                })}
+                                onClick={() => handleClick(index + 1)}
+                            >
+                                {index + 1}
+                            </div>
+                        );
+                    })}
                 </div>
 
                 <div className="flex justify-center items-center w-full">
@@ -172,6 +169,7 @@ export default function TimerPraktikan({
                         isOpen={isSubmitModalOpen}
                         onClose={closeSubmitModal}
                         onConfirm={confirmTaskSubmission}
+                        activeTask={activeTask} 
                     />
                 </Modal>
             )}

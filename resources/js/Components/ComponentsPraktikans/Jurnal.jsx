@@ -58,6 +58,13 @@ export default function Jurnal({
         }
     };
 
+    const determineMode = (question) => {
+        const simpleKeywords = [";", "{", "}", "#", "//"];
+        return simpleKeywords.some((keyword) => question.includes(keyword)) 
+            ? "bg-gray-200" 
+            : "bg-softIvory";
+    };
+
     return (
         <div className="mt-[1vh] p-5 transition-all duration-300 max-w-4xl mx-auto rounded-lg">
             <div className="flex bg-deepForestGreen rounded-lg py-2 px-2 mb-4 justify-center">
@@ -66,23 +73,20 @@ export default function Jurnal({
                 </h1>
             </div>
     
-            <div
-                className="mt-5 p-4 bg-softIvory rounded-lg border-4 border-softPearl transition-colors duration-300"
-                style={{ maxHeight: "50vh", overflowY: "auto", overflowX: "hidden" }}
-            >
+            <div className="mt-5 max-h-[55vh] p-4 rounded-lg border-4 bg-softIvory border-softPearl transition-colors duration-300 overflow-y-auto overflow-x-hidden">
                 <p className="text-lg font-medium mb-4">
-                    <b>{currentQuestion}. Soal :</b>
+                    <b>Soal: {currentQuestion}</b>
                 </p>
     
                 <pre
-                    className="bg-softIvory p-4 rounded-lg text-sm"
-                    style={{ whiteSpace: "pre-wrap", overflowX: "hidden", overflowY: "auto" }}
+                    className={`p-4 rounded-lg text-sm overflow-x-hidden overflow-y-auto shadow-lg ${determineMode(questions[currentQuestion - 1])}`}
+                    style={{ whiteSpace: "pre-wrap" }}
                 >
                     <code>{questions[currentQuestion - 1]}</code>
                 </pre>
     
                 <textarea
-                    className="mt-3 w-full bg-gainsboro h-24 p-2 border border-gray-300 rounded-md"
+                    className="mt-5 shadow-lg w-full bg-gainsboro h-24 p-2 border border-gray-300 rounded-md"
                     placeholder="Jawaban"
                     value={userAnswers[currentQuestion - 1]}
                     onChange={handleInputChange}

@@ -1,4 +1,11 @@
-export default function TPReview({ answers, questions, activeTask }) {
+export default function TPReview({ answers, questions }) {
+    const determineMode = (question) => {
+        const simpleKeywords = [";", "{", "}", "#", "//"];
+        return simpleKeywords.some((keyword) => question.includes(keyword))
+            ? "bg-gray-200"
+            : "bg-softIvory";
+    };
+
     return (
         <div className="mt-[1vh] p-5 transition-all duration-300 w-[70vw] max-h-full mx-auto rounded-lg relative right-[-4vw]">
             <div className="flex bg-deepForestGreen rounded-lg py-2 px-2 mb-4 justify-center">
@@ -15,17 +22,25 @@ export default function TPReview({ answers, questions, activeTask }) {
                 {questions.map((question, index) => (
                     <div
                         key={index}
-                        className="p-4 bg-softIvory rounded-lg border-4 border-softPearl"
+                        className="mt-5 max-h-[55vh] p-4 bg-softIvory rounded-lg border-4 border-softPearl transition-colors duration-300 overflow-y-auto overflow-x-hidden"
                     >
-                        <p className="text-lg font-medium">
-                            {index + 1}. {question}
+                        <p className="text-lg font-medium mb-4">
+                            <b>Soal: {index + 1}</b>
                         </p>
+
+                        <pre
+                            className={`p-4 rounded-lg text-sm overflow-y-auto overflow-x-hidden shadow-lg ${determineMode(question)}`}
+                            style={{ whiteSpace: "pre-wrap" }}
+                        >
+                            <code>{question}</code>
+                        </pre>
+
                         <textarea
-                            className="mt-3 w-full bg-gainsboro h-24 p-2 border border-gray-300 rounded-md overflow-y-auto cursor-not-allowed"
+                            className="mt-5 w-full bg-gainsboro h-24 p-2 border border-gray-300 rounded-md shadow-lg cursor-not-allowed"
                             value={answers[index] || "Belum ada jawaban"}
                             readOnly
                             style={{
-                                color: answers[index]?.trim() ? "black" : "darkGray", 
+                                color: answers[index]?.trim() ? "black" : "darkGray",
                             }}
                         ></textarea>
                     </div>

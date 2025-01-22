@@ -23,6 +23,13 @@ export default function TKReview() {
         );
     }
 
+    const determineMode = (question) => {
+        const simpleKeywords = [";", "{", "}", "#", "//"];
+        return simpleKeywords.some((keyword) => question.includes(keyword))
+            ? "bg-gray-200"
+            : "bg-softIvory";
+    };
+
     return (
         <div className="mt-[1vh] p-5 transition-all duration-300 w-[70vw] max-h-full mx-auto rounded-lg relative right-[-4vw]">
             <div className="flex bg-deepForestGreen rounded-lg py-2 px-2 mb-4 justify-center">
@@ -31,7 +38,7 @@ export default function TKReview() {
                 </h1>
             </div>
             <div
-                className="space-y-6 overflow-y-auto h-[90vh]"
+                className="space-y-8 overflow-y-auto h-[90vh]"
                 style={{
                     maxHeight: "calc(80vh - 6rem)",
                 }}
@@ -47,7 +54,8 @@ export default function TKReview() {
                         <>
                             <div
                                 key={index}
-                                className="mt-[4vh] relative p-4 bg-softIvory rounded-lg border-4 border-softPearl shadow-lg"
+                                className="mt-[1vh] relative p-4 bg-softIvory rounded-lg border-4 border-softPearl shadow-lg"
+                                style={{ top: "3vh" }}
                             >
                                 <span
                                     className={`absolute -top-[25px] right-0 text-sm underline ${
@@ -57,18 +65,23 @@ export default function TKReview() {
                                     Mark {isCorrect ? "1.00" : "0.00"} out of 1.00
                                 </span>
 
-                                <p className="text-lg font-medium">
+                                <pre
+                                    className={`p-4 rounded-lg text-sm overflow-y-auto overflow-x-hidden shadow-lg ${determineMode(
+                                        questionObj.question
+                                    )}`}
+                                    style={{ whiteSpace: "pre-wrap" }}
+                                >
                                     {index + 1}. {questionObj.question || "Soal tidak tersedia"}
-                                </p>
+                                </pre>
 
-                                <div className="mt-3">
+                                <div className="mt-3 p-1">
                                     {options.map((option, optionIndex) => (
                                         <div
                                             key={optionIndex}
                                             className="flex items-center space-x-3 mb-2"
                                         >
                                             <div
-                                                className={`w-6 h-6 flex items-center justify-center rounded-full border-2 ${
+                                                className={`w-4 h-4 flex items-center justify-center rounded-full border-2 ${
                                                     userAnswerIndex === optionIndex
                                                         ? "bg-black border-darkGray"
                                                         : "bg-softIvory border-gray-400"
@@ -88,7 +101,7 @@ export default function TKReview() {
                                 </div>
                             </div>
 
-                            <div className="mt-[-2vh] mb-5 p-2 bg-softPearl rounded-lg border-2 border-gray-300">
+                            <div className="p-2 bg-softPearl rounded-lg border-2 shadow-lg border-darkGray">
                                 <span className="text-gray-600 text-sm font-semibold">
                                     Answer : {correctAnswer}
                                 </span>
