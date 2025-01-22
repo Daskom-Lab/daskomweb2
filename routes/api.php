@@ -43,8 +43,8 @@ use App\Http\Controllers\Auth\RegisteredPraktikanController;
 use App\Models\Deadline;
 
 // i guess
-// Route::post('/registrasi/asisten', [RegisteredAsistenController::class, 'store'])->name('store.asisten')->middleware('guest');
-// Route::post('/registrasi/praktikan', [RegisteredPraktikanController::class, 'store'])->name('store.praktikan')->middleware('guest');
+Route::post('/register/asisten', [RegisteredAsistenController::class, 'store'])->name('store.asisten')->middleware('guest');
+Route::post('/register/praktikan', [RegisteredPraktikanController::class, 'store'])->name('store.praktikan')->middleware('guest');
 
 // Asisten
 Route::get('/asisten', [AsistenController::class, 'index'])->name('get.asisten')->middleware(['auth:sanctum', 'ability:see-plot,lihat-asisten']);

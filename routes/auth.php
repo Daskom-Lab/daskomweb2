@@ -17,7 +17,7 @@ use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 
 Route::middleware('guest')->group(function () {
-    Route::post('register/asisten', [RegisteredAsistenController::class, 'store']);
+    // Route::post('register/asisten', [RegisteredAsistenController::class, 'store']);
 
     Route::post('login/asisten', [LoginAsistenController::class, 'store']);
 });
@@ -34,7 +34,7 @@ Route::prefix('asisten')->group(function () {
 
 
 Route::middleware('guest')->group(function () {
-    Route::post('register/praktikan', [RegisteredPraktikanController::class, 'store']);
+    // Route::post('register/praktikan', [RegisteredPraktikanController::class, 'store']);
 
     Route::post('login/praktikan', [LoginPraktikanController::class, 'store']);
 });
