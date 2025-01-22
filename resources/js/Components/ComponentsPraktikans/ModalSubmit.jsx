@@ -1,9 +1,11 @@
 import { useState } from "react";
 import Modal from "./Modal";
 import ModalFeedback from "./ModalFeedback";
+import ModalSuccessData from "./ModalSuccessData";
 
 export default function ModalSubmit({ isOpen, onClose, onConfirm, activeTask }) {
     const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
+    const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
     const handleConfirm = () => {
         if (activeTask === "TesKeterampilan") {
@@ -15,7 +17,12 @@ export default function ModalSubmit({ isOpen, onClose, onConfirm, activeTask }) 
 
     const closeFeedbackModal = () => {
         setIsFeedbackModalOpen(false);
-        onConfirm();
+
+        setIsSuccessModalOpen(true);
+        setTimeout(() => {
+            setIsSuccessModalOpen(false);
+            onConfirm(); 
+        }, 2000);
     };
 
     if (!isOpen) return null;
@@ -47,6 +54,7 @@ export default function ModalSubmit({ isOpen, onClose, onConfirm, activeTask }) 
                     <ModalFeedback onClose={closeFeedbackModal} />
                 </Modal>
             )}
+            <ModalSuccessData isVisible={isSuccessModalOpen} />
         </div>
     );
 }

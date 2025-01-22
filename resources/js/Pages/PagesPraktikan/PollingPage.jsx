@@ -5,6 +5,7 @@ import Clock from "@/Components/ComponentsAssistants/Clock";
 import ModalSoftware from "@/Components/ComponentsAssistants/ModalSoftware";
 import PollingHeader from "@/Components/ComponentsPraktikans/PollingHeader";
 import PollingContent from "@/Components/ComponentsPraktikans/PollingContent";
+import ModalSuccessData from "@/Components/ComponentsPraktikans/ModalSuccessData";
 
 export default function PollingPage({ auth }) {
     const { ziggy } = usePage().props;
@@ -14,12 +15,19 @@ export default function PollingPage({ auth }) {
         return storedCards ? JSON.parse(storedCards) : {};
     });
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [showModal, setShowModal] = useState(false);
 
     const handleSubmit = () => {
+        if (isSubmitted) return; 
         setIsSubmitted(true);
+        setShowModal(true);
 
         localStorage.setItem("submittedCards", JSON.stringify(selectedCards));
-        router.visit(`${ziggy.url}/polling-assistant`);
+
+        setTimeout(() => {
+            setShowModal(false); 
+            router.visit(`${ziggy.url}/polling-assistant`);
+        }, 2000);
     };
 
     return (
@@ -54,12 +62,14 @@ export default function PollingPage({ auth }) {
                     <PollingContent
                         activeCategory={activeCategory}
                         onSubmit={setSelectedCards}
-                        isSubmitted={isSubmitted} 
+                        isSubmitted={isSubmitted}
                     />
                 </div>
             </PraktikanAuthenticated>
             <Clock />
             <ModalSoftware />
+
+            <ModalSuccessData isVisible={showModal} />
         </>
     );
 }
