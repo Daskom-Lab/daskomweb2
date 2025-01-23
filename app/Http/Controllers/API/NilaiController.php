@@ -22,99 +22,160 @@ class NilaiController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'tp'=>'required|numeric',
-            'ta'=>'required|numeric',
-            'd1'=>'required|numeric',
-            'd2'=>'required|numeric',
-            'd3'=>'required|numeric',
-            'd4'=>'required|numeric',
-            'l1'=>'required|numeric',
-            'l2'=>'required|numeric', 
-            'modul_id' => 'required|numeric',
-            'asisten_id'=>'required|numeric',
-            'kelas_id'=>'required|numeric',
-            'praktikan_id'=>'required|numeric',
+        $validatedData = $request->validate([
+            'tp'           => 'required|numeric|min:0|max:100',
+            'ta'           => 'required|numeric|min:0|max:100',
+            'd1'           => 'required|numeric|min:0|max:100',
+            'd2'           => 'required|numeric|min:0|max:100',
+            'd3'           => 'required|numeric|min:0|max:100',
+            'd4'           => 'required|numeric|min:0|max:100',
+            'l1'           => 'required|numeric|min:0|max:100',
+            'l2'           => 'required|numeric|min:0|max:100',
+            'modul_id'     => 'required|exists:moduls,id',
+            'asisten_id'   => 'required|exists:asistens,id',
+            'kelas_id'     => 'required|exists:kelas,id',
+            'praktikan_id' => 'required|exists:praktikans,id',
         ]);
-        
-        $avg = ($request->tp+$request->ta+$request->d1+$request->d2+$request->d3+$request->d4+$request->l1+$request->l2)/8;
-        // dd($avg);
-
-        $nilai = Nilai::create([
-            'tp'=>$request->tp,
-            'ta'=>$request->ta,
-            'd1'=>$request->d1,
-            'd2'=>$request->d2,
-            'd3'=>$request->d3,
-            'd4'=>$request->d4,
-            'l1'=>$request->l1,
-            'l2'=>$request->l2 ,
-            'avg'=>$avg,
-            'modul_id'=>$request->modul_id,
-            'asisten_id'=>$request->asisten_id,
-            'kelas_id'=>$request->kelas_id,
-            'praktikan_id'=>$request->praktikan_id
-        ]);
-
-        return response()->json(['message'=>'nilai berhasil di tambahkan'],200);
+        try {
+            $avg = (
+                $validatedData['tp'] +
+                $validatedData['ta'] +
+                $validatedData['d1'] +
+                $validatedData['d2'] +
+                $validatedData['d3'] +
+                $validatedData['d4'] +
+                $validatedData['l1'] +
+                $validatedData['l2']
+            ) / 8;
+            $nilai = Nilai::create([
+                'tp'           => $validatedData['tp'],
+                'ta'           => $validatedData['ta'],
+                'd1'           => $validatedData['d1'],
+                'd2'           => $validatedData['d2'],
+                'd3'           => $validatedData['d3'],
+                'd4'           => $validatedData['d4'],
+                'l1'           => $validatedData['l1'],
+                'l2'           => $validatedData['l2'],
+                'avg'          => $avg,
+                'modul_id'     => $validatedData['modul_id'],
+                'asisten_id'   => $validatedData['asisten_id'],
+                'kelas_id'     => $validatedData['kelas_id'],
+                'praktikan_id' => $validatedData['praktikan_id'],
+            ]);
+            return response()->json([
+                'message' => 'Nilai berhasil ditambahkan.',
+                'data'    => $nilai,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Terjadi kesalahan saat menambahkan nilai.',
+                'error'   => $e->getMessage(),
+            ], 500);
+        }
     }
+    
 
     /**
      * Display the specified resource.
      */
     public function show()
     {
-        $nilai = Nilai::where('praktikan_id', auth('sanctum')->user()->id)->get();
-        return response()->json([
-            'nilai' => $nilai
-        ]);
+        try {
+            $nilai = Nilai::where('praktikan_id', auth('sanctum')->user()->id)->get();
+            if ($nilai->isEmpty()) {
+                return response()->json([
+                    'message' => 'Data nilai tidak ditemukan untuk praktikan ini.',
+                ], 404);
+            }
+            return response()->json([
+                'nilai' => $nilai,
+                'message' => 'Data nilai berhasil diambil.',
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Terjadi kesalahan saat mengambil data nilai.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
+
     public function showAsisten($idPraktikan, $idModul)
     {
-        $nilai = Nilai::where('praktikan_id', $idPraktikan)->where('modul_id', $idModul)->where('asisten_id', auth('asisten')->user()->id)->first();
-        return response()->json([
-            'nilai' => $nilai
-        ]);
+        try {
+            $nilai = Nilai::where('praktikan_id', $idPraktikan)
+                ->where('modul_id', $idModul)
+                ->where('asisten_id', auth('asisten')->user()->id)
+                ->first();
+            if (!$nilai) {
+                return response()->json([
+                    'message' => 'Data nilai tidak ditemukan untuk kombinasi praktikan, modul, dan asisten ini.',
+                ], 404);
+            }
+            return response()->json([
+                'nilai' => $nilai,
+                'message' => 'Data nilai berhasil diambil.',
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Terjadi kesalahan saat mengambil data nilai.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
+    
 
     /**
      * Update the specified resource in storage.
      */
+    public function validateRequest(Request $request)
+    {
+        return $request->validate([
+            'tp' => 'required|numeric|min:0|max:100',
+            'ta' => 'required|numeric|min:0|max:100',
+            'd1' => 'required|numeric|min:0|max:100',
+            'd2' => 'required|numeric|min:0|max:100',
+            'd3' => 'required|numeric|min:0|max:100',
+            'd4' => 'required|numeric|min:0|max:100',
+            'l1' => 'required|numeric|min:0|max:100',
+            'l2' => 'required|numeric|min:0|max:100',
+            'modul_id' => 'required|exists:moduls,id',
+            'asisten_id' => 'required|exists:asistens,id',
+            'kelas_id' => 'required|exists:kelas,id',
+            'praktikan_id' => 'required|exists:praktikans,id',
+        ]);
+    }
+
     public function update(Request $request, $id)
     {
-        $nilai = Nilai::find($id);
-        $request->validate([
-            'tp'=>'required|numeric',
-            'ta'=>'required|numeric',
-            'd1'=>'required|numeric',
-            'd2'=>'required|numeric',
-            'd3'=>'required|numeric',
-            'd4'=>'required|numeric',
-            'l1'=>'required|numeric',
-            'l2'=>'required|numeric', 
-            'modul_id' => 'required|integer',
-            'asisten_id'=>'required|integer',
-            'kelas_id'=>'required|integer',
-            'praktikan_id'=>'required|integer', 
-        ]);
-
-        $avg = ($request->tp+$request->ta+$request->d1+$request->d2+$request->d3+$request->d4+$request->l1+$request->l2)/8;
-        $nilai->tp = $request->tp;
-        $nilai->ta = $request->ta;
-        $nilai->d1 = $request->d1;
-        $nilai->d2 = $request->d2;
-        $nilai->d3 = $request->d3;
-        $nilai->d4 = $request->d4;
-        $nilai->l1 = $request->l1;
-        $nilai->l2 = $request->l2;
-        $nilai->avg = $avg;
-        $nilai->modul_id = $request->modul_id;
-        $nilai->asisten_id = $request->asisten_id;
-        $nilai->kelas_id = $request->kelas_id;
-        $nilai->praktikan_id = $request->praktikan_id;
-        $nilai->save();
-
-        return response()->json(['message'=>'nilai berhasil di ubah'],200);
+        try {
+            $nilai = Nilai::find($id);
+            if (!$nilai) {
+                return response()->json([
+                    'message' => 'Data nilai dengan ID ' . $id . ' tidak ditemukan.'
+                ], 404);
+            }
+            $validatedData = $this->validateRequest($request);
+            $avg = (
+                $validatedData['tp'] +
+                $validatedData['ta'] +
+                $validatedData['d1'] +
+                $validatedData['d2'] +
+                $validatedData['d3'] +
+                $validatedData['d4'] +
+                $validatedData['l1'] +
+                $validatedData['l2']
+            ) / 8;
+            $nilai->update(array_merge($validatedData, ['avg' => $avg]));
+            return response()->json([
+                'message' => 'Data nilai berhasil diperbarui.',
+                'nilai' => $nilai,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Terjadi kesalahan saat memperbarui data nilai.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
     /**

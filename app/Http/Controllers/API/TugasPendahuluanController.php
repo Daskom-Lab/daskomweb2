@@ -14,12 +14,27 @@ class TugasPendahuluanController extends Controller
      */
     public function index()
     {
-        $tugas = Tugaspendahuluan::leftJoin('moduls', 'moduls.id', '=', 'tugaspendahuluans.modul_id')->get();
-        return response()->json([
-            "status" => "success",
-            "data" => $tugas,
-        ]);
+        try {
+            $tugas = Tugaspendahuluan::leftJoin('moduls', 'moduls.id', '=', 'tugaspendahuluans.modul_id')
+                ->select('tugaspendahuluans.*', 'moduls.nama_modul')
+                ->get();
+            if ($tugas->isEmpty()) {
+                return response()->json([
+                    "message" => "Tidak ada tugas ditemukan.",
+                ], 404);
+            }
+            return response()->json([
+                "status" => "success",
+                "data" => $tugas,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "message" => "Terjadi kesalahan saat mengambil data tugas.",
+                "error" => $e->getMessage(),
+            ], 500);
+        }
     }
+    
 
     /**
      * Store a newly created resource in storage.
@@ -42,22 +57,40 @@ class TugasPendahuluanController extends Controller
      */
     public function update(Request $request)
     {
+        // Validasi input
         $request->validate([
-            'isActive' => 'required|integer',
+            'data' => 'required|array',
+            'data.*.id' => 'required|integer|exists:tugaspendahuluans,id',
+            'data.*.isActive' => 'required|integer|in:0,1',
         ]);
-        $data =  $request->all();
-        for($i = 0; $i < count($data); $i++){
-            $tugas = Tugaspendahuluan::find($data[$i]["id"]);
-            $tugas->isActive = $data[$i]["isActive"];
-            $tugas->updated_at = now();
-            $tugas->save();
+        try {
+            $updatedTugas = []; 
+            foreach ($request->data as $item) {
+                $tugas = Tugaspendahuluan::find($item['id']);
+                
+                if (!$tugas) {
+                    return response()->json([
+                        'message' => "Tugas dengan ID {$item['id']} tidak ditemukan.",
+                    ], 404); 
+                }
+                $tugas->isActive = $item['isActive'];
+                $tugas->updated_at = now();
+                $tugas->save();
+                $updatedTugas[] = $tugas;
+            }
+    
+            return response()->json([
+                'status' => 'success',
+                'data' => $updatedTugas,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Terjadi kesalahan saat mengupdate tugas.',
+                'error' => $e->getMessage(),
+            ], 500);
         }
-
-        return response()->json([
-            "status" => "success",
-            "data" => $tugas,
-        ]);
     }
+    
 
     /**
      * Remove the specified resource from storage.

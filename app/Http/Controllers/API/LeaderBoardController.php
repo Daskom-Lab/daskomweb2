@@ -9,32 +9,50 @@ use App\Http\Controllers\Controller;
 
 class LeaderBoardController extends Controller
 {
+    private function getLeaderboardData($kelasId = null)
+    {
+        $query = DB::table('praktikans')
+            ->leftJoin('nilais', 'praktikans.id', '=', 'nilais.praktikan_id')
+            ->leftJoin('kelas', 'praktikans.kelas_id', '=', 'kelas.id')
+            ->select(
+                'praktikans.id',
+                'praktikans.nama',
+                'praktikans.nim',
+                'kelas.kelas',
+                DB::raw('AVG(nilais.avg) as average_nilai')
+            )
+            ->groupBy('praktikans.id', 'praktikans.nama', 'praktikans.nim', 'kelas.kelas')
+            ->orderBy('average_nilai', 'desc');
+        if ($kelasId) {
+            $query->where('praktikans.kelas_id', $kelasId);
+        }
+        return $query->get();
+    }
+
     public function index()
     {
-       $leaderboard =  DB::table('praktikans')
-        ->leftJoin('nilais', 'praktikans.id', '=', 'nilais.praktikan_id')
-        ->leftJoin('kelas', 'praktikans.kelas_id', '=', 'kelas.id')
-        ->select('praktikans.id', 'praktikans.nama', 'praktikans.nim', 'kelas.kelas', DB::raw('AVG(nilais.avg) as average_nilai'))
-        ->groupBy('praktikans.id', 'praktikans.nama')
-        ->orderBy('average_nilai', 'desc')
-        ->get();
+        $leaderboard = $this->getLeaderboardData();
         return response()->json([
-            'leaderboard' => $leaderboard
-        ]);
+            'status' => 'success',
+            'leaderboard' => $leaderboard,
+            'message' => 'Leaderboard retrieved successfully.'
+        ], 200);
     }
 
     public function show($id)
     {
-        $leaderboard =  DB::table('praktikans')
-        ->leftJoin('nilais', 'praktikans.id', '=', 'nilais.praktikan_id')
-        ->leftJoin('kelas', 'praktikans.kelas_id', '=', 'kelas.id')
-        ->select('praktikans.id', 'praktikans.nama', 'praktikans.nim', 'kelas.kelas', DB::raw('AVG(nilais.avg) as average_nilai'))
-        ->where('praktikans.kelas_id', $id)
-        ->groupBy('praktikans.id', 'praktikans.nama')
-        ->orderBy('average_nilai', 'desc')
-        ->get();
+        $leaderboard = $this->getLeaderboardData($id);
+        // Check if leaderboard is empty
+        if ($leaderboard->isEmpty()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Tidak ada data untuk kelas dengan ID ini.',
+            ], 404);
+        }
         return response()->json([
-            'leaderboard' => $leaderboard
-        ]);
+            'status' => 'success',
+            'leaderboard' => $leaderboard,
+            'message' => 'Leaderboard retrieved successfully.'
+        ], 200);
     }
 }
