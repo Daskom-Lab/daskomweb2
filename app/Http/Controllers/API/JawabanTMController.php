@@ -22,47 +22,95 @@ class JawabanTMController extends Controller
      */
     public function store(Request $request)
     {
-        JawabanMandiri::where('praktikan_id', $request->praktikan_id)
-        ->where('modul_id', $request->modul_id)
-        ->delete();
-        $request->validate([
-            'jawaban' => 'required',
-            'soal_id' => 'required',
-        ]);
-
-        $jawaban = JawabanMandiri::create([
-            'jawaban' => $request->jawaban??'-',
-            'soal_id' => $request->soal_id,
-            'praktikan_id' => $request->praktikan_id,
-            'modul_id' => $request->modul_id
-        ]);
-
-        return response()->json([
-            "status" => "success"
-        ]);
-    }
+        try {
+            $validatedData = $request->validate([
+                'praktikan_id' => 'required|integer',
+                'modul_id' => 'required|integer',
+                'jawaban' => 'required|string',
+                'soal_id' => 'required|integer',
+            ]);
+            JawabanMandiri::where('praktikan_id', $validatedData['praktikan_id'])
+                ->where('modul_id', $validatedData['modul_id'])
+                ->delete();
+            $jawaban = JawabanMandiri::create([
+                'praktikan_id' => $validatedData['praktikan_id'],
+                'modul_id' => $validatedData['modul_id'],
+                'soal_id' => $validatedData['soal_id'],
+                'jawaban' => $validatedData['jawaban'] ?? '-',
+            ]);
+            return response()->json([
+                "status" => "success",
+                "message" => "Jawaban berhasil disimpan",
+                "data" => $jawaban
+            ], 201);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return response()->json([
+                "status" => "error",
+                "message" => "Validasi gagal",
+                "errors" => $e->errors(),
+            ], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => "error",
+                "message" => "Terjadi kesalahan saat menyimpan jawaban",
+                "error" => $e->getMessage(),
+            ], 500);
+        }
+    }    
 
     /**
      * Display the specified resource.
      */
     public function show($idModul)
-    {   
-        $jawaban = JawabanMandiri::where('praktikan_id', auth('sanctum')->user()->id)->where('modul_id', $idModul)->get();
-        return response()->json([
-            "status" => "success",
-            "jawaban_mandiri" => $jawaban
-        ]);
-    }
-
-
-    public function showAsisten($idPraktikan,$idModul)
     {
-        $jawaban = JawabanMandiri::where('praktikan_id', $idPraktikan)->where('modul_id', $idModul)->get();
-        return response()->json([
-            "status" => "success",
-            "jawaban_mandiri" => $jawaban
-        ]);
+        try {
+            $jawaban = JawabanMandiri::where('praktikan_id', auth('sanctum')->user()->id)
+                ->where('modul_id', $idModul)
+                ->get();
+            if ($jawaban->isEmpty()) {
+                return response()->json([
+                    "status" => "error",
+                    "message" => "Jawaban tidak ditemukan untuk modul ini."
+                ], 404);
+            }
+            return response()->json([
+                "status" => "success",
+                "jawaban_mandiri" => $jawaban
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => "error",
+                "message" => "Terjadi kesalahan saat mengambil jawaban.",
+                "error" => $e->getMessage()
+            ], 500);
+        }
     }
+
+    public function showAsisten($idPraktikan, $idModul)
+    {
+        try {
+            $jawaban = JawabanMandiri::where('praktikan_id', $idPraktikan)
+                ->where('modul_id', $idModul)
+                ->get();
+            if ($jawaban->isEmpty()) {
+                return response()->json([
+                    "status" => "error",
+                    "message" => "Jawaban tidak ditemukan untuk praktikan dan modul ini."
+                ], 404);
+            }
+            return response()->json([
+                "status" => "success",
+                "jawaban_mandiri" => $jawaban
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => "error",
+                "message" => "Terjadi kesalahan saat mengambil jawaban.",
+                "error" => $e->getMessage()
+            ], 500);
+        }
+    }
+    
 
     /**
      * Update the specified resource in storage.

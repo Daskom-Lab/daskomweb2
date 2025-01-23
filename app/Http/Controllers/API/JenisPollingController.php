@@ -13,12 +13,22 @@ class JenisPollingController extends Controller
      */
     public function index()
     {
-        $jenis_polling = JenisPolling::get();
-        return response()->json([
-            'polling' => $jenis_polling,
-            'message' => 'Jenis Polling retrieved successfully.'
-        ],200);
+        try {
+            $jenis_polling = JenisPolling::all();
+            return response()->json([
+                'status' => 'success',
+                'polling' => $jenis_polling,
+                'message' => 'Jenis Polling retrieved successfully.',
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to retrieve Jenis Polling.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
+    
 
     /**
      * Store a newly created resource in storage.
