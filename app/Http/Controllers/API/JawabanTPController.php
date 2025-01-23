@@ -22,35 +22,35 @@ class JawabanTPController extends Controller
      */
     public function store(Request $request)
     {
-
-        $jawaban = JawabanTp::where('praktikan_id', $request->input('0.praktikan_id'))
-        ->where('modul_id', $request->input('0.modul_id'))
-        ->where('soal_id', $request->input('0.soal_id'))
-        ->delete();
-
-        $request->validate([
-            'jawaban' => 'required|string',
-            'soal_id' => 'required',
-            'praktikan_id' => 'required',
-            'modul_id' => 'required',
-        ]);
-
-        $data = $request->all();
-        for ($i = 0; $i < count($data); $i++) { {
-                JawabanTp::create([
-                    'jawaban' => $request->$data[$i]['jawaban'] ?? '-',
-                    'soal_id' => $request->$data[$i]['soal_id'],
-                    'praktikan_id' => $request->$data[$i]['praktikan_id'] ?? auth('sanctum')->user()->id,
-                    'modul_id' => $request->$data[$i]['modul_id'],
-                    'crated_at' => now(),
-                    'updated_at' => now(),
-                ]);
-            }
-
+        try {
+            $validateData = $request->validate([
+                'jawaban' => 'required|string',
+                'soal_id' => 'required',
+                'praktikan_id' => 'required',
+                'modul_id' => 'required',
+            ]);
+            JawabanTp::where('praktikan_id', $validateData['praktikan_id'])
+                ->where('modul_id', $validateData['modul_id'])
+                ->where('soal_id', $validateData['soal_id'])
+                ->delete();
+            JawabanTp::create([
+                'jawaban' => $validateData['jawaban'],
+                'soal_id' => $validateData['soal_id'],
+                'praktikan_id' => $validateData['praktikan_id'],
+                'modul_id' => $validateData['modul_id'],
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
             return response()->json([
                 "status" => "success",
-                'messages' => "Berhasil Menyimpan Jawaban"
-            ]);
+                "message" => "Jawaban berhasil disimpan.",
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                "status" => "error",
+                "message" => "Terjadi kesalahan saat menyimpan jawaban.",
+                "error" => $e->getMessage(),
+            ], 500);
         }
     }
 
@@ -59,34 +59,51 @@ class JawabanTPController extends Controller
      */
     public function show($idModul)
     {
-        $jawaban = JawabanTp::where('praktikan_id', auth('sanctum')->user()->id)
-        ->where('modul_id', $idModul)->get();
-        if ($jawaban->isEmpty()) {
+        try {
+            $jawaban = JawabanTp::where('praktikan_id', auth('sanctum')->user()->id)
+                ->where('modul_id', $idModul)
+                ->get();
+            if ($jawaban->isEmpty()) {
+                return response()->json([
+                    "status" => "success",
+                    "message" => "Tidak ada jawaban",
+                ]);
+            }
             return response()->json([
                 "status" => "success",
-                'messages' => "Tidak ada jawaban"
+                "jawaban_tp" => $jawaban,
             ]);
-        } else {
+        } catch (\Exception $e) {
             return response()->json([
-                "status" => "success",
-                "jawaban_tp" => $jawaban
-            ]);
+                "status" => "error",
+                "message" => "Terjadi kesalahan saat mengambil data jawaban.",
+                "error" => $e->getMessage(),
+            ], 500);
         }
     }
 
     public function showAsisten($idPraktikan, $idModul)
     {
-        $jawaban = JawabanTp::where('praktikan_id', $idPraktikan)->where('modul_id', $idModul)->get();
-        if ($jawaban->isEmpty()) {
+        try {
+            $jawaban = JawabanTp::where('praktikan_id', $idPraktikan)
+                ->where('modul_id', $idModul)
+                ->get();
+            if ($jawaban->isEmpty()) {
+                return response()->json([
+                    "status" => "success",
+                    "message" => "Tidak ada jawaban",
+                ]);
+            }
             return response()->json([
                 "status" => "success",
-                'messages' => "Tidak ada jawaban"
+                "jawaban_tp" => $jawaban,
             ]);
-        } else {
+        } catch (\Exception $e) {
             return response()->json([
-                "status" => "success",
-                "jawaban_tp" => $jawaban
-            ]);
+                "status" => "error",
+                "message" => "Terjadi kesalahan saat mengambil data jawaban.",
+                "error" => $e->getMessage(),
+            ], 500);
         }
     }
 

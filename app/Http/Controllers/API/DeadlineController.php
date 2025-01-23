@@ -31,12 +31,28 @@ class DeadlineController extends Controller
      */
     public function show($id)
     {
-        $deadline = Deadline::where('praktikums_id', $id)->first();
-        return response()->json([
-            'deadline' => $deadline,
-            'message' => 'success'
-        ],200);
+        try {
+            $deadline = Deadline::where('praktikums_id', $id)->first();
+            if (!$deadline) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Deadline is empty.'
+                ], 404);
+            }
+            return response()->json([
+                'success' => true,
+                'deadline' => $deadline,
+                'message' => 'Deadline retrieved successfully.'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while retrieving the deadline.',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
+    
 
     /**
      * Update the specified resource in storage.
@@ -106,34 +122,55 @@ class DeadlineController extends Controller
 
     public function reset($idPraktikum)
     {
-        $praktikum=Praktikum::findOrFail($idPraktikum);
-        if($praktikum->isActive){
-            $deadline = Deadline::where('praktikums_id', $idPraktikum)->first();
-            $timeString = "00:00";
-            $time = Carbon::createFromFormat('d-m-Y H:i', $timeString);
-            $praktikum->isActive = 0;
-            $deadline->start_TA = $time;
-            $deadline->end_TA = $time;
-            $deadline->start_TK = $time;
-            $deadline->end_TK = $time;
-            $deadline->start_TM = $time;
-            $deadline->end_TM = $time;
-            $deadline->start_jurnal = $time;
-            $deadline->end_jurnal = $time;
-            $deadline->updated_at = now();
-            $praktikum->updated_at = now();
-            $praktikum->save();
-            $deadline->save();
+        try {
+            $praktikum = Praktikum::findOrFail($idPraktikum);
+            if ($praktikum->isActive) {
+                $deadline = Deadline::where('praktikums_id', $idPraktikum)->first();
+                if (!$deadline) {
+                    return response()->json([
+                        'success' => false,
+                        'message' => 'Deadline not found for the specified Praktikum.'
+                    ], 404);
+                }
+                $timeString = "00:00";
+                $time = Carbon::createFromFormat('H:i', $timeString);
+                $praktikum->isActive = 0;
+                $deadline->start_TA = $time;
+                $deadline->end_TA = $time;
+                $deadline->start_TK = $time;
+                $deadline->end_TK = $time;
+                $deadline->start_TM = $time;
+                $deadline->end_TM = $time;
+                $deadline->start_jurnal = $time;
+                $deadline->end_jurnal = $time;
+                $deadline->updated_at = now();
+                $praktikum->updated_at = now();
+                $praktikum->save();
+                $deadline->save();
+                return response()->json([
+                    'success' => true,
+                    'deadline' => $deadline,
+                    'message' => 'Deadline successfully reset.'
+                ], 200);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Praktikum is not active.'
+                ], 400);
+            }
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
             return response()->json([
-                'deadline' => $deadline,
-                'message' => 'Deadline successfully reset'
-            ], 200);
-        }
-        else{
+                'success' => false,
+                'message' => 'Praktikum not found.',
+                'error' => $e->getMessage()
+            ], 404);
+        } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Praktikum is not active'
+                'success' => false,
+                'message' => 'An error occurred while resetting the deadline.',
+                'error' => $e->getMessage()
             ], 500);
         }
-
     }
+    
 }
