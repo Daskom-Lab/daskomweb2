@@ -1,4 +1,3 @@
-import React from 'react';
 import FormChangePassPraktikan from './FormChangePassPraktikan';
 import FormTarikPraktikan from './FormTarikPraktikan';
 

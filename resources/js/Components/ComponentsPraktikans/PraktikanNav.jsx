@@ -231,7 +231,7 @@ export default function PraktikanNav() {
                             </Link>
                         </li>
                         <li>
-                            <Link
+                            <div
                                 className="flex py-3 px-3 hover:bg-darkGreen items-center cursor-pointer"
                                 onClick={handleOpenModal}
                             >
@@ -251,7 +251,7 @@ export default function PraktikanNav() {
                                 >
                                     Change Password
                                 </span>
-                            </Link>
+                            </div>
                         </li>
                         {isModalOpen && !isChangePassSuccess && !isChangePassFailed && (
                             <Modal isOpen={isModalOpen} onClose={closeModal} width="w-[370px]">
@@ -283,7 +283,7 @@ export default function PraktikanNav() {
                             </Modal>
                         )}
                         <li>
-                            <Link
+                            <div
                                 className="flex py-3 px-3 hover:bg-darkGreen items-center cursor-pointer"
                                 onClick={handleOpenLogoutModal}
                             >
@@ -303,7 +303,7 @@ export default function PraktikanNav() {
                                 >
                                     Logout
                                 </span>
-                            </Link>
+                            </div>
                         </li>
                         {isLogoutModalOpen && (
                             <Modal isOpen={isLogoutModalOpen} onClose={closeLogoutModal} width="w-[370px]">

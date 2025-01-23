@@ -9,6 +9,11 @@ export default function ContactAssistantTable() {
         { nama: "Muh Zaidan Fauzan", kode: "| QGW", wa: "082123456789", line: "@____ea", ig: "@zaidnfz_`111111" },
         { nama: "Fauzan, Muhammad Zaidan Daskom Lab FYN", kode: "| FYN", wa: "082123456789", line: "@____ea", ig: "@zaidnfz_" },
         { nama: "Muh Zaidan Fauzan", kode: "| FYN", wa: "082123456789", line: "@____ea", ig: "@zaidnfz_" },
+        { nama: "Muh Zaidan Fauzan", kode: "| FYN", wa: "082123456789", line: "@____ea", ig: "@zaidnfz_" },
+        { nama: "Muh Zaidan Fauzan", kode: "| FYN", wa: "082123456789", line: "@____ea", ig: "@zaidnfz_" },
+        { nama: "Muh Zaidan Fauzan", kode: "| FYN", wa: "082123456789", line: "@____ea", ig: "@zaidnfz_" },
+        { nama: "Muh Zaidan Fauzan", kode: "| FYN", wa: "082123456789", line: "@____ea", ig: "@zaidnfz_" },
+        { nama: "Muh Zaidan Fauzan", kode: "| FYN", wa: "082123456789", line: "@____ea", ig: "@zaidnfz_" },
         { nama: "Muh Zaidan Fauzan", kode: "| FYN", wa: "082123456789", line: "@____ea", ig: "@zaidnfz_" }
     ];
 
@@ -80,7 +85,7 @@ export default function ContactAssistantTable() {
                     </div>
                 </div>
             </div>
-            <div className="mt-4 mx-auto max-w-[850px] max-h-[400px] overflow-y-auto">
+            <div className="mt-4 mx-auto max-w-[850px] h-[69vh] overflow-y-auto">
                 {rows.map((row, index) => (
                     <RowComponent
                         key={index}

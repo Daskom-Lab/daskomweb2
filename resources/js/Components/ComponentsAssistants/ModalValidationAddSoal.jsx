@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function ModalValidationAddSoal({ onClose }) {
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">

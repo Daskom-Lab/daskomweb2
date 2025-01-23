@@ -1,4 +1,3 @@
-import React from 'react';
 import closeIcon from "../../../assets/modal/iconClose.svg"
 
 export default function ModalLogout({ onClose, onConfirm }) {
