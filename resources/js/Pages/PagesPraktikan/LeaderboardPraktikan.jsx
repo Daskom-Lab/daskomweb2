@@ -1,5 +1,4 @@
 import { Head } from "@inertiajs/react";
-import React from "react";
 import PraktikanAuthenticated from "@/Layouts/PraktikanAuthenticatedLayout";
 import Clock from "@/Components/ComponentsAssistants/Clock";
 import ModalSoftware from "@/Components/ComponentsAssistants/ModalSoftware";
@@ -19,7 +18,7 @@ export default function LeaderboardPraktikan({ auth }) {
             >
                 <Head title="Leaderboard Praktikan" />
         
-                <div className="relative mt-[60px] min-h-[calc(100vh-60px)]">
+                <div className="relative mt-[11vh] h-screen">
                     <div className="ml-4 w-[100px] border-2 border-black px-4 py-1 bg-white text-center z-10">
                         Nilai
                     </div>

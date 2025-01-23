@@ -1,4 +1,3 @@
-import React from 'react';
 import iconClose from '../../../assets/modal/failedSymbol.png';
 
 export default function ModalChangePassFailed({ onRetry }) {
