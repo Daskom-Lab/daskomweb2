@@ -24,56 +24,64 @@ class PollingsController extends Controller
      */
     public function store(Request $request)
     {
-        // $praktikan = Auth::guard('praktikan')->user()->id;
         $request->validate([
             'asisten_id' => 'required|integer|exists:asistens,id',
             'polling_id' => 'required|integer|exists:jenis_pollings,id',
-            'praktikan_id' => 'required|integer|exists:praktikans,id',//or just use Auth::guard('praktikan')->user()->id
+            'praktikan_id' => 'required|integer|exists:praktikans,id',
         ]);
-
-        if(Polling::where('praktikan_id', $request->praktikan_id)->where('polling_id', $request->polling_id)->exists()){
-            Polling::where('praktikan_id', $request->praktikan_id)->where('polling_id', $request->polling_id)->update([
-                "asisten_id" => $request->asisten_id
-            ]);
+        try {
+            $polling = Polling::where('praktikan_id', $request->praktikan_id)
+                ->where('polling_id', $request->polling_id)
+                ->first();
+            if ($polling) {
+                $polling->update([
+                    'asisten_id' => $request->asisten_id,
+                ]);
+                return response()->json([
+                    'message' => 'Polling updated successfully.'
+                ], 200);
+            } else {
+                Polling::create([
+                    'asisten_id' => $request->asisten_id,
+                    'polling_id' => $request->polling_id,
+                    'praktikan_id' => $request->praktikan_id,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+                return response()->json([
+                    'message' => 'Polling created successfully.'
+                ], 201);
+            }
+        } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Polling updated successfully.'
-            ]);
-        }else{
-            Polling::create([
-                'asisten_id' => $request->asisten_id,
-                'polling_id' => $request->polling_id,
-                'praktikan_id' => $request->praktikan_id,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+                'message' => 'An error occurred while processing the request.',
+                'error' => $e->getMessage(),
+            ], 500);
         }
-
-
-        return response()->json([
-            'message' => 'Polling created successfully.'
-        ]);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        // $asisten = Asisten::withCount('pollingsCount')->where('polling_id', $id)->get();
-        $asisten = DB::table('pollings')
-        ->leftJoin('jenis_pollings', 'jenis_pollings.id', '=', 'pollings.polling_id')
-        ->leftJoin('asistens', 'asistens.id', '=', 'pollings.asisten_id') // Corrected table name
-        ->where('pollings.praktikan_id', $id)
-        ->select('asistens.kode', DB::raw('count(pollings.id) as total'))
-        ->groupBy('asistens.kode') // Group by assistant code
-        ->get();
-
-        return response()->json([
-            'asisten' => $asisten,
-            'message' => 'Poll count by assistant code retrieved successfully.'
-        ]);
-
+        try {
+            $asisten = DB::table('pollings')
+                ->leftJoin('jenis_pollings', 'jenis_pollings.id', '=', 'pollings.polling_id')
+                ->leftJoin('asistens', 'asistens.id', '=', 'pollings.asisten_id')
+                ->where('pollings.praktikan_id', $id)
+                ->select('asistens.kode', DB::raw('count(pollings.id) as total'))
+                ->groupBy('asistens.kode')
+                ->get();
+            return response()->json([
+                'asisten' => $asisten,
+                'message' => 'Poll count by assistant code retrieved successfully.'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'An error occurred while retrieving the data.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
+    
 
     /**
      * Update the specified resource in storage.

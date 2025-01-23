@@ -32,49 +32,60 @@ class PraktikumController extends Controller
      */
     public function show($id)
     {
-        $praktikum = Praktikum::leftJoin('moduls', 'praktikums.modul_id', '=', 'moduls.id')
-        ->select('praktikums.*', 'moduls.*')->where('kelas_id', $id)->get();
-
-        return response()->json([
-            'praktikum' => $praktikum,
-            'message' => 'praktikum retrieved successfully.'
-        ]);
+        try {
+            $praktikum = Praktikum::leftJoin('moduls', 'praktikums.modul_id', '=', 'moduls.id')
+                ->select('praktikums.*', 'moduls.*')
+                ->where('kelas_id', $id)
+                ->get();
+            return response()->json([
+                'praktikum' => $praktikum,
+                'message' => 'praktikum retrieved successfully.'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'An error occurred while retrieving the praktikum.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $id)
     {
-        // Get the current time
-        $currentTime = Carbon::now();
-        $request->validate([
-            'start_TA' => 'nullable|date_format:d-m-Y H:i',
-            'end_TK' => 'nullable|date_format:d-m-Y H:i',
-        ]);
-
-        $praktikum = Praktikum::find($id);
-        $start = $request->start_TA ? Carbon::createFromFormat('d-m-Y H:i', $request->start_TA) : null;
-        $end = $request->end_TK ? Carbon::createFromFormat('d-m-Y H:i', $request->end_TK) : null;
-
-        if (boolval($praktikum->isActive)) {
-            // Toggle off if the current time is greater than `end_TK`
-            if ($end && $currentTime->greaterThan($end)) {
-                $praktikum->isActive = 0;
-                $praktikum->start_time = $start ? $start->format('Y-m-d H:i:s') : $praktikum->start_time;
-                $praktikum->end_time = $end->format('Y-m-d H:i:s');
-                $praktikum->save();
-                return response()->json(['message' => 'Status praktikum berhasil diubah']);
-            } else {
-                // No update needed
-                return response()->json(['message' => 'No changes made to status']);
+        try {
+            $currentTime = Carbon::now();
+            $request->validate([
+                'start_TA' => 'nullable|date_format:d-m-Y H:i',
+                'end_TK' => 'nullable|date_format:d-m-Y H:i',
+            ]);
+            $praktikum = Praktikum::find($id);
+            if (!$praktikum) {
+                return response()->json([
+                    'message' => 'Praktikum not found.'
+                ], 404);
             }
-        } else {
-            // Toggle on (no condition needed for toggling on)
-            $praktikum->isActive = 1;
-            $praktikum->start_time = $currentTime->format('Y-m-d H:i:s');
-            $praktikum->save();
-            return response()->json(['message' => 'Status praktikum berhasil diubah']);
+            $start = $request->start_TA ? Carbon::createFromFormat('d-m-Y H:i', $request->start_TA) : null;
+            $end = $request->end_TK ? Carbon::createFromFormat('d-m-Y H:i', $request->end_TK) : null;
+            if (boolval($praktikum->isActive)) {
+                if ($end && $currentTime->greaterThan($end)) {
+                    $praktikum->isActive = 0;
+                    $praktikum->start_time = $start ? $start->format('Y-m-d H:i:s') : $praktikum->start_time;
+                    $praktikum->end_time = $end->format('Y-m-d H:i:s');
+                    $praktikum->save();
+                    return response()->json(['message' => 'Status praktikum berhasil diubah'], 200);
+                } else {
+                    return response()->json(['message' => 'No changes made to status'], 200);
+                }
+            } else {
+                $praktikum->isActive = 1;
+                $praktikum->start_time = $currentTime->format('Y-m-d H:i:s');
+                $praktikum->save();
+                return response()->json(['message' => 'Status praktikum berhasil diubah'], 200);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'An error occurred while updating the praktikum.',
+                'error' => $e->getMessage(),
+            ], 500);
         }
     }
 

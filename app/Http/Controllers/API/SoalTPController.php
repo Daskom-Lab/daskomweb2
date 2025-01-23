@@ -21,87 +21,138 @@ class SoalTPController extends Controller
      */
     public function store(Request $request, $id)
     {
-        $request->validate([
-            "modul_id" => "required|integer",
-            "soal" => "required|string",
-            "isEssay" => "required|boolean",
-            "isProgram" => "required|boolean",
-        ]);
-
-        $soal = SoalTp::create([
-            "modul_id" => $id,
-            "soal" => $request->soal,
-            "isEssay" => $request->isEssay,
-            "isProgram" => $request->isProgram,
-            "created_at" => now(),
-            "updated_at" => now(),
-        ]);
-
-        return response()->json([
-            "message" => "Soal berhasil ditambahkan",
-            "data" => $soal,
-        ]);
+        try {
+            // Validasi input
+            $request->validate([
+                "modul_id" => "required|integer|exists:moduls,id", 
+                "soal" => "required|string|max:1000",
+                "isEssay" => "required|boolean", 
+                "isProgram" => "required|boolean", 
+            ]);
+    
+            // Menyimpan soal baru
+            $soal = SoalTp::create([
+                "modul_id" => $id,
+                "soal" => $request->soal,
+                "isEssay" => $request->isEssay,
+                "isProgram" => $request->isProgram,
+                "created_at" => now(),
+                "updated_at" => now(),
+            ]);
+    
+            return response()->json([
+                "message" => "Soal berhasil ditambahkan",
+                "data" => $soal,
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                "message" => "Terjadi kesalahan saat menambahkan soal.",
+                "error" => $e->getMessage(),
+            ], 500);
+        }
     }
-
-    /**
-     * Display the specified resource.
-     */
+    
     public function show($id)
     {
-        $all_tp = SoalTp::where("modul_id", $id)->get();
-        return response()->json([
-            "message" => "Soal TP retrieved successfully.",
-            "soalTp" => $all_tp,
-        ]);
+        try {
+            // Mengambil soal berdasarkan modul_id
+            $all_tp = SoalTp::where("modul_id", $id)->get();
+            if ($all_tp->isEmpty()) {
+                return response()->json([
+                    "message" => "Tidak ada soal ditemukan untuk modul ID $id.",
+                ], 404);
+            }
+            return response()->json([
+                "message" => "Soal TP retrieved successfully.",
+                "soalTp" => $all_tp,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "message" => "Terjadi kesalahan saat mengambil soal.",
+                "error" => $e->getMessage(),
+            ], 500);
+        }
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id)//soal id
+    
+    public function update(Request $request, $id)
     {
-        $request->validate([
-            "modul_id" => "required|integer",
-            "isEssay" => "required|boolean",
-            "isProgram" => "required|boolean",
-            "soal" => "required|string",
-        ]);
-        if ($request->soal != $request->oldSoal)
-            foreach (SoalTp::all() as $value)
-                if ($value->soal === $request->soal)
-                    return '{"message": "Soal ' . $request->soal . ' sudah terdaftar"}';
-
-        $soal = SoalTp::find($id);
-        $soal->modul_id = $request->modul_id;
-        $soal->isEssay = $request->isEssay;
-        $soal->isProgram = $request->isProgram;
-        $soal->soal = $request->soal;
-        $soal->updated_at = now();
-        $soal->save();
-
-        return response()->json([
-            "message" => "Soal berhasil diupdate",
-            "data" => $soal,
-        ]);
+        try {
+            // Validasi input
+            $request->validate([
+                "modul_id" => "required|integer|exists:moduls,id",
+                "isEssay" => "required|boolean", 
+                "isProgram" => "required|boolean", 
+                "soal" => "required|string|max:1000", 
+            ]);
+            $soal = SoalTp::find($id);
+            if (!$soal) {
+                return response()->json([
+                    "message" => "Soal dengan ID $id tidak ditemukan.",
+                ], 404);
+            }
+            if ($request->soal != $request->oldSoal) {
+                $existingSoal = SoalTp::where('soal', $request->soal)->first();
+                if ($existingSoal) {
+                    return response()->json([
+                        "message" => "Soal dengan pertanyaan tersebut sudah terdaftar.",
+                    ], 400);
+                }
+            }
+            // Update soal
+            $soal->modul_id = $request->modul_id;
+            $soal->isEssay = $request->isEssay;
+            $soal->isProgram = $request->isProgram;
+            $soal->soal = $request->soal;
+            $soal->updated_at = now();
+            $soal->save();
+    
+            return response()->json([
+                "message" => "Soal berhasil diupdate",
+                "data" => $soal,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "message" => "Terjadi kesalahan saat memperbarui soal.",
+                "error" => $e->getMessage(),
+            ], 500);
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        $soal = SoalTp::find($id);
-        $soal->delete();
-        return response()->json([
-            "status" => "success"
-        ]);
+        try {
+            // Cek apakah soal ada
+            $soal = SoalTp::find($id);
+            if (!$soal) {
+                return response()->json([
+                    "message" => "Soal dengan ID $id tidak ditemukan.",
+                ], 404);
+            }
+            $soal->delete();
+            return response()->json([
+                "message" => "Soal berhasil dihapus",
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "message" => "Terjadi kesalahan saat menghapus soal.",
+                "error" => $e->getMessage(),
+            ], 500);
+        }
     }
-
+    
     public function reset()
     {
-        SoalTp::truncate();
-        return response()->json([
-            "status" => "success"
-        ], 200);
+        try {
+            SoalTp::truncate();
+            return response()->json([
+                "status" => "success",
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                "message" => "Terjadi kesalahan saat mereset soal.",
+                "error" => $e->getMessage(),
+            ], 500); 
+        }
     }
+    
 }
