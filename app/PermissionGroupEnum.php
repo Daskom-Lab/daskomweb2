@@ -58,7 +58,19 @@ enum PermissionGroupEnum: string
     ];
     
     const ASISTEN =[
-        self::DEFAULT
+        self::MANAGE_PROFILE,
+        self::SEE_PRAKTIKUM,
+        self::SEE_HISTORY,
+        self::SEE_SOAL,
+        self::NILAI_PRAKTIKAN,
+        self::SEE_PLOT,
+        self::RANKING_PRAKTIKAN,
+        self::SEE_POLLING,
+        self::SET_PRAKTIKAN,
+        self::RESET_PRAKTIKAN,
+        self::CHECK_TUGAS_PENDAHULUAN,
+        self::CHANGE_PASSWORD,
+        self::LOGOUT,
     ];
 
 
