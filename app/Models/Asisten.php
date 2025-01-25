@@ -9,13 +9,16 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Models\Role;
 use Laravel\Sanctum\NewAccessToken;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Models\Permission;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * Class Asisten
@@ -88,6 +91,11 @@ class Asisten extends Authenticatable
 		]);
 
 		return new NewAccessToken($token, $token->getKey() . '|' . $plainTextToken);
+	}
+
+	public function getPermissionsAttribute()
+	{
+		return $this->role ? $this->role->permissions->pluck('name') : [];
 	}
 
 	public function role()

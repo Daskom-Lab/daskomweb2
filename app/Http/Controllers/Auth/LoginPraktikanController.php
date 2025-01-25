@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Route;
+use App\Providers\RouteServiceProvider;
 use App\Http\Requests\Auth\PraktikanLoginRequest;
 
 class LoginPraktikanController extends Controller
@@ -27,7 +28,7 @@ class LoginPraktikanController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(PraktikanLoginRequest $request)
+    public function store(PraktikanLoginRequest $request): RedirectResponse
     {
         try {
             $request->authenticate();
@@ -39,11 +40,14 @@ class LoginPraktikanController extends Controller
             $allPermissions = $role->permissions->pluck('name'); // Extract permissions
     
             $token = $user->createToken($role->name, [...$allPermissions])->plainTextToken; // Generate a new token
-    
-            return response()->json([
-                'token' => $token,
-                'praktikan' => $user
-            ]);
+
+            $cookie = cookie('auth', $token, 60, null, null, true, true, false, 'Lax');
+
+            return redirect()->intended(RouteServiceProvider::PRAKTIKAN)
+                ->header('X-XSRF-TOKEN', csrf_token())
+                ->header('Authorization', $token)
+                ->cookie($cookie);
+            
         } catch (\Throwable $th) {
             return response()->json([
                 'error' => $th->getMessage()
@@ -57,6 +61,10 @@ class LoginPraktikanController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
+        $user = Auth::guard('praktikan')->user();
+
+        $user->tokens()->delete();
+
         Auth::guard('praktikan')->logout();
 
         $request->session()->invalidate();

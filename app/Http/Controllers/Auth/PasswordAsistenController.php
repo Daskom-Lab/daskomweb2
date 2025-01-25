@@ -13,17 +13,17 @@ class PasswordAsistenController extends Controller
     /**
      * Update the user's password.
      */
-    public function update(Request $request): RedirectResponse
+    public function update(Request $request)
     {
         $validated = $request->validate([
-            'current_password' => ['required', 'current_password'],
-            'password' => ['required', Password::defaults(), 'confirmed'],
+            'current_password' => ['required', 'current_password:asisten'],
+            'password' => ['required', 'min:8', Password::defaults()],
         ]);
 
         $request->user('asisten')->update([
             'password' => Hash::make($validated['password']),
         ]);
 
-        return back();
+        return response()->json(['message' => 'Password updated successfully.'], 200);
     }
 }

@@ -6,12 +6,14 @@ use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\Asisten;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Route;
+use App\Providers\RouteServiceProvider;
+use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\Auth\AsistenLoginRequest;
-use Spatie\Permission\Models\Role;
 
 class LoginAsistenController extends Controller
 {
@@ -28,23 +30,34 @@ class LoginAsistenController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(AsistenLoginRequest $request)
+    public function store(AsistenLoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
+        try {
+            //code...
+            $request->authenticate();
+    
+            $request->session()->regenerate();
+            $user = Auth::guard('asisten')->user();
+            $role = Role::find($user->role_id);
+            $permissions = $role->permissions; 
+            $allPermissions = $role->permissions->pluck('name'); 
+         
+    
+            $token = $user->createToken($role->name, [...$allPermissions ])->plainTextToken;
 
-        $request->session()->regenerate();
-        $user = Auth::guard('asisten')->user(); // Get the authenticated user object
-        $role = Role::find($user->role_id);
-        $permissions = $role->permissions; // Assuming this fetches the permissions
-        $allPermissions = $role->permissions->pluck('name'); // Extract permissions
-     
+            $cookie = cookie('auth', $token, 60, null, null, true, true, false, 'Lax');
 
-        $token = $user->createToken($role->name, [...$allPermissions ])->plainTextToken; // Generate a new token
-        
-        return response()->json([
-            'token' => $token,
-            'asisten' => $user
-        ]);
+            return redirect()->intended(RouteServiceProvider::ASSISTANT)
+                ->header('X-XSRF-TOKEN', csrf_token())
+                ->header('Authorization', $token)
+                ->cookie($cookie);
+            
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response()->json([
+                'message' => $th->getMessage()
+            ], 500);
+        }
 
     }
 
@@ -53,6 +66,11 @@ class LoginAsistenController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
+        
+        $user = Auth::guard('asisten')->user();
+
+        $user->tokens()->delete();
+
         Auth::guard('asisten')->logout();
 
         $request->session()->invalidate();

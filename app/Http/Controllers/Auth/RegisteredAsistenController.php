@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
 
 class RegisteredAsistenController extends Controller
 {
@@ -27,7 +28,7 @@ class RegisteredAsistenController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request):RedirectResponse
     {
         $request->validate([
             'nama' => 'required|string|max:255',
@@ -56,8 +57,6 @@ class RegisteredAsistenController extends Controller
 
         $asisten->assignRole($role->name);
 
-        Auth::login($asisten);
-
-        return redirect(route('asisten', absolute: false));
+        return Redirect::route('login');
     }
 }
