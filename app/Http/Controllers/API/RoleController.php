@@ -2,18 +2,31 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\Asisten;
 use App\PermissionGroupEnum;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Models\Role as roles;
 use Spatie\Permission\Models\Role;
+use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Permission;
-use App\Models\Asisten;
 
 class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+
+    public function index()
+    {
+        $roles = Role::where('name', '!=', 'praktikan') // Exclude the 'praktikan' role
+        ->whereNotIn('name', ['SOFTWARE', 'ADMIN', 'KORDAS', 'WAKORDAS', 'KOORPRAK', 'HARDWARE', 'DDC']) // Exclude specific roles
+        ->get()
+        ->makeHidden(['guard_name']);
+
+        return response()->json([
+            'roles' => $roles
+        ]);
+    }
 
     public function store(Request $request)
     {

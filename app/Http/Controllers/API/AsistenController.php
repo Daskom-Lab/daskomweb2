@@ -60,7 +60,7 @@ class AsistenController extends Controller
             'deskripsi' => 'required|string',
         ]);
         try {
-            $asisten = Asisten::find(auth('sanctum')->user()->id);
+            $asisten = Asisten::find(auth()->guard('asisten')->user()->id);
             if (!$asisten) {
                 return response()->json([
                     'success' => false,
@@ -72,11 +72,8 @@ class AsistenController extends Controller
             $asisten->instagram = $request->instagram;
             $asisten->deskripsi = $request->deskripsi;
             $asisten->save();
-            return response()->json([
-                'success' => true,
-                'message' => 'Asisten updated successfully.',
-                'asisten' => $asisten,
-            ], 200);
+
+            return redirect()->back()->with('success', 'Asisten updated successfully.');
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
