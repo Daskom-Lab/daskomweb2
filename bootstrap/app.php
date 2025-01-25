@@ -14,6 +14,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        $middleware->encryptCookies(except: [
+            'auth',
+        ]);
         $middleware->alias([
             'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
@@ -25,12 +28,13 @@ return Application::configure(basePath: dirname(__DIR__))
                 'throttle:api',
                 \Illuminate\Routing\Middleware\SubstituteBindings::class,
             ],
-            'loggedIn' => \App\Http\Middleware\CheckLoggedIn::class,
-            'redirectIfAuthenticated' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+            'check.permission' => \App\Http\Middleware\CheckPermission::class,
+            'check.auth' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         ]);
         $middleware->web(append: [
             \App\Http\Middleware\HandleInertiaRequests::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
+            \Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class,
         ]);
 
         //

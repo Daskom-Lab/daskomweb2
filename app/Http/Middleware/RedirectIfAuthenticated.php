@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class RedirectIfAuthenticated
@@ -15,17 +16,17 @@ class RedirectIfAuthenticated
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $user = $request->user()->role->guard_name;
-        switch ($user) {
-            case 'asisten':
-                return redirect()->route('assistant');
-                break;
-            case 'praktikan':
-                return redirect()->route('dashboard');
-                break;
-            default:
-                return $next($request);
-                break;
+        // Check if user is authenticated and determine their guard
+        $asisten = Auth::guard('asisten')->check() ? 'asisten' : null;
+        $praktikan = Auth::guard('praktikan')->check() ? 'praktikan' : null;
+
+        // Check the user's guard and redirect accordingly
+        if ($asisten) {
+            return redirect()->route('assistant'); 
+        }
+            
+        if ($praktikan) {
+            return redirect()->route('praktikan'); 
         }
 
         return $next($request);
