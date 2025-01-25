@@ -146,6 +146,9 @@ Route::get('/contact-assistant', function () {
     return Inertia::render('PagesPraktikan/ContactAssistant');
 })->name('contact-assistant')->middleware(['auth:praktikan', 'can:lihat-asisten']);
 
+Route::get('/polling-assistant', function () { 
+    return Inertia::render('PagesPraktikan/PollingPage'); 
+})->name('polling-assistant');
 
 /////////////////////////////////////// Data Routes ///////////////////////////////////////
 Route::prefix('api-v1')->group(function () {

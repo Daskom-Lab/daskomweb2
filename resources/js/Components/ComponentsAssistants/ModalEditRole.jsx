@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import closeIcon from "../../../assets/modal/iconClose.svg"
 
 export default function ModalEditRole({ onClose }) {

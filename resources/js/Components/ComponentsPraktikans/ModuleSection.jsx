@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "@inertiajs/react";
 import iconPPT from "../../../assets/practicum/iconPPT.svg";
 import iconVideo from "../../../assets/practicum/iconVideo.svg";
 import iconModule from "../../../assets/practicum/iconModule.svg";
@@ -6,33 +7,84 @@ import iconCeklistboxFalse from "../../../assets/practicum/iconCeklistboxFalse.s
 import iconCeklistboxTrue from "../../../assets/practicum/iconCeklistboxTrue.svg";
 import Modal from "../ComponentsPraktikans/Modal";
 import ModalAttempt from "../ComponentsPraktikans/ModalAttempt";
+import ModalReview from "../ComponentsPraktikans/ModalReview";
 
-export default function ModuleSection() {
+export default function ModuleSection({ 
+    onNavigate, 
+    completedCategories,
+    setCompletedCategories,
+    onReviewTask
+ }) {
     const [expandedRows, setExpandedRows] = useState([]);
-    const [openModal, setOpenModal] = useState(null);
-    const [completedTasks, setCompletedTasks] = useState({
-        TugasPendahuluan: false,
-        TesAwal: false,
-        Jurnal: false,
-        Mandiri: false,
-        TesKeterampilan: false,
+    const [openModalAttempt, setOpenModalAttempt] = useState(null); 
+    const [openModalReview, setOpenModalReview] = useState(null);   
+
+    const categoryLabels = {
+        TugasPendahuluan: "Tugas Pendahuluan",
+        TesAwal: "Tes Awal",
+        Jurnal: "Jurnal",
+        Mandiri: "Mandiri",
+        TesKeterampilan: "Tes Keterampilan",
+    };
+
+    const [categories, setCategories] = useState({
+        TugasPendahuluan: { isSubmitted: false },
+        TesAwal: { isSubmitted: false },
+        Jurnal: { isSubmitted: false },
+        Mandiri: { isSubmitted: false },
+        TesKeterampilan: { isSubmitted: false },
     });
 
-    const handleOpenModal = (key) => {
-        setOpenModal(key);
+    const handleSubmission = (categoryName) => {
+        setCategories((prev) => ({
+            ...prev,
+            [categoryName]: { ...prev[categoryName], isSubmitted: true },
+        }));
+    };
+
+    const handleOpenModalAttempt = (key) => {
+        setOpenModalAttempt(key);
+        setOpenModalReview(null);
+    };
+
+    const handleOpenModalReview = (key) => {
+        setOpenModalReview(key); 
+        setOpenModalAttempt(null);
     };
 
     const closeModal = () => {
-        setOpenModal(null);
-    };
-
+        setOpenModalAttempt(null); 
+        setOpenModalReview(null); 
+    };    
+      
     const handleAttemptComplete = (key) => {
-        setCompletedTasks((prev) => ({
-            ...prev,
-            [key]: true,
-        }));
+        if (key === "TugasPendahuluan") {
+            onNavigate("TugasPendahuluan");
+        } else if (key === "TesAwal") {
+            onNavigate("TesAwal");
+        } else if (key === "Jurnal") {
+            onNavigate("Jurnal");
+        } else if (key === "Mandiri") {
+            onNavigate("Mandiri");
+        } else if (key === "TesKeterampilan") {
+            onNavigate("TesKeterampilan");
+        }
         closeModal();
-    };
+    };      
+
+    const handleReviewNavigate = (key) => {
+        if (onReviewTask) {
+            onReviewTask(key);
+        }
+    };    
+
+    const handleCategoryClick = (key) => {
+        if (!completedCategories[key]) {
+            handleOpenModalAttempt(key); 
+        } else {
+            handleOpenModalReview(key); 
+        }
+    };            
 
     const rows = [
         {
@@ -57,881 +109,88 @@ export default function ModuleSection() {
                     </p>
                     <div className="flex items-center mt-2 pl-[26px]">
                         <img src={iconPPT} alt="Icon PPT" className="w-6 h-6 p-[2px] bg-green-700 rounded-full" />
-                        <a
+                        <Link
                             href=""
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-green-700 underline ml-2"
                         >
                             PPT
-                        </a>
+                        </Link>
                     </div>
                     <div className="flex items-center mt-2 pl-[26px]">
                         <img src={iconVideo} alt="Icon Video" className="w-6 h-6 p-[2px] bg-red-700 rounded-full" />
-                        <a
+                        <Link
                             href=""
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-red-700 underline ml-2"
                         >
                             Video YouTube
-                        </a>
+                        </Link>
                     </div>
                     <div className="flex items-center mt-2 pl-[26px]">
                         <img src={iconModule} alt="Icon Module" className="w-6 h-6 p-[2px] bg-blue-700 rounded-full" />
-                        <a
+                        <Link
                             href=""
                             target="_blank"
                             rel="noopener noreferrer"
                             className="text-blue-700 underline ml-2"
                         >
                             Module
-                        </a>
+                        </Link>
                     </div>
                     <br />
-                    {Object.keys(completedTasks).map((key) => (
-                    <div
-                        key={key}
-                        className="flex items-center justify-between mt-2 pl-[26px]"
-                        onClick={() => handleOpenModal(key)}
-                    >
-                        <div className="flex items-center">
-                            <img
-                                src={
-                                    completedTasks[key]
-                                        ? iconCeklistboxTrue
-                                        : iconCeklistboxFalse
-                                }
-                                alt="Checkbox"
-                                className="w-5 h-5 cursor-pointer"
-                            />
-                            <p className="pl-2 text-black cursor-pointer">{key.replace(/([A-Z])/g, ' $1')}</p>
-                        </div>
-
-                        {completedTasks[key] && (
-                            <div className="mr-[42vw]">
-                                <a
-                                    href=""
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-dustyBlue underline"
-                                >
-                                    Review
-                                </a>
+                    {Object.keys(completedCategories).map((key) => (
+                        <div
+                            key={key}
+                            className="flex items-center justify-between mt-2 pl-[26px]"
+                            onClick={() => handleCategoryClick(key)}
+                        >
+                            <div className="flex items-center">
+                                <img
+                                    src={completedCategories[key] ? iconCeklistboxTrue : iconCeklistboxFalse}
+                                    alt="Checkbox"
+                                    className="w-5 h-5 cursor-pointer"
+                                />
+                                <p className="pl-2 text-black cursor-pointer">
+                                    {categoryLabels[key] || key}
+                                </p>
                             </div>
-                        )}
-                    </div>
-                ))}
-                </>
-            ),
-        },
-        {
-            id: 2,
-            moduleName: (
-                <span className="font-bold text-xl">Sintaks Dasar dan Struktur Program C</span>
-            ),
-            details: (
-                <>
-                    <h3 className="font-semibold text-md pl-[26px]">
-                        Pencapaian Pembelajaran
-                    </h3>
-                    <ol className="list-decimal list-inside pl-[26px]">
-                        <li>Mampu mendefinisikan apa itu algoritma dan mengapa penting dalam pemrograman.</li>
-                        <li>Mampu menjelaskan struktur dasar dari program C.</li>
-                        <li>Mampu mengidentifikasi komponen utama dari sebuah program C.</li>
-                        <li>Mampu mengatur lingkungan pengembangan untuk pemrograman C.</li>
-                    </ol>
-                    <br />
-                    <p className="pl-[26px]">
-                        Untuk tutorial lebih lanjut, Anda dapat menonton video berikut:
-                    </p>
-                    <div className="flex items-center mt-2 pl-[26px]">
-                        <img src={iconPPT} alt="Icon PPT" className="w-6 h-6 p-[2px] bg-green-700 rounded-full" />
-                        <a
-                            href=""
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-green-700 underline ml-2"
-                        >
-                            PPT
-                        </a>
-                    </div>
-                    <div className="flex items-center mt-2 pl-[26px]">
-                        <img src={iconVideo} alt="Icon Video" className="w-6 h-6 p-[2px] bg-red-700 rounded-full" />
-                        <a
-                            href=""
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-red-700 underline ml-2"
-                        >
-                            Video YouTube
-                        </a>
-                    </div>
-                    <div className="flex items-center mt-2 pl-[26px]">
-                        <img src={iconModule} alt="Icon Module" className="w-6 h-6 p-[2px] bg-blue-700 rounded-full" />
-                        <a
-                            href=""
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-blue-700 underline ml-2"
-                        >
-                            Module
-                        </a>
-                    </div>
-                    <br />
-                    {Object.keys(completedTasks).map((key) => (
-                    <div
-                        key={key}
-                        className="flex items-center justify-between mt-2 pl-[26px]"
-                        onClick={() => handleOpenModal(key)}
-                    >
-                        <div className="flex items-center">
-                            <img
-                                src={
-                                    completedTasks[key]
-                                        ? iconCeklistboxTrue
-                                        : iconCeklistboxFalse
-                                }
-                                alt="Checkbox"
-                                className="w-5 h-5 cursor-pointer"
-                            />
-                            <p className="pl-2 text-black cursor-pointer">{key.replace(/([A-Z])/g, ' $1')}</p>
-                        </div>
 
-                        {completedTasks[key] && (
-                            <div className="mr-[42vw]">
-                                <a
-                                    href="/review"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-dustyBlue underline"
-                                >
-                                    Review
-                                </a>
-                            </div>
-                        )}
-                    </div>
-                ))}
-                </>
-            ),
-        },
-        {
-            id: 3,
-            moduleName: (
-                <span className="font-bold text-xl">Kontrol Alur Program</span>
-            ),
-            details: (
-                <>
-                    <h3 className="font-semibold text-md pl-[26px]">
-                        Pencapaian Pembelajaran
-                    </h3>
-                    <ol className="list-decimal list-inside pl-[26px]">
-                        <li>Mampu mendefinisikan apa itu algoritma dan mengapa penting dalam pemrograman.</li>
-                        <li>Mampu menjelaskan struktur dasar dari program C.</li>
-                        <li>Mampu mengidentifikasi komponen utama dari sebuah program C.</li>
-                        <li>Mampu mengatur lingkungan pengembangan untuk pemrograman C.</li>
-                    </ol>
-                    <br />
-                    <p className="pl-[26px]">
-                        Untuk tutorial lebih lanjut, Anda dapat menonton video berikut:
-                    </p>
-                    <div className="flex items-center mt-2 pl-[26px]">
-                        <img src={iconPPT} alt="Icon PPT" className="w-6 h-6 p-[2px] bg-green-700 rounded-full" />
-                        <a
-                            href=""
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-green-700 underline ml-2"
-                        >
-                            PPT
-                        </a>
-                    </div>
-                    <div className="flex items-center mt-2 pl-[26px]">
-                        <img src={iconVideo} alt="Icon Video" className="w-6 h-6 p-[2px] bg-red-700 rounded-full" />
-                        <a
-                            href=""
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-red-700 underline ml-2"
-                        >
-                            Video YouTube
-                        </a>
-                    </div>
-                    <div className="flex items-center mt-2 pl-[26px]">
-                        <img src={iconModule} alt="Icon Module" className="w-6 h-6 p-[2px] bg-blue-700 rounded-full" />
-                        <a
-                            href=""
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-blue-700 underline ml-2"
-                        >
-                            Module
-                        </a>
-                    </div>
-                    <br />
-                    {Object.keys(completedTasks).map((key) => (
-                    <div
-                        key={key}
-                        className="flex items-center justify-between mt-2 pl-[26px]"
-                        onClick={() => handleOpenModal(key)}
-                    >
-                        <div className="flex items-center">
-                            <img
-                                src={
-                                    completedTasks[key]
-                                        ? iconCeklistboxTrue
-                                        : iconCeklistboxFalse
-                                }
-                                alt="Checkbox"
-                                className="w-5 h-5 cursor-pointer"
-                            />
-                            <p className="pl-2 text-black cursor-pointer">{key.replace(/([A-Z])/g, ' $1')}</p>
-                        </div>
+                            {completedCategories[key] && (
+                                <div className="mr-[42vw]">
+                                    <span
+                                        className="text-darkGray underline hover:text-dustyBlue cursor-pointer"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            handleOpenModalReview(key);
+                                        }}
+                                    >
+                                        Review
+                                    </span>
+                                </div>
+                            )}
 
-                        {completedTasks[key] && (
-                            <div className="mr-[42vw]">
-                                <a
-                                    href="/review"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-dustyBlue underline"
-                                >
-                                    Review
-                                </a>
-                            </div>
-                        )}
-                    </div>
-                ))}
-                </>
-            ),
-        },
-        {
-            id: 4,
-            moduleName: (
-                <span className="font-bold text-xl">Looping dan Iterasi</span>
-            ),
-            details: (
-                <>
-                    <h3 className="font-semibold text-md pl-[26px]">
-                        Pencapaian Pembelajaran
-                    </h3>
-                    <ol className="list-decimal list-inside pl-[26px]">
-                        <li>Mampu mendefinisikan apa itu algoritma dan mengapa penting dalam pemrograman.</li>
-                        <li>Mampu menjelaskan struktur dasar dari program C.</li>
-                        <li>Mampu mengidentifikasi komponen utama dari sebuah program C.</li>
-                        <li>Mampu mengatur lingkungan pengembangan untuk pemrograman C.</li>
-                    </ol>
-                    <br />
-                    <p className="pl-[26px]">
-                        Untuk tutorial lebih lanjut, Anda dapat menonton video berikut:
-                    </p>
-                    <div className="flex items-center mt-2 pl-[26px]">
-                        <img src={iconPPT} alt="Icon PPT" className="w-6 h-6 p-[2px] bg-green-700 rounded-full" />
-                        <a
-                            href=""
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-green-700 underline ml-2"
-                        >
-                            PPT
-                        </a>
-                    </div>
-                    <div className="flex items-center mt-2 pl-[26px]">
-                        <img src={iconVideo} alt="Icon Video" className="w-6 h-6 p-[2px] bg-red-700 rounded-full" />
-                        <a
-                            href=""
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-red-700 underline ml-2"
-                        >
-                            Video YouTube
-                        </a>
-                    </div>
-                    <div className="flex items-center mt-2 pl-[26px]">
-                        <img src={iconModule} alt="Icon Module" className="w-6 h-6 p-[2px] bg-blue-700 rounded-full" />
-                        <a
-                            href=""
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-blue-700 underline ml-2"
-                        >
-                            Module
-                        </a>
-                    </div>
-                    <br />
-                    {Object.keys(completedTasks).map((key) => (
-                    <div
-                        key={key}
-                        className="flex items-center justify-between mt-2 pl-[26px]"
-                        onClick={() => handleOpenModal(key)}
-                    >
-                        <div className="flex items-center">
-                            <img
-                                src={
-                                    completedTasks[key]
-                                        ? iconCeklistboxTrue
-                                        : iconCeklistboxFalse
-                                }
-                                alt="Checkbox"
-                                className="w-5 h-5 cursor-pointer"
-                            />
-                            <p className="pl-2 text-black cursor-pointer">{key.replace(/([A-Z])/g, ' $1')}</p>
-                        </div>
+                            {openModalReview === key && (
+                                <Modal isOpen={!!openModalReview} onClose={closeModal} width="w-[370px]">
+                                    <ModalReview
+                                        taskKey={openModalReview}
+                                        onReviewNavigate={() => handleReviewNavigate(key)}
+                                    />
+                                </Modal>
+                            )}
 
-                        {completedTasks[key] && (
-                            <div className="mr-[42vw]">
-                                <a
-                                    href="/review"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-dustyBlue underline"
-                                >
-                                    Review
-                                </a>
-                            </div>
-                        )}
-                    </div>
-                ))}
-                </>
-            ),
-        },
-        {
-            id: 5,
-            moduleName: (
-                <span className="font-bold text-xl">Fungsi</span>
-            ),
-            details: (
-                <>
-                    <h3 className="font-semibold text-md pl-[26px]">
-                        Pencapaian Pembelajaran
-                    </h3>
-                    <ol className="list-decimal list-inside pl-[26px]">
-                        <li>Mampu mendefinisikan apa itu algoritma dan mengapa penting dalam pemrograman.</li>
-                        <li>Mampu menjelaskan struktur dasar dari program C.</li>
-                        <li>Mampu mengidentifikasi komponen utama dari sebuah program C.</li>
-                        <li>Mampu mengatur lingkungan pengembangan untuk pemrograman C.</li>
-                    </ol>
-                    <br />
-                    <p className="pl-[26px]">
-                        Untuk tutorial lebih lanjut, Anda dapat menonton video berikut:
-                    </p>
-                    <div className="flex items-center mt-2 pl-[26px]">
-                        <img src={iconPPT} alt="Icon PPT" className="w-6 h-6 p-[2px] bg-green-700 rounded-full" />
-                        <a
-                            href=""
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-green-700 underline ml-2"
-                        >
-                            PPT
-                        </a>
-                    </div>
-                    <div className="flex items-center mt-2 pl-[26px]">
-                        <img src={iconVideo} alt="Icon Video" className="w-6 h-6 p-[2px] bg-red-700 rounded-full" />
-                        <a
-                            href=""
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-red-700 underline ml-2"
-                        >
-                            Video YouTube
-                        </a>
-                    </div>
-                    <div className="flex items-center mt-2 pl-[26px]">
-                        <img src={iconModule} alt="Icon Module" className="w-6 h-6 p-[2px] bg-blue-700 rounded-full" />
-                        <a
-                            href=""
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-blue-700 underline ml-2"
-                        >
-                            Module
-                        </a>
-                    </div>
-                    <br />
-                    {Object.keys(completedTasks).map((key) => (
-                    <div
-                        key={key}
-                        className="flex items-center justify-between mt-2 pl-[26px]"
-                        onClick={() => handleOpenModal(key)}
-                    >
-                        <div className="flex items-center">
-                            <img
-                                src={
-                                    completedTasks[key]
-                                        ? iconCeklistboxTrue
-                                        : iconCeklistboxFalse
-                                }
-                                alt="Checkbox"
-                                className="w-5 h-5 cursor-pointer"
-                            />
-                            <p className="pl-2 text-black cursor-pointer">{key.replace(/([A-Z])/g, ' $1')}</p>
+                            {openModalAttempt === key && (
+                                <Modal isOpen={!!openModalAttempt} onClose={closeModal} width="w-[370px]">
+                                    <ModalAttempt
+                                        taskKey={openModalAttempt}
+                                        onAttemptComplete={(taskKey) => handleAttemptComplete(taskKey)}
+                                    />
+                                </Modal>
+                            )}
                         </div>
-
-                        {completedTasks[key] && (
-                            <div className="mr-[42vw]">
-                                <a
-                                    href="/review"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-dustyBlue underline"
-                                >
-                                    Review
-                                </a>
-                            </div>
-                        )}
-                    </div>
-                ))}
-                </>
-            ),
-        },
-        {
-            id: 6,
-            moduleName: (
-                <span className="font-bold text-xl">Array dan String</span>
-            ),
-            details: (
-                <>
-                    <h3 className="font-semibold text-md pl-[26px]">
-                        Pencapaian Pembelajaran
-                    </h3>
-                    <ol className="list-decimal list-inside pl-[26px]">
-                        <li>Mampu mendefinisikan apa itu algoritma dan mengapa penting dalam pemrograman.</li>
-                        <li>Mampu menjelaskan struktur dasar dari program C.</li>
-                        <li>Mampu mengidentifikasi komponen utama dari sebuah program C.</li>
-                        <li>Mampu mengatur lingkungan pengembangan untuk pemrograman C.</li>
-                    </ol>
-                    <br />
-                    <p className="pl-[26px]">
-                        Untuk tutorial lebih lanjut, Anda dapat menonton video berikut:
-                    </p>
-                    <div className="flex items-center mt-2 pl-[26px]">
-                        <img src={iconPPT} alt="Icon PPT" className="w-6 h-6 p-[2px] bg-green-700 rounded-full" />
-                        <a
-                            href=""
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-green-700 underline ml-2"
-                        >
-                            PPT
-                        </a>
-                    </div>
-                    <div className="flex items-center mt-2 pl-[26px]">
-                        <img src={iconVideo} alt="Icon Video" className="w-6 h-6 p-[2px] bg-red-700 rounded-full" />
-                        <a
-                            href=""
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-red-700 underline ml-2"
-                        >
-                            Video YouTube
-                        </a>
-                    </div>
-                    <div className="flex items-center mt-2 pl-[26px]">
-                        <img src={iconModule} alt="Icon Module" className="w-6 h-6 p-[2px] bg-blue-700 rounded-full" />
-                        <a
-                            href=""
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-blue-700 underline ml-2"
-                        >
-                            Module
-                        </a>
-                    </div>
-                    <br />
-                    {Object.keys(completedTasks).map((key) => (
-                    <div
-                        key={key}
-                        className="flex items-center justify-between mt-2 pl-[26px]"
-                        onClick={() => handleOpenModal(key)}
-                    >
-                        <div className="flex items-center">
-                            <img
-                                src={
-                                    completedTasks[key]
-                                        ? iconCeklistboxTrue
-                                        : iconCeklistboxFalse
-                                }
-                                alt="Checkbox"
-                                className="w-5 h-5 cursor-pointer"
-                            />
-                            <p className="pl-2 text-black cursor-pointer">{key.replace(/([A-Z])/g, ' $1')}</p>
-                        </div>
-
-                        {completedTasks[key] && (
-                            <div className="mr-[42vw]">
-                                <a
-                                    href="/review"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-dustyBlue underline"
-                                >
-                                    Review
-                                </a>
-                            </div>
-                        )}
-                    </div>
-                ))}
-                </>
-            ),
-        },
-        {
-            id: 7,
-            moduleName: (
-                <span className="font-bold text-xl">Pointer</span>
-            ),
-            details: (
-                <>
-                    <h3 className="font-semibold text-md pl-[26px]">
-                        Pencapaian Pembelajaran
-                    </h3>
-                    <ol className="list-decimal list-inside pl-[26px]">
-                        <li>Mampu mendefinisikan apa itu algoritma dan mengapa penting dalam pemrograman.</li>
-                        <li>Mampu menjelaskan struktur dasar dari program C.</li>
-                        <li>Mampu mengidentifikasi komponen utama dari sebuah program C.</li>
-                        <li>Mampu mengatur lingkungan pengembangan untuk pemrograman C.</li>
-                    </ol>
-                    <br />
-                    <p className="pl-[26px]">
-                        Untuk tutorial lebih lanjut, Anda dapat menonton video berikut:
-                    </p>
-                    <div className="flex items-center mt-2 pl-[26px]">
-                        <img src={iconPPT} alt="Icon PPT" className="w-6 h-6 p-[2px] bg-green-700 rounded-full" />
-                        <a
-                            href=""
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-green-700 underline ml-2"
-                        >
-                            PPT
-                        </a>
-                    </div>
-                    <div className="flex items-center mt-2 pl-[26px]">
-                        <img src={iconVideo} alt="Icon Video" className="w-6 h-6 p-[2px] bg-red-700 rounded-full" />
-                        <a
-                            href=""
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-red-700 underline ml-2"
-                        >
-                            Video YouTube
-                        </a>
-                    </div>
-                    <div className="flex items-center mt-2 pl-[26px]">
-                        <img src={iconModule} alt="Icon Module" className="w-6 h-6 p-[2px] bg-blue-700 rounded-full" />
-                        <a
-                            href=""
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-blue-700 underline ml-2"
-                        >
-                            Module
-                        </a>
-                    </div>
-                    <br />
-                    {Object.keys(completedTasks).map((key) => (
-                    <div
-                        key={key}
-                        className="flex items-center justify-between mt-2 pl-[26px]"
-                        onClick={() => handleOpenModal(key)}
-                    >
-                        <div className="flex items-center">
-                            <img
-                                src={
-                                    completedTasks[key]
-                                        ? iconCeklistboxTrue
-                                        : iconCeklistboxFalse
-                                }
-                                alt="Checkbox"
-                                className="w-5 h-5 cursor-pointer"
-                            />
-                            <p className="pl-2 text-black cursor-pointer">{key.replace(/([A-Z])/g, ' $1')}</p>
-                        </div>
-
-                        {completedTasks[key] && (
-                            <div className="mr-[42vw]">
-                                <a
-                                    href="/review"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-dustyBlue underline"
-                                >
-                                    Review
-                                </a>
-                            </div>
-                        )}
-                    </div>
-                ))}
-                </>
-            ),
-        },
-        {
-            id: 8,
-            moduleName: (
-                <span className="font-bold text-xl">File Input/Output</span>
-            ),
-            details: (
-                <>
-                    <h3 className="font-semibold text-md pl-[26px]">
-                        Pencapaian Pembelajaran
-                    </h3>
-                    <ol className="list-decimal list-inside pl-[26px]">
-                        <li>Mampu mendefinisikan apa itu algoritma dan mengapa penting dalam pemrograman.</li>
-                        <li>Mampu menjelaskan struktur dasar dari program C.</li>
-                        <li>Mampu mengidentifikasi komponen utama dari sebuah program C.</li>
-                        <li>Mampu mengatur lingkungan pengembangan untuk pemrograman C.</li>
-                    </ol>
-                    <br />
-                    <p className="pl-[26px]">
-                        Untuk tutorial lebih lanjut, Anda dapat menonton video berikut:
-                    </p>
-                    <div className="flex items-center mt-2 pl-[26px]">
-                        <img src={iconPPT} alt="Icon PPT" className="w-6 h-6 p-[2px] bg-green-700 rounded-full" />
-                        <a
-                            href=""
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-green-700 underline ml-2"
-                        >
-                            PPT
-                        </a>
-                    </div>
-                    <div className="flex items-center mt-2 pl-[26px]">
-                        <img src={iconVideo} alt="Icon Video" className="w-6 h-6 p-[2px] bg-red-700 rounded-full" />
-                        <a
-                            href=""
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-red-700 underline ml-2"
-                        >
-                            Video YouTube
-                        </a>
-                    </div>
-                    <div className="flex items-center mt-2 pl-[26px]">
-                        <img src={iconModule} alt="Icon Module" className="w-6 h-6 p-[2px] bg-blue-700 rounded-full" />
-                        <a
-                            href=""
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-blue-700 underline ml-2"
-                        >
-                            Module
-                        </a>
-                    </div>
-                    <br />
-                    {Object.keys(completedTasks).map((key) => (
-                    <div
-                        key={key}
-                        className="flex items-center justify-between mt-2 pl-[26px]"
-                        onClick={() => handleOpenModal(key)}
-                    >
-                        <div className="flex items-center">
-                            <img
-                                src={
-                                    completedTasks[key]
-                                        ? iconCeklistboxTrue
-                                        : iconCeklistboxFalse
-                                }
-                                alt="Checkbox"
-                                className="w-5 h-5 cursor-pointer"
-                            />
-                            <p className="pl-2 text-black cursor-pointer">{key.replace(/([A-Z])/g, ' $1')}</p>
-                        </div>
-
-                        {completedTasks[key] && (
-                            <div className="mr-[42vw]">
-                                <a
-                                    href="/review"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-dustyBlue underline"
-                                >
-                                    Review
-                                </a>
-                            </div>
-                        )}
-                    </div>
-                ))}
-                </>
-            ),
-        },
-        {
-            id: 9,
-            moduleName: (
-                <span className="font-bold text-xl">Sorting</span>
-            ),
-            details: (
-                <>
-                    <h3 className="font-semibold text-md pl-[26px]">
-                        Pencapaian Pembelajaran
-                    </h3>
-                    <ol className="list-decimal list-inside pl-[26px]">
-                        <li>Mampu mendefinisikan apa itu algoritma dan mengapa penting dalam pemrograman.</li>
-                        <li>Mampu menjelaskan struktur dasar dari program C.</li>
-                        <li>Mampu mengidentifikasi komponen utama dari sebuah program C.</li>
-                        <li>Mampu mengatur lingkungan pengembangan untuk pemrograman C.</li>
-                    </ol>
-                    <br />
-                    <p className="pl-[26px]">
-                        Untuk tutorial lebih lanjut, Anda dapat menonton video berikut:
-                    </p>
-                    <div className="flex items-center mt-2 pl-[26px]">
-                        <img src={iconPPT} alt="Icon PPT" className="w-6 h-6 p-[2px] bg-green-700 rounded-full" />
-                        <a
-                            href=""
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-green-700 underline ml-2"
-                        >
-                            PPT
-                        </a>
-                    </div>
-                    <div className="flex items-center mt-2 pl-[26px]">
-                        <img src={iconVideo} alt="Icon Video" className="w-6 h-6 p-[2px] bg-red-700 rounded-full" />
-                        <a
-                            href=""
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-red-700 underline ml-2"
-                        >
-                            Video YouTube
-                        </a>
-                    </div>
-                    <div className="flex items-center mt-2 pl-[26px]">
-                        <img src={iconModule} alt="Icon Module" className="w-6 h-6 p-[2px] bg-blue-700 rounded-full" />
-                        <a
-                            href=""
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-blue-700 underline ml-2"
-                        >
-                            Module
-                        </a>
-                    </div>
-                    <br />
-                    {Object.keys(completedTasks).map((key) => (
-                    <div
-                        key={key}
-                        className="flex items-center justify-between mt-2 pl-[26px]"
-                        onClick={() => handleOpenModal(key)}
-                    >
-                        <div className="flex items-center">
-                            <img
-                                src={
-                                    completedTasks[key]
-                                        ? iconCeklistboxTrue
-                                        : iconCeklistboxFalse
-                                }
-                                alt="Checkbox"
-                                className="w-5 h-5 cursor-pointer"
-                            />
-                            <p className="pl-2 text-black cursor-pointer">{key.replace(/([A-Z])/g, ' $1')}</p>
-                        </div>
-
-                        {completedTasks[key] && (
-                            <div className="mr-[42vw]">
-                                <a
-                                    href="/review"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-dustyBlue underline"
-                                >
-                                    Review
-                                </a>
-                            </div>
-                        )}
-                    </div>
-                ))}
-                </>
-            ),
-        },
-        {
-            id: 10,
-            moduleName: (
-                <span className="font-bold text-xl">Searching</span>
-            ),
-            details: (
-                <>
-                    <h3 className="font-semibold text-md pl-[26px]">
-                        Pencapaian Pembelajaran
-                    </h3>
-                    <ol className="list-decimal list-inside pl-[26px]">
-                        <li>Mampu mendefinisikan apa itu algoritma dan mengapa penting dalam pemrograman.</li>
-                        <li>Mampu menjelaskan struktur dasar dari program C.</li>
-                        <li>Mampu mengidentifikasi komponen utama dari sebuah program C.</li>
-                        <li>Mampu mengatur lingkungan pengembangan untuk pemrograman C.</li>
-                    </ol>
-                    <br />
-                    <p className="pl-[26px]">
-                        Untuk tutorial lebih lanjut, Anda dapat menonton video berikut:
-                    </p>
-                    <div className="flex items-center mt-2 pl-[26px]">
-                        <img src={iconPPT} alt="Icon PPT" className="w-6 h-6 p-[2px] bg-green-700 rounded-full" />
-                        <a
-                            href=""
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-green-700 underline ml-2"
-                        >
-                            PPT
-                        </a>
-                    </div>
-                    <div className="flex items-center mt-2 pl-[26px]">
-                        <img src={iconVideo} alt="Icon Video" className="w-6 h-6 p-[2px] bg-red-700 rounded-full" />
-                        <a
-                            href=""
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-red-700 underline ml-2"
-                        >
-                            Video YouTube
-                        </a>
-                    </div>
-                    <div className="flex items-center mt-2 pl-[26px]">
-                        <img src={iconModule} alt="Icon Module" className="w-6 h-6 p-[2px] bg-blue-700 rounded-full" />
-                        <a
-                            href=""
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-blue-700 underline ml-2"
-                        >
-                            Module
-                        </a>
-                    </div>
-                    <br />
-                    {Object.keys(completedTasks).map((key) => (
-                    <div
-                        key={key}
-                        className="flex items-center justify-between mt-2 pl-[26px]"
-                        onClick={() => handleOpenModal(key)}
-                    >
-                        <div className="flex items-center">
-                            <img
-                                src={
-                                    completedTasks[key]
-                                        ? iconCeklistboxTrue
-                                        : iconCeklistboxFalse
-                                }
-                                alt="Checkbox"
-                                className="w-5 h-5 cursor-pointer"
-                            />
-                            <p className="pl-2 text-black cursor-pointer">{key.replace(/([A-Z])/g, ' $1')}</p>
-                        </div>
-
-                        {completedTasks[key] && (
-                            <div className="mr-[42vw]">
-                                <a
-                                    href="/review"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-dustyBlue underline"
-                                >
-                                    Review
-                                </a>
-                            </div>
-                        )}
-                    </div>
-                ))}
+                    ))}
                 </>
             ),
         },
@@ -953,13 +212,13 @@ export default function ModuleSection() {
     }, []);
 
     return (
-        <div className="bg-white rounded-lg py-4 px-4 max-w-4xl mx-auto">
+        <div className="ml-[3vw] bg-white rounded-lg py-4 px-4 w-[896px] mx-auto">
             <div className="flex bg-deepForestGreen rounded-lg py-2 px-2 mb-4 justify-center">
                 <h1 className="text-white text-center font-bold text-2xl bg-deepForestGreen hover:bg-darkOliveGreen rounded-lg p-1 w-[50%]">MODUL PRAKTIKUM</h1>
             </div>
             <div
                 className="space-y-2 overflow-y-auto"
-                style={{ maxHeight: "400px" }}
+                style={{ maxHeight: "69vh" }}
             >
                 {rows.map((row) => (
                     <div
@@ -988,15 +247,6 @@ export default function ModuleSection() {
                     </div>
                 ))}
             </div>
-
-            {openModal && (
-                <Modal isOpen={!!openModal} onClose={closeModal} width="w-[370px]">
-                    <ModalAttempt
-                        taskKey={openModal}
-                        onAttemptComplete={handleAttemptComplete} 
-                    />
-                </Modal>            
-            )}
         </div>
     );
 }

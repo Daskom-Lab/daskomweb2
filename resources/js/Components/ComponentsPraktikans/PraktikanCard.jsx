@@ -12,7 +12,7 @@ export default function CardPraktikan() {
 
     return (
         <>
-            <div className="my-auto mx-auto font-poppins">
+            <div className="mt-[13vh] mx-auto font-poppins">
                 <div className="bg-softIvory h-[436px] w-[352.8px] shadow-xl rounded-lg pt-5">
                     <CircularImage src={daskomIcon} alt="Logo Daskom" />
 

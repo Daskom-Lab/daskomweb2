@@ -1,5 +1,3 @@
-import React from 'react';
-
 export default function ModalChangePassSuccess() {
     const handleLoginClick = () => {
         window.location.href = '/login';

@@ -25,7 +25,7 @@ export default function ContactAssistant({ auth }) {
             >
                 <Head title="Contact Assistant" />
 
-                <div className="mt-12 flex min-h-[calc(100vh-60px)]">
+                <div className="mt-[8vh] flex mx-auto h-screen">
                     <div 
                         className={`transition-all duration-300 flex-1 ${isSidebarOpen ? 'ml-[240px]' : 'ml-14'}`}
                     >
