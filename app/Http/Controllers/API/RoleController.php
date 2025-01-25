@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Role as roles;
 use Spatie\Permission\Models\Role;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Permission;
 
 class RoleController extends Controller
@@ -18,10 +19,16 @@ class RoleController extends Controller
 
     public function index()
     {
-        $roles = Role::where('name', '!=', 'praktikan') // Exclude the 'praktikan' role
-        ->whereNotIn('name', ['SOFTWARE', 'ADMIN', 'KORDAS', 'WAKORDAS', 'KOORPRAK', 'HARDWARE', 'DDC']) // Exclude specific roles
-        ->get()
-        ->makeHidden(['guard_name']);
+        if (Auth::guard('asisten')->check()) {
+            $roles = Role::where('name', '!=', 'praktikan')
+            ->get()
+            ->makeHidden(['guard_name']);
+        }else{
+            $roles = Role::where('name', '!=', 'praktikan') // Exclude the 'praktikan' role
+            ->whereNotIn('name', ['SOFTWARE', 'ADMIN', 'KORDAS', 'WAKORDAS', 'KOORPRAK', 'HARDWARE', 'DDC']) // Exclude specific roles
+            ->get()
+            ->makeHidden(['guard_name']);
+        }
 
         return response()->json([
             'roles' => $roles
