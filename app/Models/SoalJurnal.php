@@ -7,8 +7,9 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Class SoalJurnal
@@ -29,6 +30,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class SoalJurnal extends Model
 {
+	use HasFactory;
 	protected $table = 'soal_jurnals';
 
 	protected $casts = [
@@ -41,7 +43,6 @@ class SoalJurnal extends Model
 		'pengantar',
 		'kodingan',
 		'soal',
-		'isSulit'
 	];
 
 	public function modul()

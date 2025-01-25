@@ -7,8 +7,9 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 /**
  * Class Kela
@@ -33,18 +34,22 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Kelas extends Model
 {
+	use HasFactory;
+
 	protected $table = 'kelas';
 
 	protected $casts = [
 		'shift' => 'int',
-		'totalGroup' => 'int'
+		'totalGroup' => 'int',
+		'isEnglish' => 'int'
 	];
 
 	protected $fillable = [
 		'kelas',
 		'hari',
 		'shift',
-		'totalGroup'
+		'totalGroup',
+		'isEnglish'
 	];
 
 	public function feedback()

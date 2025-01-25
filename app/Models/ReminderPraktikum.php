@@ -39,7 +39,7 @@ class ReminderPraktikum extends Model
 		'pesan'
 	];
 
-	public function kela()
+	public function kelas()
 	{
 		return $this->belongsTo(Kelas::class, 'kelas_id');
 	}

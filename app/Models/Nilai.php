@@ -42,11 +42,13 @@ class Nilai extends Model
 	protected $casts = [
 		'tp' => 'float',
 		'ta' => 'float',
-		'tk' => 'float',
-		'jurnal' => 'float',
-		'skill' => 'float',
-		'diskon' => 'float',
-		'rating' => 'float',
+		'd1' => 'float',
+		'd2' => 'float',
+		'd3' => 'float',
+		'd4' => 'float',
+		'l1' => 'float',
+		'l2' => 'float',
+		'avg' => 'float',
 		'modul_id' => 'int',
 		'asisten_id' => 'int',
 		'kelas_id' => 'int',
@@ -56,12 +58,13 @@ class Nilai extends Model
 	protected $fillable = [
 		'tp',
 		'ta',
-		'tk',
-		'jurnal',
-		'skill',
-		'diskon',
-		'rating',
-		'review',
+		'd1',
+		'd2',
+		'd3',
+		'd4',
+		'l1',
+		'l2',
+		'avg',
 		'modul_id',
 		'asisten_id',
 		'kelas_id',
@@ -73,7 +76,7 @@ class Nilai extends Model
 		return $this->belongsTo(Asisten::class);
 	}
 
-	public function kela()
+	public function kelas()
 	{
 		return $this->belongsTo(Kelas::class, 'kelas_id');
 	}

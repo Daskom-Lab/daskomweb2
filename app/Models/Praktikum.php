@@ -7,6 +7,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -17,9 +18,6 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $kelas_id
  * @property int $pj_id
  * @property int $laporan_id
- * @property bool $isActive
- * @property Carbon|null $start_time
- * @property Carbon|null $end_time
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
@@ -27,6 +25,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property LaporanPj $laporan_pj
  * @property Modul $modul
  * @property Asisten $asisten
+ * @property Collection|Deadline[] $deadlines
  *
  * @package App\Models
  */
@@ -37,40 +36,34 @@ class Praktikum extends Model
 	protected $casts = [
 		'modul_id' => 'int',
 		'kelas_id' => 'int',
-		'pj_id' => 'int',
-		'laporan_id' => 'int',
-		'isActive' => 'bool',
-		'start_time' => 'datetime',
-		'end_time' => 'datetime'
+		'isActive' => 'int'
 	];
 
 	protected $fillable = [
 		'modul_id',
 		'kelas_id',
-		'pj_id',
-		'laporan_id',
-		'isActive',
 		'start_time',
-		'end_time'
+		'end_time',
+		'isActive',
 	];
 
-	public function kela()
+	public function kelas()
 	{
 		return $this->belongsTo(Kelas::class, 'kelas_id');
 	}
 
-	public function laporan_pj()
-	{
-		return $this->belongsTo(LaporanPj::class, 'laporan_id');
-	}
-
 	public function modul()
 	{
-		return $this->belongsTo(Modul::class);
+		return $this->belongsTo(Modul::class, 'modul_id');
 	}
 
-	public function asisten()
+	public function laporan_pj()
 	{
-		return $this->belongsTo(Asisten::class, 'pj_id');
+		return $this->hasMany(LaporanPj::class, 'praktikum_id');
+	}
+
+	public function deadlines()
+	{
+		return $this->hasMany(Deadline::class, 'praktikums_id');
 	}
 }

@@ -7,12 +7,16 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Support\Str;
+use Spatie\Permission\Role;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Sanctum\NewAccessToken;
+use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 /**
  * Class Praktikan
@@ -49,7 +53,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Praktikan extends Authenticatable
 {
-	use HasApiTokens, HasFactory, Notifiable;
+	use HasFactory, Notifiable , HasApiTokens, HasRoles;
+
+	protected $guard = 'praktikan';
 	protected $table = 'praktikans';
 
 	protected $casts = [
@@ -74,7 +80,19 @@ class Praktikan extends Authenticatable
 		'remember_token'
 	];
 
-	public function kela()
+
+	public function createToken(string $name, array $abilities = ['*'])
+	{
+		$token = $this->tokens()->create([
+			'name' => $name,
+			'token' => hash('sha256', $plainTextToken = Str::random(240)),
+			'abilities' => $abilities,
+		]);
+
+		return new NewAccessToken($token, $token->getKey() . '|' . $plainTextToken);
+	}
+
+	public function kelas()
 	{
 		return $this->belongsTo(Kelas::class, 'kelas_id');
 	}

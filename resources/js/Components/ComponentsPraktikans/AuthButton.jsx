@@ -24,11 +24,12 @@ export default function AuthButton({ order, openModal, mode }) {
 
     return order === 'login' ? (
         <>
-            <Link href={mode === 'praktikan' ? '/praktikan' : '/assistant'}>
-                <button className="w-full mt-2 mb-1 p-1 bg-deepForestGreen text-lg text-white font-bold rounded-sm hover:bg-deepForestGreenDark duration-300">
-                    Masuk
-                </button>
-            </Link>
+            <button className="w-full mt-2 mb-1 p-1 bg-deepForestGreen text-lg text-white font-bold rounded-sm hover:bg-deepForestGreenDark duration-300"
+            type='submit'>
+                Masuk
+            </button>
+            {/* <Link href={mode === 'praktikan' ? '/praktikan' : '/assistant'}>
+            </Link> */}
             <Separator />
             <Link href={`/register?mode=${mode}`}>
                 <button className="w-full mt-1 p-1 bg-deepForestGreen text-lg text-white font-bold rounded-sm mb-3 hover:bg-deepForestGreenDark duration-300">
@@ -39,13 +40,13 @@ export default function AuthButton({ order, openModal, mode }) {
     ) : (
         <>
             <button
-                className="w-full mt-[-20px] mb-[-10px] p-1 bg-deepForestGreen text-lg text-white font-bold rounded-sm hover:bg-deepForestGreenDark duration-300"
-                onClick={handleOpenModal}
+                className="w-full mt-2 mb-1 p-1 bg-deepForestGreen text-lg text-white font-bold rounded-sm hover:bg-deepForestGreenDark duration-300"
+                onClick={handleOpenModal} type='submit'
             >
                 Daftar
             </button>
             <Separator />
-            <Link href="/login">
+            <Link href={`/login?mode=${mode}`}>
                 <button className="w-full mt-[-10px] p-1 bg-deepForestGreen text-lg text-white font-bold rounded-sm mb-3 hover:bg-deepForestGreenDark duration-300">
                     Masuk
                 </button>

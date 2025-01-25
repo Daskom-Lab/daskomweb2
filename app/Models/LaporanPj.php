@@ -31,26 +31,27 @@ class LaporanPj extends Model
 {
 	protected $table = 'laporan_pjs';
 
-	protected $casts = [
-		'shift' => 'int',
-		'modul_id' => 'int'
-	];
-
 	protected $fillable = [
 		'allasisten_id',
 		'laporan',
 		'hari',
 		'shift',
-		'modul_id'
+		'praktikum_id',
+		'pj_id',
 	];
 
-	public function modul()
+
+	public function history_jagas()
 	{
-		return $this->belongsTo(Modul::class);
+		return $this->hasMany(HistoryJaga::class);
+	}
+	public function praktikum()
+	{
+		return $this->belongsTo(Praktikum::class, 'praktikum_id');
 	}
 
-	public function praktikums()
+	public function asisten()
 	{
-		return $this->hasMany(Praktikum::class, 'laporan_id');
+		return $this->belongsTo(Asisten::class, 'pj_id');
 	}
 }
