@@ -5,7 +5,6 @@ import eyeOpen from '../../../assets/form/eyeOpen.png';
 import ButtonOption from '../../Components/ComponentsPraktikans/ButtonOption';
 import Modal from '../../Components/ComponentsPraktikans/Modal';
 import ModalForgotPass from '../../Components/ComponentsAssistants/ModalForgotPass';
-import axios_client from '@/axios_client';
 
 export default function LoginFormAssistant({ mode }) {
     const [values, setValues] = useState({
@@ -40,44 +39,44 @@ export default function LoginFormAssistant({ mode }) {
         }));
     }
 
-    // function handleSubmit(e) {
-    //     e.preventDefault();
-
-    //     // Perform login using Inertia's router
-    //     router.post('/login/asisten', values, {
-    //         preserveScroll: true, // Keeps the scroll position
-    //         onFinish: () => {
-                
-    //             console.log('Login finished!');
-    //         },
-    //         onError: (errors) => {
-    //             console.error('Validation Errors:', errors);
-    //         },
-    //     });
-    // }
     function handleSubmit(e) {
-    e.preventDefault();
+        e.preventDefault();
 
-    // Perform login using Inertia's router
-    router.post('/login/asisten', values, {
-        preserveScroll: true,
-        onSuccess: (page) => {
-            const token = page.props.auth?.token; // Adjust according to your server response
-            if (token) {
-                // Save the token (e.g., in localStorage)
-                localStorage.setItem('token', token);
+        // Perform login using Inertia's router
+        router.post('/login/asisten', values, {
+            preserveScroll: true, // Keeps the scroll position
+            onFinish: () => {
+                
+                console.log('Login finished!');
+            },
+            onError: (errors) => {
+                console.error('Validation Errors:', errors);
+            },
+        });
+    }
+//     function handleSubmit(e) {
+//     e.preventDefault();
 
-                // Set the default Authorization header
-                axios_client.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+//     // Perform login using Inertia's router
+//     router.post('/login/asisten', values, {
+//         preserveScroll: true,
+//         onSuccess: (page) => {
+//             const token = page.props.auth?.token; // Adjust according to your server response
+//             if (token) {
+//                 // Save the token (e.g., in localStorage)
+//                 localStorage.setItem('token', token);
 
-                console.log('Token set to Axios default header!');
-            }
-        },
-        onError: (errors) => {
-            console.error('Validation Errors:', errors);
-        },
-    });
-}
+//                 // Set the default Authorization header
+//                 axios_client.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+//                 console.log('Token set to Axios default header!');
+//             }
+//         },
+//         onError: (errors) => {
+//             console.error('Validation Errors:', errors);
+//         },
+//     });
+// }
 
     return (
         <div className="w-1/2 my-10 px-10">
