@@ -56,7 +56,7 @@ export default function RegistFormAssistant({ mode }) {
 
         if (validateFields()) {
             // Submit form using Inertia
-            router.post('/api/register/asisten', values, {
+            router.post('/api-v1/register/asisten', values, {
                 preserveScroll: true,
                 onFinish: () => {
                     console.log('Registration finished!');
