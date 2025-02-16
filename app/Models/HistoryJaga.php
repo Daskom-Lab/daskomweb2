@@ -32,15 +32,13 @@ class HistoryJaga extends Model
 
 	protected $casts = [
 		'shift' => 'int',
-		'pj' => 'bool',
+		'laporan_pj_id' => 'int',
 		'asisten_id' => 'int',
 		'modul_id' => 'int'
 	];
 
 	protected $fillable = [
-		'hari',
-		'shift',
-		'pj',
+		'laporan_pj_id',
 		'asisten_id',
 		'modul_id'
 	];
@@ -48,6 +46,10 @@ class HistoryJaga extends Model
 	public function asisten()
 	{
 		return $this->belongsTo(Asisten::class);
+	}
+	public function laporanpjs()
+	{
+		return $this->belongsTo(LaporanPj::class);
 	}
 
 	public function modul()

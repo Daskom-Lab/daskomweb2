@@ -8,6 +8,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -48,17 +49,16 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Modul extends Model
 {
+	use HasFactory;
 	protected $table = 'moduls';
-
-	protected $casts = [
-		'isEnglish' => 'bool',
-		'isUnlocked' => 'bool'
-	];
+	protected $primaryKey = "id";
+    protected $keyType = "int";
 
 	protected $fillable = [
 		'judul',
-		'deskripsi',
-		'isi',
+		'poin1',
+		'poin2',
+		'poin3',
 		'isEnglish',
 		'isUnlocked'
 	];

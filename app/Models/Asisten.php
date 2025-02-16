@@ -7,12 +7,18 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Models\Role;
+use Laravel\Sanctum\NewAccessToken;
+use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Models\Permission;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  * Class Asisten
@@ -48,7 +54,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Asisten extends Authenticatable
 {
-	use HasApiTokens, HasFactory, Notifiable;
+	use HasFactory, Notifiable, HasApiTokens, HasRoles;
+
+	protected $guard = 'asisten';
 	protected $table = 'asistens';
 
 	protected $casts = [
@@ -73,6 +81,22 @@ class Asisten extends Authenticatable
 		'instagram',
 		'remember_token'
 	];
+
+	public function createToken(string $name, array $abilities = ['*'])
+	{
+		$token = $this->tokens()->create([
+			'name' => $name,
+			'token' => hash('sha256', $plainTextToken = Str::random(240)),
+			'abilities' => $abilities,
+		]);
+
+		return new NewAccessToken($token, $token->getKey() . '|' . $plainTextToken);
+	}
+
+	public function getPermissionsAttribute()
+	{
+		return $this->role ? $this->role->permissions->pluck('name') : [];
+	}
 
 	public function role()
 	{
@@ -124,13 +148,25 @@ class Asisten extends Authenticatable
 		return $this->hasMany(Pelanggaran::class);
 	}
 
+	public function pelanggaranCount()
+	{
+		return $this->hasMany(Pelanggaran::class, 'asisten_id');
+	}
+
 	public function pollings()
 	{
 		return $this->hasMany(Polling::class);
 	}
 
-	public function praktikums()
+	public function pollingsCount()
 	{
-		return $this->hasMany(Praktikum::class, 'pj_id');
+		return $this->hasMany(Polling::class, 'asisten_id');
 	}
+
+	public function laporanPj()
+	{
+		return $this->hasMany(LaporanPj::class, 'pj_id');
+	}
+
+
 }

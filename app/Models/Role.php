@@ -27,7 +27,8 @@ class Role extends Model
 	protected $table = 'roles';
 
 	protected $fillable = [
-		'role'
+		'name',
+		'guard_name'
 	];
 
 	public function asistens()

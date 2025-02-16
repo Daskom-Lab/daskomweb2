@@ -1,123 +1,214 @@
-import { useState } from 'react';
-import { useForm } from '@inertiajs/react';
+import { useState, useEffect } from 'react';
+import { router, usePage } from '@inertiajs/react';
 import eyeClose from '../../../assets/form/eyeClose.png';
 import eyeOpen from '../../../assets/form/eyeOpen.png';
-import AuthButton from '../ComponentsPraktikans/AuthButton';
+import ButtonOption from '../../Components/ComponentsPraktikans/ButtonOption';
 
-export default function RegistFormAssistant() {
-    const [passwordVisible, setPasswordVisible] = useState(false);
-
-    const togglePasswordVisibility = () => {
-        setPasswordVisible(prev => !prev);
-    };
-
-    const { data, setData, post, processing } = useForm({
-        fullName: '',
-        desc: '',
-        phone: '',
-        lineId: '',
+export default function RegistFormAssistant({ mode }) {
+    const [values, setValues] = useState({
+        nama: '',
+        deskripsi: '',
+        nomor_telepon: '',
+        id_line: '',
         instagram: '',
-        role: '',
-        assistantCode: '',
+        role_id: '',
+        kode: '',
         password: '',
     });
 
+    const [passwordVisible, setPasswordVisible] = useState(false);
+    const [roles, setRoles] = useState([]);
+    const [localErrors, setLocalErrors] = useState({});
+    const { errors: serverErrors } = usePage().props;
+
+    const togglePasswordVisibility = () => {
+        setPasswordVisible((prevState) => !prevState);
+    };
+
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setData(name, value);
+        const key = e.target.id;
+        const value = e.target.value;
+        setValues((prevValues) => ({
+            ...prevValues,
+            [key]: value,
+        }));
+    };
+
+    const validateFields = () => {
+        const newErrors = {};
+
+        if (!values.nama.trim()) newErrors.nama = 'Nama is required.';
+        if (!values.deskripsi.trim()) newErrors.deskripsi = 'Deskripsi is required.';
+        if (!values.nomor_telepon.trim()) newErrors.nomor_telepon = 'Nomor Telepon is required.';
+        if (!values.id_line.trim()) newErrors.id_line = 'ID Line is required.';
+        if (!values.instagram.trim()) newErrors.instagram = 'Instagram is required.';
+        if (!values.kode.trim()) newErrors.kode = 'Kode Asisten is required.';
+        if (!values.password.trim()) newErrors.password = 'Password is required.';
+
+        setLocalErrors(newErrors);
+
+        // Return true if there are no errors
+        return Object.keys(newErrors).length === 0;
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route('assistant.register'));
+
+        if (validateFields()) {
+            // Submit form using Inertia
+            router.post('/api-v1/register/asisten', values, {
+                preserveScroll: true,
+                onFinish: () => {
+                    console.log('Registration finished!');
+                },
+                onError: (errors) => {
+                    console.error('Validation Errors:', errors);
+                },
+            });
+        }
     };
 
+    useEffect(() => {
+        async function fetchRoles() {
+            try {
+                const response = await fetch('/api-v1/roles');
+                if (response.ok) {
+                    const data = await response.json();
+                    setRoles(data.roles || []);
+                } else {
+                    console.error('Failed to fetch roles:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error fetching roles:', error);
+            }
+        }
+
+        fetchRoles();
+    }, []);
+
     return (
-        <div className="w-1/2 my-1 px-10">
-            <p className="font-bold text-lg text-center">Let’s Get Started..</p>
-            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                <input
-                    className="bg-lightGray py-1 px-4 mt-3 rounded-sm border-dustyBlue border-2 placeholder-dustyBlue peer"
-                    type="text"
-                    name="fullName"
-                    placeholder="Nama Lengkap"
-                    value={data.fullName}
-                    onChange={handleChange}
-                />
-                <input
-                    className="bg-lightGray py-1 px-4 mt-[-10px] rounded-sm border-dustyBlue border-2 placeholder-dustyBlue"
-                    type="text"
-                    name="desc"
-                    placeholder="Deskripsi"
-                    value={data.desc}
-                    onChange={handleChange}
-                />
-                <input
-                    className="bg-lightGray py-1 px-4 mt-[-10px] rounded-sm border-dustyBlue border-2 placeholder-dustyBlue"
-                    type="tel"
-                    name="phone"
-                    placeholder="No. Telepon"
-                    value={data.phone}
-                    onChange={handleChange}
-                />
-                <input
-                    className="bg-lightGray py-1 px-4 mt-[-10px] rounded-sm border-dustyBlue border-2 placeholder-dustyBlue"
-                    type="text"
-                    name="lineId"
-                    placeholder="ID Line"
-                    value={data.lineId}
-                    onChange={handleChange}
-                />
-                <input
-                    className="bg-lightGray py-1 px-4 mt-[-10px] rounded-sm border-dustyBlue border-2 placeholder-dustyBlue"
-                    type="text"
-                    name="instagram"
-                    placeholder="Instagram"
-                    value={data.instagram}
-                    onChange={handleChange}
-                />
-                <select
-                    className="bg-lightGray py-1 px-4 mt-[-10px] rounded-sm border-dustyBlue border-2 placeholder-dustyBlue ${data.role ? 'text-black' : 'text-dustyBlue'}"
-                    name="role"
-                    value={data.role}
-                    onChange={handleChange}
-                >
-                    <option value="" disabled className='hidden focus:text-black'>Pilih Role</option>
-                    {[
-                        "KOORDAS", "SOFTWARE", "HARDWARE", "KOORPRAK", "ADMIN 1", "ADMIN 2", 
-                        "PJ SC ATC", "PJ SC CMD", "PJ SC HRD", "PJ SC MLC", "PJ SC RDC", 
-                        "SC ATC", "SC CMD", "SC HRD", "SC MLC", "SC RDC", 
-                        "ATC", "CMD", "DDC", "HRD", "MLC", "RDC"
-                    ].map(role => (
-                        <option key={role} value={role} className='text-black'>{role}</option>
-                    ))}
-                </select>
-                <input
-                    className="bg-[#CDCDCD] py-1 px-4 mt-[-10px] rounded-sm border-[#868A95] border-2 placeholder-[#868A95] uppercase"
-                    type="text"
-                    name="assistantCode"
-                    placeholder="Kode Asisten"
-                    value={data.assistantCode}
-                    onChange={handleChange}
-                    maxLength={3}
-                />
+        <div className="w-1/2 my-10 px-10">
+            <h1 className="font-bold text-3xl text-darkGreen text-shadow-md text-center">
+                REGISTER
+            </h1>
+            <p className="font-bold text-lg text-center">Let’s create your account!</p>
+            <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+                <div>
+                    <input
+                        className={`bg-lightGray py-1 px-4 mt-4 rounded-sm border-2 ${
+                            localErrors.nama ? 'border-red-500' : 'border-dustyBlue'
+                        } placeholder-dustyBlue w-full`}
+                        type="text"
+                        id="nama"
+                        value={values.nama}
+                        onChange={handleChange}
+                        placeholder="Nama Lengkap"
+                    />
+                    {localErrors.nama && <p className="text-red-500 text-sm mt-1">{localErrors.nama}</p>}
+                </div>
+                <div>
+                    <input
+                        className={`bg-lightGray py-1 px-4 mt-1 rounded-sm border-2 ${
+                            localErrors.deskripsi ? 'border-red-500' : 'border-dustyBlue'
+                        } placeholder-dustyBlue w-full`}
+                        type="text"
+                        id="deskripsi"
+                        value={values.deskripsi}
+                        onChange={handleChange}
+                        placeholder="Deskripsi"
+                    />
+                    {localErrors.deskripsi && <p className="text-red-500 text-sm mt-1">{localErrors.deskripsi}</p>}
+                </div>
+                <div>
+                    <input
+                        className={`bg-lightGray py-1 px-4 mt-1 rounded-sm border-2 ${
+                            localErrors.nomor_telepon ? 'border-red-500' : 'border-dustyBlue'
+                        } placeholder-dustyBlue w-full`}
+                        type="tel"
+                        id="nomor_telepon"
+                        value={values.nomor_telepon}
+                        onChange={handleChange}
+                        placeholder="No. Telepon"
+                    />
+                    {localErrors.nomor_telepon && <p className="text-red-500 text-sm mt-1">{localErrors.nomor_telepon}</p>}
+                </div>
+                <div>
+                    <input
+                        className={`bg-lightGray py-1 px-4 mt-1 rounded-sm border-2 ${
+                            localErrors.id_line ? 'border-red-500' : 'border-dustyBlue'
+                        } placeholder-dustyBlue w-full`}
+                        type="text"
+                        id="id_line"
+                        value={values.id_line}
+                        onChange={handleChange}
+                        placeholder="ID Line"
+                    />
+                    {localErrors.id_line && <p className="text-red-500 text-sm mt-1">{localErrors.id_line}</p>}
+                </div>
+                <div>
+                    <input
+                        className={`bg-lightGray py-1 px-4 mt-1 rounded-sm border-2 ${
+                            localErrors.instagram ? 'border-red-500' : 'border-dustyBlue'
+                        } placeholder-dustyBlue w-full`}
+                        type="text"
+                        id="instagram"
+                        value={values.instagram}
+                        onChange={handleChange}
+                        placeholder="Instagram"
+                    />
+                    {localErrors.instagram && <p className="text-red-500 text-sm mt-1">{localErrors.instagram}</p>}
+                </div>
+                <div>
+                    <select
+                        className="bg-lightGray py-1 px-4 mt-1 rounded-sm border-dustyBlue border-2 placeholder-dustyBlue w-full"
+                        id="role_id"
+                        value={values.role_id}
+                        onChange={handleChange}
+                    >
+                        <option value="" disabled>
+                            Pilih Role
+                        </option>
+                        {roles.map((role) => (
+                            <option key={role.id} value={role.id}>
+                                {role.name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div>
+                    <input
+                        className={`bg-lightGray py-1 px-4 mt-1 rounded-sm border-2 ${
+                            localErrors.kode ? 'border-red-500' : 'border-dustyBlue'
+                        } placeholder-dustyBlue w-full`}
+                        type="text"
+                        id="kode"
+                        value={values.kode}
+                        onChange={handleChange}
+                        placeholder="Kode Asisten"
+                        maxLength={3}
+                    />
+                    {localErrors.kode && <p className="text-red-500 text-sm mt-1">{localErrors.kode}</p>}
+                </div>
                 <div className="relative">
                     <input
-                        className="bg-[#CDCDCD] py-1 px-4 mt-[-10px] mb-5 w-full rounded-sm border-[#868A95] border-2 placeholder-[#868A95]"
+                        className={`bg-lightGray py-1 px-4 mt-1 rounded-sm border-2 ${
+                            localErrors.password ? 'border-red-500' : 'border-dustyBlue'
+                        } placeholder-dustyBlue w-full`}
                         type={passwordVisible ? 'text' : 'password'}
-                        name="password"
-                        placeholder="Password"
-                        value={data.password}
+                        id="password"
+                        value={values.password}
                         onChange={handleChange}
+                        placeholder="Password"
                     />
                     <img
-                        className="w-4 cursor-pointer absolute top-[25%] right-3 transform -translate-y-1/2"
+                        className="w-4 cursor-pointer absolute top-[55%] right-3 transform -translate-y-1/2"
                         src={passwordVisible ? eyeOpen : eyeClose}
                         alt="Toggle Password Visibility"
                         onClick={togglePasswordVisibility}
                     />
+                    {localErrors.password && <p className="text-red-500 text-sm mt-1">{localErrors.password}</p>}
                 </div>
-                <AuthButton type="submit" disabled={processing} processing={processing} label="Daftar" />
+                <ButtonOption order="register" mode={mode} />
             </form>
         </div>
     );

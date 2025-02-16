@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link, usePage, router} from "@inertiajs/react";
 import ModalPasswordAssistant from './ModalPasswordAssistant';
 import ModalLogout from './ModalLogout';
 import ModalKonfigurasi from './ModalKonfigurasi';
@@ -25,12 +26,14 @@ import jawabanTP from "../../../assets/nav/Icon-Rating.svg"
 import moduleIcon from "../../../assets/nav/Icon-Module.svg"
 import tpModuleIcon from "../../../assets/nav/Icon-TP.svg"
 
-export default function AssisstantNav({ openSendAnnouncement }) {
+export default function AssisstantNav({ asisten, permission_name }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [showLogoutModal, setShowLogoutModal] = useState(false);
     const [showConfigModal, setShowConfigModal] = useState(false);
     const [showOpenKJ, setShowOpenKJ] = useState(false);
     const [showOpenTP, setShowOpenTP] = useState(false);
+    
+
 
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
@@ -59,10 +62,13 @@ export default function AssisstantNav({ openSendAnnouncement }) {
                         <ul className="py-5">
                             {/* Bagian Profile dan Praktikum */}
                             <li>
-                                <a href="/assistant" className="flex py-3 px-5 hover:bg-darkGreen">
+                                 <Link
+                                    href={route('assistant')} // Inertia's route helper
+                                    className="flex py-3 px-5 hover:bg-darkGreen"
+                                >
                                     <img className="w-6" src={profileIcon} alt="profile" />
                                     <span className="self-center text-sm ml-3">Profile</span>
-                                </a>
+                                </Link>
                             </li>
                             <li>
                                 <a href="/start-praktikum" className="flex py-3 px-5 hover:bg-darkGreen">
@@ -138,7 +144,7 @@ export default function AssisstantNav({ openSendAnnouncement }) {
                             </li>
 
                             {/* Bagian Kunci Jawaban, manage role dan Konfigurasi */}
-                            <li>
+                            <li v-if="permission_name.can.manage-role">
                                 <a href="/manage-role" className="flex py-3 px-5 hover:bg-darkGreen">
                                     <img className="w-6" src={praktikanIcon} alt="manage role" />
                                     <span className="self-center text-sm ml-3">Manage Role</span>
