@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Configuration;
 use App\Models\JenisPolling;
+use App\Models\Polling;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -21,19 +22,32 @@ class JenisPollingController extends Controller
             $pollingActive = $config ? (bool) $config->polling_activation : true;
 
             $isPraktikanRequest = (bool) $request->user('praktikan');
+            $submittedCategories = [];
 
-            if ($isPraktikanRequest && ! $pollingActive) {
-                return response()->json([
-                    'status' => 'success',
-                    'categories' => [],
-                    'polling_active' => false,
-                    'message' => 'Polling sedang tidak aktif.',
-                ], 200);
+            if ($isPraktikanRequest) {
+                if (! $pollingActive) {
+                    return response()->json([
+                        'status' => 'success',
+                        'categories' => [],
+                        'submitted_categories' => [],
+                        'polling_active' => false,
+                        'message' => 'Polling sedang tidak aktif.',
+                    ], 200);
+                }
+                
+                $praktikan = $request->user('praktikan');
+                $submittedCategories = Polling::where('praktikan_id', $praktikan->id)
+                    ->pluck('polling_id')
+                    ->unique()
+                    ->values()
+                    ->map(fn($id) => (string) $id)
+                    ->toArray();
             }
 
             return response()->json([
                 'status' => 'success',
                 'categories' => $categories,
+                'submitted_categories' => $submittedCategories,
                 'polling_active' => $pollingActive,
                 'message' => 'Polling categories retrieved successfully.',
             ], 200);

@@ -252,8 +252,11 @@ function FullscreenPollingSession({
 }
 
 export default function PollingPage({ auth }) {
+    const user = auth?.praktikan;
+
     const [showIntro, setShowIntro] = useState(() => {
-        const hasSeenIntro = sessionStorage.getItem("pollingIntroSeen");
+        if (!user?.id) return true;
+        const hasSeenIntro = sessionStorage.getItem(`pollingIntroSeen_${user.id}`);
         return !hasSeenIntro;
     });
     const [showPollingSession, setShowPollingSession] = useState(false);
@@ -271,14 +274,10 @@ export default function PollingPage({ auth }) {
     const [asistens, setAsistens] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const user = auth?.praktikan;
 
     // New states for tracking categories
     const [categories, setCategories] = useState([]);
-    const [submittedCategories, setSubmittedCategories] = useState(() => {
-        const stored = localStorage.getItem("submittedCategories");
-        return stored ? JSON.parse(stored) : [];
-    });
+    const [submittedCategories, setSubmittedCategories] = useState([]);
     const [availableCategories, setAvailableCategories] = useState([]);
     const [allCategoriesSubmitted, setAllCategoriesSubmitted] = useState(false);
     const [isPollingActive, setIsPollingActive] = useState(null);
@@ -289,10 +288,12 @@ export default function PollingPage({ auth }) {
 
     // Handle intro completion
     const handleIntroComplete = useCallback(() => {
-        sessionStorage.setItem("pollingIntroSeen", "true");
+        if (user?.id) {
+            sessionStorage.setItem(`pollingIntroSeen_${user.id}`, "true");
+        }
         setShowIntro(false);
         setShowPollingSession(true);
-    }, []);
+    }, [user]);
 
     // Fetch categories to know total count
     const categoriesQuery = useQuery({
@@ -313,6 +314,9 @@ export default function PollingPage({ auth }) {
             setCategories(fetched);
             if (typeof categoriesQuery.data?.polling_active !== "undefined") {
                 setIsPollingActive(Boolean(categoriesQuery.data.polling_active));
+            }
+            if (Array.isArray(categoriesQuery.data?.submitted_categories)) {
+                setSubmittedCategories(categoriesQuery.data.submitted_categories);
             }
         }
     }, [categoriesQuery.data]);
@@ -402,7 +406,9 @@ export default function PollingPage({ auth }) {
             if (data?.status === 'success') {
                 const newSubmittedCategories = [...new Set([...submittedCategories, ...submissions.map(s => s.polling_id.toString())])];
                 setSubmittedCategories(newSubmittedCategories);
-                localStorage.setItem("submittedCategories", JSON.stringify(newSubmittedCategories));
+                
+                // Clear any old local storage data that might conflict
+                localStorage.removeItem("submittedCategories");
 
                 setSelectedCards({});
                 localStorage.removeItem("selectedCards");
