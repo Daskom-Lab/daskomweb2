@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Asisten;
+use App\Models\Configuration;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -30,6 +31,12 @@ class RegisteredAsistenController extends Controller
     public function store(Request $request): RedirectResponse
     {
         try {
+            // Check if assistant registration is enabled
+            $config = Configuration::first();
+            if (!$config?->registrationAsisten_activation) {
+                return redirect()->back()->with('error', 'Assistant registration is currently disabled.');
+            }
+
             // Validate input
             $validated = $request->validate([
                 'nama' => 'required|string|max:255',

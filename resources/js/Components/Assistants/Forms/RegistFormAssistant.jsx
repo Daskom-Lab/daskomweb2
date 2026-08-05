@@ -5,6 +5,7 @@ import eyeClose from '../../../../assets/form/eyeClose.png';
 import eyeOpen from '../../../../assets/form/eyeOpen.png';
 import ButtonOption from '../../Praktikans/Buttons/ButtonOption';
 import { useRolesQuery } from '@/hooks/useRolesQuery';
+import { useConfigurationQuery } from '@/hooks/useConfigurationQuery';
 import { submit } from '@/lib/http';
 import { store as registerAsisten } from '@/lib/routes/auth/registeredAsisten';
 
@@ -25,11 +26,24 @@ export default function RegistFormAssistant({ mode, onSwitchToLogin }) {
     const [localErrors, setLocalErrors] = useState({});
 
     const {
+        data: config,
+        isLoading: configLoading,
+        isError: configError,
+    } = useConfigurationQuery({
+        onError: (err) => {
+            toast.error(err.message ?? 'Failed to load configuration');
+        },
+    });
+
+    const isRegistrationEnabled = config?.registrationAsisten_activation === true;
+
+    const {
         data: roles = [],
         isLoading: rolesLoading,
         isError: rolesError,
         error: rolesQueryError,
     } = useRolesQuery({
+        enabled: isRegistrationEnabled,
         onError: (err) => {
             toast.error(err.message ?? 'Whoops terjadi kesalahan');
         },
@@ -99,6 +113,29 @@ export default function RegistFormAssistant({ mode, onSwitchToLogin }) {
         }
     };
     
+    // Show loading state while checking configuration
+    if (configLoading) {
+        return (
+            <div className="w-1/2 my-10 px-10 flex flex-col items-center justify-center">
+                <h1 className="font-bold text-3xl text-depth-primary text-center">REGISTER</h1>
+                <p className="font-bold text-lg text-depth-secondary text-center mt-4">Loading...</p>
+            </div>
+        );
+    }
+
+    // Show disabled message if registration is not enabled
+    if (configError || !isRegistrationEnabled) {
+        return (
+            <div className="w-1/2 my-10 px-10 flex flex-col items-center justify-center">
+                <h1 className="font-bold text-3xl text-depth-primary text-center">REGISTER</h1>
+                <div className="mt-6 p-4 bg-red-100 border border-red-400 rounded-depth-md text-center">
+                    <p className="text-red-700 font-semibold">Assistant registration is currently disabled</p>
+                    <p className="text-red-600 text-sm mt-2">Please try again later or contact an administrator.</p>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="w-1/2 my-10 px-10">
             <h1 className="font-bold text-3xl text-depth-primary text-center">

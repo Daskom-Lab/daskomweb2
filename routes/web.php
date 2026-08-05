@@ -167,6 +167,8 @@ Route::prefix('api-v1')->group(function () {
     Route::get('/get-kelas', [RegisteredPraktikanController::class, 'getKelas'])->name('public-getkelas');
     Route::post('/register/asisten', [RegisteredAsistenController::class, 'store'])->name('store.asisten');
     Route::post('/register/praktikan', [RegisteredPraktikanController::class, 'store'])->name('store.praktikan');
+    Route::get('/config', [ConfigurationController::class, 'index'])->name('public.get.config');
+    Route::get('/roles', [RoleController::class, 'index'])->name('public.get.roles');
     // Route::get('/praktikum/active', [PraktikumController::class, 'active'])->name('api.public.praktikum.active');
 });
 
@@ -258,8 +260,7 @@ Route::prefix('api-v1')->middleware(['audit.assistant', 'auth:asisten,praktikan'
     // Route::put('/asisten', [AsistenController::class, 'update'])->name('update.asisten')->middleware(['auth:asisten', 'can:manage-profile']);
     Route::post('/asisten/delete', [AsistenController::class, 'destroy'])->name('destroy.asisten')->middleware(['auth:asisten', 'can:manage-role']);
 
-    // Roles
-    Route::get('/roles', [RoleController::class, 'index'])->name('get.roles');
+    // Roles (GET is public via /api-v1/roles in public routes)
     Route::post('/roles', [RoleController::class, 'store'])->name('store.roles')->middleware(['auth:asisten', 'can:manage-role']);
     Route::put('/roles/{id}', [RoleController::class, 'update'])->name('update.roles')->middleware(['auth:asisten', 'can:manage-role']);
 
@@ -304,8 +305,7 @@ Route::prefix('api-v1')->middleware(['audit.assistant', 'auth:asisten,praktikan'
     Route::get('/praktikum/{idKelas}', [PraktikumController::class, 'show'])->name('api.show.praktikums')->middleware(['auth:asisten', 'permission:manage-praktikum|see-praktikum']);
     Route::put('/praktikum/{id}', [PraktikumController::class, 'update'])->name('api.update.praktikums')->middleware(['auth:asisten', 'can:manage-praktikum']);
 
-    // Configuration
-    Route::get('/config', [ConfigurationController::class, 'index'])->name('get.config')->middleware(['auth:asisten', 'permission:lms-configuration|tp-configuration|praktikan-regist']);
+    // Configuration (UPDATE only - READ is public via /api-v1/config in public routes)
     Route::put('/config', [ConfigurationController::class, 'update'])->name('update.config')->middleware(['auth:asisten', 'permission:lms-configuration|tp-configuration|praktikan-regist']);
 
     // Jenis Polling
