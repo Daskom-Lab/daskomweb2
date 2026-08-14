@@ -71,12 +71,12 @@ class RoleController extends Controller
                 }
 
                 switch ($paket) {
-                    // case 'super':
-                    //     $permissions = array_merge($permissions, $SUPER_PACKAGE);
-                    //     break;
-                    // case 'aslab':
-                    //     $permissions = array_merge($permissions, $ASLAB_PACKAGE);
-                    //     break;
+                    case 'super':
+                        $permissions = array_merge($permissions, $SUPER_PACKAGE);
+                        break;
+                    case 'aslab':
+                        $permissions = array_merge($permissions, $ASLAB_PACKAGE);
+                        break;
                     case 'atc':
                         $permissions = array_merge($permissions, $ATC_PACKAGE);
                         break;
@@ -92,13 +92,18 @@ class RoleController extends Controller
                 }
             }
 
+            // Every asisten role needs manage-profile to land on /assistant after login,
+            // regardless of which packages were selected (mirrors RolePermissionsSeeder,
+            // where every seeded role has it).
+            $permissions[] = PermissionGroupEnum::MANAGE_PROFILE;
+
             $role = Role::create([
                 'name' => $request->name,
                 'guard_name' => 'asisten',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
-            $role->syncPermissions($permissions);
+            $role->syncPermissions(array_unique($permissions));
 
             return redirect(route('manage-role'))->with('success', 'Role created successfully.');
         } catch (\Throwable $th) {

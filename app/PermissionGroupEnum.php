@@ -14,8 +14,6 @@ enum PermissionGroupEnum: string
 
     const MANAGE_MODUL = 'manage-modul';
 
-    const SEE_MODUL = 'see-modul';
-
     const MANAGE_SOAL = 'manage-soal';
 
     const UNLOCK_JAWABAN = 'unlock-jawaban';
@@ -100,7 +98,6 @@ enum PermissionGroupEnum: string
         self::MANAGE_PROFILE,
         self::SEE_PRAKTIKUM,
         self::SEE_HISTORY,
-        self::SEE_MODUL,
         self::SEE_SOAL,
         self::NILAI_PRAKTIKAN,
         self::SEE_PLOT,

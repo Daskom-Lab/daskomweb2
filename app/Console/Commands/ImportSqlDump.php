@@ -311,7 +311,7 @@ class ImportSqlDump extends Command
             'aslab' => array_merge(PermissionGroupEnum::ASLAB, ['manage-pelanggaran']),
             'atc' => PermissionGroupEnum::ATC,
             'rdc' => PermissionGroupEnum::RDC,
-            'asisten' => array_values(array_diff(PermissionGroupEnum::ASISTEN, [PermissionGroupEnum::SEE_MODUL])),
+            'asisten' => PermissionGroupEnum::ASISTEN,
             'praktikan' => PermissionGroupEnum::PRAKTIKAN,
         ];
 
