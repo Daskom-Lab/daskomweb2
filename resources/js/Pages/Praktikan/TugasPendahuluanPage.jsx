@@ -279,6 +279,11 @@ export default function TugasPendahuluanPage() {
 
     const handleQuestionsCount = useCallback(() => { }, []);
 
+    const blockClipboardEvent = useCallback((event) => {
+        event.preventDefault();
+        toast.error("Copy, paste, dan cut dinonaktifkan pada halaman ini.");
+    }, []);
+
     const renderPlaceholder = (message) => (
         <div className="min-h-[70vh] mx-auto mt-2">
             <div className="mt-[25vh] flex-col gap-2 items-center justify-center p-8 text-center text-sm font-semibold text-depth-secondary">
@@ -309,7 +314,13 @@ export default function TugasPendahuluanPage() {
             >
                 <Head title="Tugas Pendahuluan" />
 
-                <div className="mt-1 flex flex-col gap-1 ">
+                <div
+                    className="mt-1 flex flex-col gap-1 select-none"
+                    onCopy={blockClipboardEvent}
+                    onCut={blockClipboardEvent}
+                    onPaste={blockClipboardEvent}
+                    onContextMenu={blockClipboardEvent}
+                >
                     <PraktikanPageHeader title="Tugas Pendahuluan" />
 
                     {tugasQuery.isLoading
