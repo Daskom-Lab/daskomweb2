@@ -286,6 +286,12 @@ function FencedCodeBlock({ children }) {
     );
 }
 
+function remarkDisableIndentedCode() {
+    const data = this.data();
+    data.micromarkExtensions = data.micromarkExtensions || [];
+    data.micromarkExtensions.push({ disable: { null: ["codeIndented"] } });
+}
+
 /* ============================================================
  * Media
  * ============================================================ */
@@ -433,7 +439,7 @@ export default function MarkdownRenderer({
     return (
         <div className={`prose prose-invert max-w-none ${className}`}>
             <ReactMarkdown
-                remarkPlugins={[remarkGfm, remarkMath, remarkGithubAlerts, remarkBreaks]}
+                remarkPlugins={[remarkGfm, remarkMath, remarkGithubAlerts, remarkBreaks, remarkDisableIndentedCode]}
                 rehypePlugins={[rehypeKatex]}
                 components={{
                     pre: ({ children }) => (
