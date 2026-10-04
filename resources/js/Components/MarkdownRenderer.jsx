@@ -449,7 +449,7 @@ export default function MarkdownRenderer({
                     ),
 
                     code: ({className = "", children, ...props}) => (
-                        <code className={`rounded border border-depth bg-depth-card px-1.5 py-0.5 font-mono text-sm ${className}`} {...props}>
+                        <code className={`rounded border border-depth bg-depth-card px-1.5 py-0.5 font-mono text-sm text-depth-primary ${className}`} {...props}>
                             {children}
                         </code>
                     ),
