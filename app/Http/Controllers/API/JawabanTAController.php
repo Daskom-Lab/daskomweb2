@@ -5,14 +5,15 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\JawabanTa;
 use App\Models\Modul;
+use App\Models\Praktikan;
 use App\Models\SoalOpsi;
 use App\Models\SoalTa;
+use App\Services\Praktikum\DifficultyQuestionRandomizer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
-use App\Services\Praktikum\DifficultyQuestionRandomizer;
 
 class JawabanTAController extends Controller
 {
@@ -82,9 +83,18 @@ class JawabanTAController extends Controller
                 ->filter()
                 ->values();
 
+            $praktikan = Praktikan::find($praktikanId);
+            $totalQuestions = $this->randomizer->scoreTotal($praktikan, $modulId, 'ta', SoalTa::class);
+            $correctAnswers = $jawaban
+                ->filter(fn (JawabanTa $item) => $item->soal_ta && $item->opsi_id === $item->soal_ta->opsi_benar_id)
+                ->count();
+
             return response()->json([
                 'success' => true,
                 'jawaban_ta' => $data,
+                'total_questions' => $totalQuestions,
+                'correct_answers' => $correctAnswers,
+                'score' => $totalQuestions > 0 ? round(($correctAnswers / $totalQuestions) * 100, 2) : 0,
             ]);
         } catch (\Throwable $e) {
             report($e);

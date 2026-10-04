@@ -153,17 +153,19 @@ async function fetchAutoScore(type, praktikanId, modulId) {
             x.selected_opsi_id !== "",
     );
 
-    const correct = answered.filter(
-        (x) =>
-            String(x.selected_opsi_id) ===
-            String(x.opsi_benar_id),
-    ).length;
+    const total = Number(data?.total_questions ?? items.length);
+    const correct = Number(
+        data?.correct_answers ??
+            answered.filter(
+                (x) => String(x.selected_opsi_id) === String(x.opsi_benar_id),
+            ).length,
+    );
 
     return {
-        score: Math.round((correct / items.length) * 10000) / 100,
+        score: total > 0 ? Math.round((correct / total) * 10000) / 100 : 0,
         hasAnswers: answered.length > 0,
         answered: answered.length,
-        total: items.length,
+        total,
     };
 }
 
@@ -585,7 +587,7 @@ export default function ModalInputNilai({
                                                                 Jawaban Salah
                                                             </div>
                                                         )}
-                                                        {String(item.selectedOptionId) === String(item.correctOptionId) && (
+                                                        {!isUnanswered && String(item.selectedOptionId) === String(item.correctOptionId) && (
                                                             <div className="mt-2 inline-flex rounded-depth-full border border-[#4c7a4c]/40 bg-[var(--depth-color-primary)]/10 px-2.5 py-1 text-xs font-semibold bg-[var(--depth-color-primary)]">
                                                                 Jawaban Benar
                                                             </div>
