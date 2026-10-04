@@ -118,7 +118,7 @@ class SoalTMController extends Controller
             // Validasi input
             $request->validate([
                 'modul_id' => 'required|integer|exists:moduls,id',
-                'soal' => 'required|string|max:1000',
+                'soal' => 'required|string|max:10000',
             ]);
             $soal = SoalMandiri::find($id);
             if (! $soal) {
