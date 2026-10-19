@@ -118,7 +118,40 @@ function Mermaid({ chart }) {
     useEffect(() => {
         mermaid.initialize({
             startOnLoad: false,
-            theme: "dark",
+            theme: "base",
+            themeVariables: {
+                background: "#ffffff",
+
+                primaryColor: "#ffffff",
+                primaryTextColor: "#000000",
+                primaryBorderColor: "#000000",
+
+                secondaryColor: "#ffffff",
+                secondaryTextColor: "#000000",
+                secondaryBorderColor: "#000000",
+
+                tertiaryColor: "#ffffff",
+                tertiaryTextColor: "#000000",
+                tertiaryBorderColor: "#000000",
+
+                lineColor: "#000000",
+                textColor: "#000000",
+
+                edgeLabelBackground: "#ffffff",
+
+                // Flowchart
+                nodeTextColor: "#000000",
+
+                // Sequence diagrams
+                actorBkg: "#ffffff",
+                actorBorder: "#000000",
+                actorTextColor: "#000000",
+                signalColor: "#000000",
+                signalTextColor: "#000000",
+
+                // Titles
+                titleColor: "#000000",
+            },
         });
 
         let cancelled = false;
@@ -131,22 +164,32 @@ function Mermaid({ chart }) {
 
                 const { svg } = await mermaid.render(id, chart);
 
-                if (!cancelled && ref.current)
+                if (!cancelled && ref.current) {
                     ref.current.innerHTML = svg;
+                }
             } catch (error) {
                 console.error("Mermaid parsing error", error);
 
-                if (!cancelled && ref.current)
-                    ref.current.innerHTML = '<div class="text-red-500 text-sm border border-red-500 p-2 rounded">Failed to render Mermaid diagram</div>';
+                if (!cancelled && ref.current) {
+                    ref.current.innerHTML =
+                        '<div class="text-red-500 text-sm border border-red-500 p-2 rounded">Failed to render Mermaid diagram</div>';
+                }
             }
         };
 
         render();
 
-        return () => {cancelled = true;};
+        return () => {
+            cancelled = true;
+        };
     }, [chart]);
 
-    return (<div ref={ref} className="my-4 flex justify-center overflow-x-auto" />);
+    return (
+        <div
+            ref={ref}
+            className="my-4 flex justify-center overflow-x-auto bg-white rounded-depth-lg p-4"
+        />
+    );
 }
 
 
@@ -284,6 +327,12 @@ function FencedCodeBlock({ children }) {
             </div>
         </div>
     );
+}
+
+function remarkDisableIndentedCode() {
+    const data = this.data();
+    data.micromarkExtensions = data.micromarkExtensions || [];
+    data.micromarkExtensions.push({ disable: { null: ["codeIndented"] } });
 }
 
 /* ============================================================
@@ -433,7 +482,7 @@ export default function MarkdownRenderer({
     return (
         <div className={`prose prose-invert max-w-none ${className}`}>
             <ReactMarkdown
-                remarkPlugins={[remarkGfm, remarkMath, remarkGithubAlerts, remarkBreaks]}
+                remarkPlugins={[remarkGfm, remarkMath, remarkGithubAlerts, remarkBreaks, remarkDisableIndentedCode]}
                 rehypePlugins={[rehypeKatex]}
                 components={{
                     pre: ({ children }) => (
@@ -443,7 +492,7 @@ export default function MarkdownRenderer({
                     ),
 
                     code: ({className = "", children, ...props}) => (
-                        <code className={`rounded border border-depth bg-depth-card px-1.5 py-0.5 font-mono text-sm ${className}`} {...props}>
+                        <code className={`rounded border border-depth bg-depth-card px-1.5 py-0.5 font-mono text-sm text-depth-primary ${className}`} {...props}>
                             {children}
                         </code>
                     ),

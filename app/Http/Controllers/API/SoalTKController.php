@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Services\Praktikum\DifficultyQuestionRandomizer;
 use App\Http\Controllers\Controller;
 use App\Models\Modul;
 use App\Models\Praktikan;
 use App\Models\SoalOpsi;
 use App\Models\SoalTk;
+use App\Services\Praktikum\DifficultyQuestionRandomizer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -55,7 +55,7 @@ class SoalTKController extends Controller
     public function show(Request $request, int $modulId): JsonResponse
     {
         $modul = Modul::find($modulId);
-        if (!$modul) {
+        if (! $modul) {
             return response()->json(['message' => "Modul dengan ID {$modulId} tidak ditemukan."], 404);
         }
 
@@ -202,7 +202,7 @@ class SoalTKController extends Controller
             ],
             'difficulty' => ['nullable', Rule::in(['easy', 'medium', 'hard'])],
             'options' => ['required', 'array', 'size:4'],
-            'options.*.text' => ['required', 'string', 'max:1000'],
+            'options.*.text' => ['required', 'string', 'max:10000'],
             'correct_option' => ['required', 'integer', 'between:0,3'],
         ]);
     }
@@ -216,7 +216,7 @@ class SoalTKController extends Controller
             'pertanyaan' => [
                 'required',
                 'string',
-                'max:1000',
+                'max:10000',
                 Rule::unique('soal_tks', 'pertanyaan')
                     ->where(fn ($query) => $query->where('modul_id', $modulId))
                     ->ignore($soal->id),
@@ -224,7 +224,7 @@ class SoalTKController extends Controller
             'difficulty' => ['sometimes', 'nullable', Rule::in(['easy', 'medium', 'hard'])],
             'options' => ['required', 'array', 'size:4'],
             'options.*.id' => ['nullable', 'integer', 'exists:soal_opsis,id'],
-            'options.*.text' => ['required', 'string', 'max:1000'],
+            'options.*.text' => ['required', 'string', 'max:10000'],
             'correct_option' => ['required', 'integer', 'between:0,3'],
         ]);
     }

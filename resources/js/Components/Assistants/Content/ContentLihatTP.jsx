@@ -104,7 +104,11 @@ const AnswerContent = ({ answer }) => {
     }
 
     // Normal text answer
-    return <MarkdownRenderer content={answer} />;
+    return (
+        <pre className="whitespace-pre-wrap break-words text-md font-sans leading-relaxed">
+            {answer}
+        </pre>
+    )
 };
 
 export default function ContentLihatTP({
