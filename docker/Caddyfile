@@ -1,0 +1,9 @@
+{
+    frankenphp
+    admin localhost:2019
+}
+
+:8000 {
+    root * /app/public
+    php_server
+}

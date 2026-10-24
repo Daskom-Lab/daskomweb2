@@ -14,5 +14,7 @@ COPY --from=build /usr/local/lib/php/extensions /usr/local/lib/php/extensions
 COPY supervisord.conf /etc/supervisord.conf
 
 COPY entrypoint.sh /entrypoint.sh
+COPY Caddyfile /etc/caddy/Caddyfile
+
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
