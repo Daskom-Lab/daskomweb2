@@ -19,11 +19,7 @@ class AssistantAuditLogTest extends TestCase
 
         app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
 
-        if (class_exists(\App\Http\Middleware\VerifyCsrfToken::class)) {
-            $this->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class);
-        }
-
-        $this->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class);
+        $this->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\PreventRequestForgery::class);
     }
 
     /**

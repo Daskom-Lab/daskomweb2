@@ -21,8 +21,7 @@ class AnomalyGradesTest extends TestCase
         parent::setUp();
 
         app()->make(\Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
-        $this->withoutMiddleware(\App\Http\Middleware\VerifyCsrfToken::class);
-        $this->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\VerifyCsrfToken::class);
+        $this->withoutMiddleware(\Illuminate\Foundation\Http\Middleware\PreventRequestForgery::class);
     }
 
     public function test_grades_endpoint_returns_all_results_with_assistant_contact(): void

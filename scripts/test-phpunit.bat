@@ -32,6 +32,6 @@ set REDIS_HOST=127.0.0.1
 set REDIS_PORT=6380
 set REDIS_PASSWORD=
 
-php artisan test %*
+php -d error_reporting=E_ALL -d display_errors=1 artisan test %*
 
 endlocal
