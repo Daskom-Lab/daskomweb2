@@ -22,6 +22,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Session Serialization
+    |--------------------------------------------------------------------------
+    |
+    | Laravel 13 serializes session payloads as JSON to prevent PHP object
+    | injection through deserialization. This application never stores PHP
+    | objects in the session, so JSON is safe. Switching this value from
+    | "php" invalidates existing sessions, so all users sign in again once.
+    |
+    */
+
+    'serialization' => env('SESSION_SERIALIZATION', 'json'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Session Lifetime
     |--------------------------------------------------------------------------
     |
