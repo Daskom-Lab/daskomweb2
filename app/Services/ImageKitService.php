@@ -6,30 +6,31 @@ use ImageKit\ImageKit;
 
 class ImageKitService
 {
-    protected ImageKit $client;
+    protected ?ImageKit $client = null;
 
-    protected string $publicKey;
-
-    protected string $privateKey;
-
-    protected string $endpointUrl;
-
-    public function __construct()
-    {
-        $this->publicKey = config('services.imagekit.public_key');
-        $this->privateKey = config('services.imagekit.private_key');
-        $this->endpointUrl = config('services.imagekit.endpoint_url');
-
-        $this->client = new ImageKit(
-            $this->publicKey,
-            $this->privateKey,
-            $this->endpointUrl
-        );
+    public function __construct(
+        protected ?string $publicKey = null,
+        protected ?string $privateKey = null,
+        protected ?string $endpointUrl = null,
+    ) {
+        $this->publicKey = $publicKey ?? config('services.imagekit.public_key');
+        $this->privateKey = $privateKey ?? config('services.imagekit.private_key');
+        $this->endpointUrl = $endpointUrl ?? config('services.imagekit.endpoint_url');
     }
 
     public function getClient(): ImageKit
     {
-        return $this->client;
+        if (empty($this->publicKey) || empty($this->privateKey) || empty($this->endpointUrl)) {
+            throw new \InvalidArgumentException(
+                'ImageKit credentials are missing. Set IMAGEKIT_PUBLIC_KEY, IMAGEKIT_PRIVATE_KEY and IMAGEKIT_ENDPOINT_URL.'
+            );
+        }
+
+        return $this->client ??= new ImageKit(
+            $this->publicKey,
+            $this->privateKey,
+            $this->endpointUrl
+        );
     }
 
     /**
@@ -37,7 +38,7 @@ class ImageKitService
      */
     public function generateAuthParameters(): array
     {
-        $authParams = $this->client->getAuthenticationParameters();
+        $authParams = $this->getClient()->getAuthenticationParameters();
 
         return [
             'token' => $authParams->token,
@@ -66,7 +67,7 @@ class ImageKitService
      */
     public function deleteFile(string $fileId): void
     {
-        $this->client->deleteFile($fileId);
+        $this->getClient()->deleteFile($fileId);
     }
 
     /**
@@ -74,7 +75,7 @@ class ImageKitService
      */
     public function moveFile(string $sourceFilePath, string $destinationPath): object
     {
-        return $this->client->move([
+        return $this->getClient()->move([
             'sourceFilePath' => $sourceFilePath,
             'destinationPath' => $destinationPath,
         ]);
