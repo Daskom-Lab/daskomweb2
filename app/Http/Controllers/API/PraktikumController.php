@@ -240,9 +240,8 @@ class PraktikumController extends Controller
 
         if ($praktikum->started_at) {
             $reference = $praktikum->ended_at ?? $now;
-            $elapsed = max(
-                0,
-                $praktikum->started_at->diffInSeconds($reference)
+            $elapsed = (int) abs(
+                $praktikum->started_at->diffInSeconds($reference, absolute: true)
             );
         }
 
@@ -320,9 +319,8 @@ class PraktikumController extends Controller
     ): void {
         if ($praktikum->started_at) {
             $reference = $praktikum->ended_at ?? $now;
-            $elapsed = max(
-                0,
-                $praktikum->started_at->diffInSeconds($reference)
+            $elapsed = (int) abs(
+                $praktikum->started_at->diffInSeconds($reference, absolute: true)
             );
 
             $praktikum->started_at =
@@ -558,9 +556,8 @@ class PraktikumController extends Controller
         );
 
         if ($praktikum->phase_started_at instanceof Carbon) {
-            $seconds += max(
-                0,
-                $praktikum->phase_started_at->diffInSeconds($now)
+            $seconds += (int) abs(
+                $praktikum->phase_started_at->diffInSeconds($now, absolute: true)
             );
         }
 
