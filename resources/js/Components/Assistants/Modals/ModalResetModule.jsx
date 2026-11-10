@@ -1,5 +1,5 @@
 import toast from "react-hot-toast";
-import { Inertia } from "@inertiajs/inertia";
+import { router } from "@inertiajs/react";
 import { api } from "@/lib/api";
 import { ModalOverlay } from "@/Components/Common/ModalPortal";
 import ModalCloseButton from "@/Components/Common/ModalCloseButton";
@@ -9,7 +9,7 @@ export default function ButtonResetModule({ onClose }) {
         try {
             await api.delete(route('moduls.reset-all'));
             toast.success("Data modul berhasil direset.");
-            Inertia.reload();
+            router.reload();
             onClose();
         } catch (error) {
             console.error('Error mereset modul : ', error);
