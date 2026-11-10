@@ -19,7 +19,7 @@
         "league/flysystem": "^3.29",
         "league/flysystem-aws-s3-v3": "3.0",
         "predis/predis": "^3.2",
-        "spatie/laravel-permission": "^6.10",
+        "spatie/laravel-permission": "^8.5",
         "symfony/console": "7.2.*",
         "tightenco/ziggy": "^2.0"
     },

@@ -26,6 +26,13 @@ return [
 
         'role' => Spatie\Permission\Models\Role::class,
 
+        /*
+         * When using the "HasModels" trait with raw IDs, this model class
+         * resolves those IDs. Null falls back to the guard's model.
+         */
+
+        'default_model' => null,
+
     ],
 
     'table_names' => [
@@ -111,6 +118,12 @@ return [
     'register_octane_reset_listener' => false,
 
     /*
+     * When set to true the package dispatches permission events
+     * (e.g. RoleAttachedEvent, PermissionDetachedEvent).
+     */
+    'events_enabled' => false,
+
+    /*
      * Teams Feature.
      * When set to true the package implements teams using the 'team_foreign_key'.
      * If you want the migrations to register the 'team_foreign_key', you must
@@ -121,6 +134,17 @@ return [
      */
 
     'teams' => false,
+
+    /*
+     * The team model used to resolve the current team when the teams
+     * feature is enabled. Null falls back to the guard's model.
+     */
+    'team' => null,
+
+    /*
+     * Resolver that determines the current team id when teams are enabled.
+     */
+    'team_resolver' => \Spatie\Permission\DefaultTeamResolver::class,
 
     /*
      * Passport Client Credentials Grant
