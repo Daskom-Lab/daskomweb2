@@ -25,7 +25,10 @@ createInertiaApp({
             </ImageKitProvider>
         );
 
-        if (import.meta.env.DEV) {
+        // Hydrate hanya bila server benar-benar mengirim markup hasil SSR.
+        // Root kosong + hydrateRoot() memicu React error #418 (hydration
+        // mismatch); tanpa SSR aktif, mount biasa lewat createRoot().
+        if (import.meta.env.DEV || el.innerHTML.trim() === '') {
             createRoot(el).render(app);
             return;
         }
