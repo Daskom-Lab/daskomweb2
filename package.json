@@ -13,7 +13,7 @@
     "@types/node": "^24.10.0",
     "@vitejs/plugin-react": "^4.2.0",
     "autoprefixer": "^10.4.12",
-    "axios": "^1.7.9",
+    "axios": "^1.21.1",
     "babel-plugin-react-compiler": "^1.0.0",
     "laravel-vite-plugin": "^1.0",
     "postcss": "^8.4.31",
