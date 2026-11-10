@@ -28,7 +28,7 @@
     "@types/react": "^19.1.9",
     "baseline-browser-mapping": "^2.11.12",
     "caniuse-lite": "^1.0.30001809",
-    "js-cookie": "^3.0.5",
+    "js-cookie": "^3.0.8",
     "katex": "^0.18.2",
     "laravel-echo": "^2.2.4",
     "lodash": "^4.17.21",
