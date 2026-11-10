@@ -20,7 +20,7 @@ class PraktikanFactory extends Factory
     {
         return [
             'nama' => $this->faker->name,
-            'nim' => $this->faker->numerify('##########'), // Generates a 10-digit number
+            'nim' => $this->faker->unique()->numerify('##########'), // 10 digit, unik karena kolom nim ber-index unique
             'password' => bcrypt('password'), // Default password for testing
             'kelas_id' => Kelas::factory(),
             'dk' => $this->faker->randomElement(['DK1', 'DK2']),
