@@ -53,21 +53,43 @@ services:
     container_name: lms2_web
     build:
       context: docker
+    env_file:
+      - .env.docker
     environment:
       - CADDY_DISABLE_HTTP=true
       - CADDY_DISABLE_HTTPS=true
+      # Nilai di .env.docker menunjuk ke service compose, bukan ke localhost,
+      # supaya container dapat menjangkau MySQL dan Redis lewat jaringan.
+      - DB_HOST=lms2_mysql
+      - DB_PORT=3306
+      - REDIS_HOST=lms2_redis
+      - REDIS_PORT=6379
     command: sh -c "supervisord -c /etc/supervisord.conf"
     volumes:
       - ./:/app
+      # Bind mount dari Windows membuat setiap stat file ~9ms, sehingga boot
+      # Laravel butuh belasan detik. vendor/ dan node_modules/ disimpan di
+      # volume container agar I/O cepat; isinya diisi ulang oleh entrypoint.
+      - vendor_data:/app/vendor
+      - node_modules_data:/app/node_modules
     ports:
       - "8001:8000"
       - "8090:8090"
     networks:
       - lms2_network
     depends_on:
-      - frontend
+      frontend:
+        condition: service_completed_successfully
+      lms2_mysql:
+        condition: service_started
+      lms2_redis:
+        condition: service_started
 
 networks:
   lms2_network:
     external: true
     name: lms2_network
+
+volumes:
+  vendor_data:
+  node_modules_data:
