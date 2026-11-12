@@ -25,7 +25,10 @@ class PraktikanFactory extends Factory
             'kelas_id' => Kelas::factory(),
             'dk' => $this->faker->randomElement(['DK1', 'DK2']),
             'alamat' => $this->faker->address,
-            'nomor_telepon' => $this->faker->phoneNumber,
+            // UpdatePraktikanRequest/StorePraktikanRequest membatasi max:15;
+            // faker->phoneNumber() bisa lebih panjang sehingga data siap-pakai
+            // factory ditolak saat dikirim balik lewat API.
+            'nomor_telepon' => $this->faker->numerify('08##########'),
             'email' => $this->faker->unique()->safeEmail,
             'created_at' => now(),
             'updated_at' => now(),

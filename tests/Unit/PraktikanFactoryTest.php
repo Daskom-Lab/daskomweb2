@@ -30,4 +30,22 @@ class PraktikanFactoryTest extends TestCase
 
         $this->assertMatchesRegularExpression('/^\d{10}$/', $praktikan->nim);
     }
+
+    /**
+     * UpdatePraktikanRequest membatasi nomor_telepon maksimal 15 karakter.
+     * faker->phoneNumber() bisa lebih panjang (mis. "+1 (555) 123-4567 ext. 89"),
+     * sehingga test yang mengirim ulang data factory gagal 422 secara acak.
+     */
+    public function test_phone_numbers_fit_the_validation_limit(): void
+    {
+        $nomorTelepon = Praktikan::factory()->count(50)->create()->pluck('nomor_telepon');
+
+        foreach ($nomorTelepon as $nomor) {
+            $this->assertLessThanOrEqual(
+                15,
+                mb_strlen($nomor),
+                "Nomor telepon dari factory melebihi batas validasi 15 karakter: {$nomor}"
+            );
+        }
+    }
 }
